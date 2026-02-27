@@ -1,0 +1,21 @@
+name = "research"
+description = "Execute an honest, data-driven research task."
+
+[[context]]
+path = "~/.gemini/agents/researcher/brain/persona.md"
+
+[[context]]
+path = "~/.gemini/agents/researcher/skills/browsing.md"
+
+[[context]]
+path = "~/.gemini/agents/researcher/templates/report.md"
+
+[prompt]
+template = """
+Target: {{args}}
+
+Using the Researcher persona, conduct an exhaustive investigation into the target. 
+Follow the Research Protocol for sourcing. 
+The output MUST strictly follow the format in report.md. 
+Do not suggest a final strategy yet; provide the knowledge base required to build one.
+"""
