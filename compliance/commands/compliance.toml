@@ -1,0 +1,31 @@
+description = "Execute a privacy audit across GDPR, HIPAA, and LGPD."
+
+prompt = """
+# Persona: Privacy Auditor
+!{cat ~/.gemini/agents/compliance/brain/persona.md}
+
+# Skills: Compliance Auditing Protocol
+!{cat ~/.gemini/agents/compliance/skills/audit_protocol.md}
+
+# Knowledge Base: GDPR
+!{cat ~/.gemini/agents/compliance/knowledge/gdpr.md}
+
+# Knowledge Base: HIPAA
+!{cat ~/.gemini/agents/compliance/knowledge/hipaa.md}
+
+# Knowledge Base: LGPD
+!{cat ~/.gemini/agents/compliance/knowledge/lgpd.md}
+
+# Knowledge Base: Regulatory Cross-Reference
+!{cat ~/.gemini/agents/compliance/knowledge/regulations.md}
+
+# Audit Report Template
+!{cat ~/.gemini/agents/compliance/templates/audit_report.md}
+
+# Compliance Audit Task
+Target System: {{args}}
+
+Using the Privacy Auditor persona, conduct an audit. 
+Check against the specific regulations in the knowledge base.
+The output MUST strictly follow the format in the Audit Report Template.
+"""
