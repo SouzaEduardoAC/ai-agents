@@ -1,16 +1,19 @@
-# Knowledge Base: General Data Protection Regulation (GDPR) - EU
+# Knowledge Base: GDPR (European Union) - Technical Grounding
 
-## Key Principles
-* **Lawfulness, Fairness, and Transparency:** Data must be processed legally and transparently.
-* **Purpose Limitation:** Data collected for one reason cannot be used for another without a new legal basis.
-* **Data Minimization:** Only collect what is strictly necessary.
-* **Storage Limitation:** Data must be deleted when no longer needed.
+## 1. Core Principles (Art. 5)
+* **Integrity & Confidentiality:** Technical assurance against unauthorized processing, accidental loss, or destruction.
+* **Storage Limitation:** Automated "Purge" logic to delete data once the "Legal Purpose" expires.
+* **Accuracy:** User-facing mechanisms to rectify data in real-time.
 
-## Rights of the Data Subject
-1. **Right to Access:** Users can request a copy of their data.
-2. **Right to Erasure (Right to be Forgotten):** Users can demand data deletion under specific conditions.
-3. **Data Portability:** Users can request their data in a structured, machine-readable format.
+## 2. Security of Processing (Art. 32)
+* **State of the Art:** Controls must reflect current tech standards (e.g., Post-Quantum Cryptography readiness for high-value data).
+* **Ongoing Resilience:** Systems must withstand stress-testing; evidence of quarterly "Red Team" or "Pentesting" is required for Tier 1 compliance.
+* **Availability & Restore:** Ability to restore access to personal data in a timely manner after a technical incident (evidence of verified backups).
 
-## Compliance Thresholds
-* **DPO Requirement:** Mandatory if processing sensitive data on a large scale or for public authorities.
-* **Breach Notification:** Must notify the supervisory authority within 72 hours of discovery.
+## 3. AI & Automated Decisions (Art. 22)
+* **Human-in-the-loop:** Subjects have the right not to be subject to a decision based solely on automated processing (AI) that has legal effects.
+* **Explainability:** In 2026, regulators prioritize "AI Explainability" (intersecting with the EU AI Act); you must document how the algorithm reached a decision.
+
+## 4. Enforcement & Accountability
+* **72-Hour Breach Rule:** Systems must have automated alerting to detect breaches and report to the Lead Supervisory Authority (LSA) within 72 hours.
+* **Procedural Regulation (2026):** New rules harmonize cross-border enforcement, introducing stricter 15-month deadlines for final regulatory decisions.

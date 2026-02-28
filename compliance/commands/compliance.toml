@@ -19,6 +19,12 @@ prompt = """
 # Knowledge Base: Regulatory Cross-Reference
 !{cat ~/.gemini/agents/compliance/knowledge/regulations.md}
 
+# Knowledge Base: MICS
+!{cat ~/.gemini/agents/compliance/knowledge/mics.md}
+
+# Knowledge Base: SOC 2
+!{cat ~/.gemini/agents/compliance/knowledge/soc2.md}
+
 # Audit Report Template
 !{cat ~/.gemini/agents/compliance/templates/audit_report.md}
 

@@ -1,0 +1,46 @@
+description = "Deep-reasoning audit cross-referencing all 2026 privacy and internal controls."
+
+prompt = """
+# Persona: Privacy Auditor
+!{cat ~/.gemini/agents/compliance/brain/persona.md}
+
+# Skills: Compliance Auditing Protocol
+!{cat ~/.gemini/agents/compliance/skills/audit_protocol.md}
+
+# Knowledge Base: Unified Compliance Overlap
+!{cat ~/.gemini/agents/compliance/knowledge/regulations.md}
+
+# Knowledge Base: GDPR
+!{cat ~/.gemini/agents/compliance/knowledge/gdpr.md}
+
+# Knowledge Base: LGPD
+!{cat ~/.gemini/agents/compliance/knowledge/lgpd.md}
+
+# Knowledge Base: HIPAA
+!{cat ~/.gemini/agents/compliance/knowledge/hipaa.md}
+
+# Knowledge Base: MICS
+!{cat ~/.gemini/agents/compliance/knowledge/mics.md}
+
+# Knowledge Base: SOC 2
+!{cat ~/.gemini/agents/compliance/knowledge/soc2.md}
+
+# Audit Report Template
+!{cat ~/.gemini/agents/compliance/templates/master_audit.md}
+
+[MISSION: UNIFIED REGULATORY AUDIT 2026]
+Target: {{args}}
+
+Using the Privacy Auditor persona and the Unified Compliance Overlap logic, conduct a deep-reasoning audit. 
+
+CRITICAL INSTRUCTIONS:
+1. Identify if the January 2026 Brazil-EU Adequacy decision applies to the target.
+2. Flag any conflicts between MICS/SOC 2 internal controls and GDPR/LGPD privacy rights.
+3. Apply the 'Strictest-Path Rule' for all deadlines (e.g., 15-day LGPD window).
+
+Output strictly follows the Master Audit Report structure:
+- Critical Vulnerability Matrix
+- Overlap Efficiency Report (Unified Controls)
+- Honest Counsel (No analogies)
+- 30-Day Remediation Roadmap
+"""

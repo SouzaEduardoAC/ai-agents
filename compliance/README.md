@@ -1,6 +1,6 @@
 # Privacy Compliance Auditor Agent
 
-A rigid legal compliance auditor agent for Gemini CLI. This agent is designed to identify vulnerabilities, non-compliance risks, and data leakage points across GDPR, HIPAA, and LGPD regulations.
+A rigid legal compliance auditor agent for Gemini CLI. This agent is designed to identify vulnerabilities, non-compliance risks, and data leakage points across GDPR, HIPAA, and LGPD regulations, as well as MICS and SOC 2 internal controls.
 
 ## Overview
 
@@ -8,15 +8,21 @@ The Compliance Auditor operates with a "Zero Trust" posture regarding data handl
 
 ## Core Components
 
-- **Brain (`brain/persona.md`):** Defines "The Privacy Auditor" identity and its regulatory scope (LGPD, GDPR, HIPAA).
+- **Brain (`brain/persona.md`):** Defines "The Privacy Auditor" identity and its regulatory scope (LGPD, GDPR, HIPAA, MICS, SOC 2).
 - **Skills (`skills/audit_protocol.md`):** Implements a Compliance Auditing Protocol for data flow mapping, legal basis checks, security evaluations, and residency checks.
 - **Knowledge Base (`knowledge/`):** Contains detailed regulatory information for:
     - GDPR (EU)
     - HIPAA (US)
     - LGPD (Brazil)
-    - Regulatory Cross-Reference (`regulations.md`)
-- **Templates (`templates/audit_report.md`):** Standardized format for compliance audits, including risk summaries, regulatory alignment, and remediation steps.
-- **Commands (`commands/compliance.toml`):** Defines the `/audit` slash command (aliased to the filename if placed in `commands/`).
+    - **MICS (Internal Controls)**
+    - **SOC 2 (Trust Services Criteria)**
+    - Regulatory Cross-Reference & 2026 Unified Overlap (`regulations.md`)
+- **Templates:**
+    - `audit_report.md`: Standardized format for privacy-focused audits.
+    - **`master_audit.md`**: Advanced 2026 unified regulatory audit format.
+- **Commands:**
+    - `compliance.toml`: Standard privacy audit across GDPR, HIPAA, and LGPD.
+    - **`master-audit.toml`**: Deep-reasoning audit cross-referencing all 2026 privacy and internal controls.
 
 ## Installation
 
@@ -27,28 +33,35 @@ mkdir -p ~/.gemini/agents/
 cp -r compliance/ ~/.gemini/agents/
 ```
 
-### 2. Global Command
-Link the compliance command to your global commands directory:
+### 2. Global Commands
+Register the compliance commands to your global commands directory:
 ```bash
-ln -s ~/.gemini/agents/compliance/commands/compliance.toml ~/.gemini/commands/compliance.toml
+cp compliance/commands/compliance.toml ~/.gemini/commands/compliance.toml
+cp compliance/commands/master-audit.toml ~/.gemini/commands/master-audit.toml
 ```
 
 ## Usage
 
 Once installed, you can trigger the auditor from any Gemini CLI session:
 
+### Standard Privacy Audit
 ```text
 /compliance [target system or data flow description]
 ```
 
+### 2026 Unified Master Audit
+```text
+/master-audit [target system or data flow description]
+```
+
 **Example:**
-`/compliance "Our customer data is stored in AWS S3 (US-East) and includes emails from EU and Brazil users."`
+`/master-audit "Our customer data is stored in AWS S3 (US-East) and includes emails from EU and Brazil users, integrated with internal financial controls."`
 
 The agent will then:
 1. Adopt the Privacy Auditor persona.
 2. Apply the Compliance Auditing Protocol.
-3. Consult the regulatory knowledge base.
-4. Output a structured audit report based on the provided template.
+3. Consult the regulatory knowledge base (including 2026 adequacy bridges).
+4. Output a structured audit report based on the selected command's template.
 
 ## Directory Structure
 
