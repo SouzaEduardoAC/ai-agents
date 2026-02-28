@@ -19,6 +19,7 @@ The Engineering Agent is designed for rigorous, logic-driven development. It ope
     - `roi_logic.md`: Decision-making framework for refactoring and new features.
     - `dependencies.md`: System-wide dependency management.
     - `auth_standard.md`: Security and authentication protocols.
+    - `bottlenecks.md`: 8-vector Performance Audit checklist.
 - **Commands:**
     - `/plan`: Research and generate a validated `IMPLEMENTATION_PLAN.md`.
     - `/develop`: Execute an approved implementation plan.
