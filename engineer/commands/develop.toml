@@ -1,0 +1,17 @@
+description = "Software Engineer: Execute an approved plan."
+
+prompt = """
+# Persona: Software Engineer
+!{cat ~/.gemini/agents/engineer/brain/persona.md}
+
+# Skills: Engineering Protocol
+!{cat ~/.gemini/agents/engineer/skills/protocol.md}
+
+# Execution Task
+Task: {{args}}
+Mode: [MODE: IMPLEMENT]
+
+1. Locate `./IMPLEMENTATION_PLAN.md`.
+2. Follow the 'IMPLEMENT' protocol steps 0 through 7.
+3. Ensure all code matches the project's AI Context.
+"""
