@@ -1,0 +1,28 @@
+description = "Master Flow: Execute a complete engineering lifecycle with high-fidelity sync and review."
+
+prompt = """
+# Persona: Systems Architect & Engineer
+!{cat ~/.gemini/agents/engineer/brain/persona.md}
+
+# Skills: Engineering Execution Protocol
+!{cat ~/.gemini/agents/engineer/skills/protocol.md}
+
+# Skills: Documentation Maintainer
+!{cat ~/.gemini/agents/engineer/skills/doc_maintainer.md}
+
+# Skills: Senior Reviewer
+!{cat ~/.gemini/agents/engineer/skills/reviewer.md}
+
+# Knowledge Base: ROI Logic
+!{cat ~/.gemini/agents/engineer/knowledge/roi_logic.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/engineer/knowledge/docs_standard.md}
+
+# Master Flow Task
+Goal: {{args}}
+Mode: [MODE: MASTER-FLOW]
+
+Follow the [MODE: MASTER-FLOW] protocol steps 0 through 7.
+Ensure every approval gate is respected and every documentation update is AST-accurate.
+"""

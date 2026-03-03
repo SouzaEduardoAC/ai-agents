@@ -26,6 +26,7 @@ The Engineering Agent is designed for rigorous, logic-driven development. It ope
     - `/bottlenecks`: Perform a deep performance audit and plan fixes.
     - `/review`: Audit code for patterns, security, and standards.
     - `/document`: Sync codebase logic with high-precision documentation.
+    - `/master-flow`: Execute a complete, end-to-end engineering lifecycle with approval gates.
 
 ## Installation
 
@@ -43,6 +44,7 @@ ln -s ~/.gemini/agents/engineer/commands/develop.toml ~/.gemini/commands/develop
 ln -s ~/.gemini/agents/engineer/commands/bottlenecks.toml ~/.gemini/commands/bottlenecks.toml
 ln -s ~/.gemini/agents/engineer/commands/review.toml ~/.gemini/commands/review.toml
 ln -s ~/.gemini/agents/engineer/commands/document.toml ~/.gemini/commands/document.toml
+ln -s ~/.gemini/agents/engineer/commands/master-flow.toml ~/.gemini/commands/master-flow.toml
 ```
 
 ## Usage
@@ -66,6 +68,13 @@ Audit for performance, conduct a code review, or sync documentation:
 /review "Review the newly implemented JWT Auth Service."
 /document "Synchronize the current authentication module with the technical specs."
 ```
+
+### Full Lifecycle
+Execute a complete task with pre-sync, planning, review, and post-sync:
+```text
+/master-flow "Add a rate-limiter middleware to all API endpoints."
+```
+
 
 ## Directory Structure
 
