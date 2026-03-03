@@ -7,7 +7,7 @@ prompt = """
 # Skills: Engineering Protocol
 !{cat ~/.gemini/agents/engineer/skills/protocol.md}
 
-# Knowledge: Bottlenecks
+# Knowledge Base: Bottlenecks
 !{cat ~/.gemini/agents/engineer/knowledge/bottlenecks.md}
 
 # Performance Audit Task

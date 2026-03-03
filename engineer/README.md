@@ -25,6 +25,7 @@ The Engineering Agent is designed for rigorous, logic-driven development. It ope
     - `/develop`: Execute an approved implementation plan.
     - `/bottlenecks`: Perform a deep performance audit and plan fixes.
     - `/review`: Audit code for patterns, security, and standards.
+    - `/document`: Sync codebase logic with high-precision documentation.
 
 ## Installation
 
@@ -41,6 +42,7 @@ ln -s ~/.gemini/agents/engineer/commands/plan.toml ~/.gemini/commands/plan.toml
 ln -s ~/.gemini/agents/engineer/commands/develop.toml ~/.gemini/commands/develop.toml
 ln -s ~/.gemini/agents/engineer/commands/bottlenecks.toml ~/.gemini/commands/bottlenecks.toml
 ln -s ~/.gemini/agents/engineer/commands/review.toml ~/.gemini/commands/review.toml
+ln -s ~/.gemini/agents/engineer/commands/document.toml ~/.gemini/commands/document.toml
 ```
 
 ## Usage
@@ -58,10 +60,11 @@ Once the `IMPLEMENTATION_PLAN.md` is approved, execute it:
 ```
 
 ### Performance & Quality
-Audit for performance or conduct a code review:
+Audit for performance, conduct a code review, or sync documentation:
 ```text
 /bottlenecks "Analyze the current database query layer for N+1 issues."
 /review "Review the newly implemented JWT Auth Service."
+/document "Synchronize the current authentication module with the technical specs."
 ```
 
 ## Directory Structure
