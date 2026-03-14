@@ -17,5 +17,5 @@ Mode: [MODE: PLAN]
 1. Conduct the Performance Audit.
 2. Identify bottlenecks.
 3. Follow Protocol Steps 1-4 to create a fix strategy.
-4. If the user approves, save the findings and the fix strategy to `engineer/templates/implementation_plan.md`.
+4. If the user approves, save the findings and the fix strategy to `IMPLEMENTATION_PLAN.md`.
 """

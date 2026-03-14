@@ -31,7 +31,7 @@
 ### Master-Flow Lifecycle (ref: `engineer/skills/protocol.md`)
 1. **Trigger:** User issues `/master-flow` command. (ref: `master-flow.toml`)
 2. **Validations:** Pre-Sync checks documentation vs code reality. (ref: `doc_maintainer.md`)
-3. **Planning:** Drafting of the `implementation_plan.md`. (ref: `protocol.md` Step 1: Architectural Intent)
+3. **Planning:** Drafting of the `IMPLEMENTATION_PLAN.md`. (ref: `protocol.md` Step 1: Architectural Intent)
 4. **Execution:** Implementation of changes and running tests. (ref: `protocol.md` Step 3: Execution)
 5. **Review:** Execution of `/review` logic to generate an audit report. (ref: `protocol.md` Step 4: Audit)
 

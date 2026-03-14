@@ -13,6 +13,9 @@ prompt = """
 # Template: Business Flow
 !{cat ~/.gemini/agents/engineer/templates/business_flow.md}
 
+# Template: Use Case
+!{cat ~/.gemini/agents/engineer/templates/use_case.md}
+
 # Template: Technical Specs
 !{cat ~/.gemini/agents/engineer/templates/technical_specs.md}
 
@@ -38,8 +41,9 @@ Initialize Documentation Maintainer Protocol.
 
 5. **Verification:** Apply Yellow/Black Hat analysis and 'Blind Spot' notes. Every technical claim MUST include an AST citation: `(ref: function_name)`.
 
-6. **Output:** Generate/Update the 4-file suite at the following locations:
-   - docs/BUSINESS_FLOW.md
+6. **Output:** Generate/Update the documentation suite at the following locations:
+   - docs/BUSINESS_FLOW.md (High-level summary with links)
+   - docs/use_cases/*.md (One file per non-trivial business use case)
    - docs/TECHNICAL_SPECS.md
    - docs/AI_Context.md
    - README.md (Update with links)

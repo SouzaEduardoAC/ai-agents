@@ -11,7 +11,7 @@ prompt = """
 Task: {{args}}
 Mode: [MODE: IMPLEMENT]
 
-1. Locate `engineer/templates/implementation_plan.md`.
+1. Locate `IMPLEMENTATION_PLAN.md`.
 2. Follow the 'IMPLEMENT' protocol steps 0 through 7.
 3. Ensure all code matches the project's AI Context.
 """

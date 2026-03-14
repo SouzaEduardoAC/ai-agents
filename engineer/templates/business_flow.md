@@ -5,20 +5,13 @@
 [One sentence: The core purpose of the codebase.]
 
 ## 2. Business Use Cases
+*List of automated business processes, each with its own detailed documentation and visual logic.*
 
-### 2.1 [Use Case Name, e.g., User Creation]
-- **Description:** [A fluid, non-technical description of the journey from trigger to resolution.]
-- **Primary Role:** [e.g., Administrator, Anonymous User, Customer]
-- **Success Criteria:** [What defines the completion of this business process?]
+* [**Use Case 1 Name**](./use_cases/use_case_1.md): [Short description]
+* [**Use Case 2 Name**](./use_cases/use_case_2.md): [Short description]
 
-### 2.2 Visual Logic (Mermaid)
-```mermaid
-graph TD
-    A[Role: User] --> B[Input Data]
-    B --> C{Validation}
-    C -- Valid --> D[Process Success]
-    C -- Invalid --> E[Process Rejection]
-```
+## 3. Global Business Rules
+*General rules that apply across multiple use cases.*
 
-## 3. Key Business Rules
-* **Rule 1**: [Business logic, e.g., "Only Managers can approve refunds over $500"]
+* **Rule 1**: [Business logic, e.g., "All transactions must be logged in the audit trail"]
+* **Rule 2**: (ref: LoggerService)

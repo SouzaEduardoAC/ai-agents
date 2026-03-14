@@ -7,6 +7,7 @@ Before any file modification, the agent **MUST** perform a diagnostic crawl to c
 1. **Inventory Check:** Verify existence of:
 * `README.md` (Root)
 * `docs/BUSINESS_FLOW.md`
+* `docs/use_cases/` (Directory for individual use cases)
 * `docs/TECHNICAL_SPECS.md`
 * `docs/AI_Context.md`
 
@@ -47,7 +48,7 @@ Before any file modification, the agent **MUST** perform a diagnostic crawl to c
 * **Procedure:**
 1. **Commit Analysis:** Identify the exact lines changed in the current `diff` or `feature branch`.
 2. **Targeted Update:**
-* Locate the specific `## Use Case` or `## Entry Point` in the existing Markdown.
+* Locate the specific `docs/use_cases/use_case_name.md` or `## Entry Point` in the existing Markdown.
 * Update **ONLY** the relevant sections.
 * If a new service was added, append it to the **Dependencies** section of the `AI_Context.md`.
 
@@ -71,6 +72,7 @@ Before any file modification, the agent **MUST** perform a diagnostic crawl to c
 ### C. Complexity Visualization (Mermaid)
 
 * **Mandatory Diagramming:** Any process involving **OAuth2**, **JWT Refresh**, **distributed transactions (Saga/2PC)**, or **recursive math** must have a Mermaid Sequence Diagram.
+* **Embedding:** Each diagram MUST be embedded directly within the corresponding `docs/use_cases/*.md` file, not in a global section.
 
 ---
 
@@ -90,9 +92,3 @@ Every technical deep-dive must conclude with this structured critique:
 2. **Negative Scope:** Ignore standard libraries, linter configs, and trivial boilerplate.
 3. **Role Mapping:** Identify the `Primary Role` by tracing decorators like `@authorized` or middleware checks.
 4. **Format Adherence:** Strictly use the Markdown templates provided in the `templates/` folder.
-
----
-
-### Next Step
-
-I can now generate the **v3.1 Templates** (Business Flow, Tech Specs, AI Context) as separate Markdown blocks for you to save in your `templates/` folder. Would you like me to do that now?
