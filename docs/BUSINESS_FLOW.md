@@ -10,6 +10,7 @@ A standardized framework for building and orchestrating specialized, autonomous 
 * [**Software Engineering Lifecycle**](./use_cases/software_engineering_lifecycle.md): Move from business requirements to validated, peer-reviewed implementations.
 * [**Regulatory & Compliance Audit**](./use_cases/regulatory_compliance_audit.md): Audit codebase and processes against GDPR, HIPAA, or SOC2 standards.
 * [**Research & Information Synthesis**](./use_cases/research_information_synthesis.md): Gather data and technical insights to generate comprehensive research reports.
+* [**Security Audit**](./use_cases/security_audit.md): Scan code, dependencies, and configuration for vulnerabilities and deliver a prioritized remediation roadmap.
 
 ## 3. Global Business Rules
 *General rules that apply across multiple use cases.*
