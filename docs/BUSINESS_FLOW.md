@@ -1,5 +1,5 @@
 # Business Flow: Agentic AI Framework
-**Status:** [GREENFIELD] | **Last AST Sync:** 2026-03-03
+**Status:** [SYNC] | **Last AST Sync:** 2026-03-18
 
 ## 1. Value Proposition
 A standardized framework for building and orchestrating specialized, autonomous AI Agents to solve complex engineering, research, and compliance tasks with high fidelity and human-in-the-loop safety.
@@ -18,3 +18,6 @@ A standardized framework for building and orchestrating specialized, autonomous 
 * **Rule 1: Human-in-the-Loop:** No implementation or commit occurs without explicit user approval of the plan or the final review.
 * **Rule 2: Zero Trust:** Unverified code is never merged. All changes must be backed by unit or integration tests.
 * **Rule 3: Conceptual Integrity:** All code changes must be reflected in the documentation immediately after implementation.
+* **Rule 4: Plan-First Persistence:** Implementation plans are written to `[FEATURE]_IMPLEMENTATION_PLAN.md` before approval is requested.
+* **Rule 5: Private Feed Safety:** Execution halts if private package registries are detected until the user provides the feed configuration.
+* **Rule 6: Plan Reconciliation:** After every commit, the plan file is updated with implemented and pending items.
