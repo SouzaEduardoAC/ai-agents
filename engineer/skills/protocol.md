@@ -1,10 +1,19 @@
 # Skill: Engineering Execution Protocol (v2026)
 
+## [MODE: DISCOVERY]
+0. **Grounding:** Read `AI Context` or `GEMINI.md`.
+1. **Deep Research:** Autonomously map data flows, dependencies, and side-effects across the codebase related to the request.
+2. **Interactive Clarification:** Identify any ambiguities in business logic, edge cases, or constraints. If any exist, **STOP** and ask the user targeted questions before proceeding.
+3. **Discovery Artifact:** Write findings and confirmed understanding to `[FEATURE]_DISCOVERY.md`.
+4. **Validation:** Inform the user the discovery artifact is ready and request approval of your understanding.
+   - **ACTION:** The discovery artifact is already persisted. Await explicit user approval before drafting the plan.
+   - **HALT:** End session. Do not write implementation plan.
+
 ## [MODE: PLAN]
 0. **Grounding:** Read `AI Context` or `GEMINI.md`.
-1. **Research:** Map codebase (`ls -R`).
-2. **Contextualize:** Trace relevant logic/dependencies.
-3. **Analyze:** Parse the task/bug/bottleneck.
+1. **Load Context:** Read `[FEATURE]_DISCOVERY.md` to align with the approved understanding.
+2. **Contextualize:** Trace specific logic/dependencies based on the discovery artifact.
+3. **Analyze:** Parse the task into discrete implementation steps.
 4. **Draft Plan:** Create a detailed Implementation Plan and **write it to `[FEATURE]_IMPLEMENTATION_PLAN.md`** immediately.
    - **Naming:** Derive `[FEATURE]` from the task target as a short UPPER_SNAKE_CASE slug (e.g., `AUTH_REFACTOR`, `PAYMENT_WEBHOOK`, `USER_PROFILE_API`).
 5. **Validation & Persistence:** Inform the user the plan is ready at `[FEATURE]_IMPLEMENTATION_PLAN.md` and request approval.
@@ -34,12 +43,14 @@
 
    ## [MODE: MASTER-FLOW]
    0. **Pre-Sync:** Execute `/document` logic (Phase 0) to verify current documentation vs. code reality.
-   1. **Architectural Intent:** Execute `/plan` logic. Write the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`.
-   2. **Gate 1 (Human Approval):** Inform the user the plan is ready at `[FEATURE]_IMPLEMENTATION_PLAN.md`. **STOP** and wait for explicit approval.
-   3. **Execution:** Upon approval, execute `/develop` logic. Implement changes and run tests.
-   4. **Audit:** Execute `/review` logic. Generate a structured report on the implementation's integrity.
-   5. **Gate 2 (Human Approval):** Present review report and diff.
-   - **On Rejection:** Revert to Step 3. Apply specific fixes and re-audit.
+   1. **Deep Dive:** Execute `/investigate` logic. Write findings to `[FEATURE]_DISCOVERY.md`.
+   2. **Gate 0 (Discovery Approval):** Inform the user the discovery artifact is ready at `[FEATURE]_DISCOVERY.md`. **STOP** and wait for explicit approval.
+   3. **Architectural Intent:** Execute `/plan` logic. Write the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`.
+   4. **Gate 1 (Human Approval):** Inform the user the plan is ready at `[FEATURE]_IMPLEMENTATION_PLAN.md`. **STOP** and wait for explicit approval.
+   5. **Execution:** Upon approval, execute `/develop` logic. Implement changes and run tests.
+   6. **Audit:** Execute `/review` logic. Generate a structured report on the implementation's integrity.
+   7. **Gate 2 (Human Approval):** Present review report and diff.
+   - **On Rejection:** Revert to Step 5. Apply specific fixes and re-audit.
    - **On Approval:** Proceed.
-   6. **Post-Sync:** Execute `/document` logic to reflect the final code state in the documentation.
-   7. **Closure:** Provide a project summary and a success message.
+   8. **Post-Sync:** Execute `/document` logic to reflect the final code state in the documentation.
+   9. **Closure:** Provide a project summary and a success message.

@@ -8,6 +8,7 @@
 | [TOML] | `/develop` | Software Execution | `Engineer` | Gemini CLI Context |
 | [TOML] | `/plan` | Architectural Planning | `Architect` | Gemini CLI Context |
 | [TOML] | `/master-flow` | End-to-End Execution | `Systems Architect` | Gemini CLI Context |
+| [TOML] | `/investigate` | Deep Dive Investigation | `Systems Architect` | Gemini CLI Context |
 | [TOML] | `/audit` | Regulatory Compliance | `Compliance Officer` | Gemini CLI Context |
 | [TOML] | `/research` | Research & Synthesis | `Researcher` | Gemini CLI Context |
 | [TOML] | `/security-audit` | Security Vulnerability Audit | `Security Auditor` | Gemini CLI Context |

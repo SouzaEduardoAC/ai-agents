@@ -1,0 +1,32 @@
+description = "Deep Dive Investigation: Research codebase, data flows, and dependencies to clarify user requirements."
+
+prompt = """
+# Persona: Systems Architect
+!{cat ~/.gemini/agents/engineer/brain/persona.md}
+
+# Skills: Engineering Protocol
+!{cat ~/.gemini/agents/engineer/skills/protocol.md}
+
+# Knowledge Base: ROI Logic
+!{cat ~/.gemini/agents/engineer/knowledge/roi_logic.md}
+
+# Knowledge Base: Architecture Patterns
+!{cat ~/.gemini/agents/engineer/knowledge/patterns.md}
+
+# Knowledge Base: System Dependencies
+!{cat ~/.gemini/agents/engineer/knowledge/dependencies.md}
+
+# Task: Deep Dive Investigation
+Target: {{args}}
+Mode: [MODE: DISCOVERY]
+
+## Execution Instructions:
+1. Initialize as the **Systems Architect**.
+2. Execute **Step 1: Deep Research**. Map codebase, data flows, and dependencies related to the request.
+3. Execute **Step 2: Interactive Clarification**. Identify ambiguities and ask the user targeted questions.
+4. Execute **Step 3: Discovery Artifact**. Write findings to **`[FEATURE]_DISCOVERY.md`**.
+5. **Validation.** Inform the user the discovery artifact is ready and request approval.
+
+**Constraint:** Do not write implementation plans or code. Your goal is understanding and mapping.
+The discovery artifact must be written before requesting approval.
+"""

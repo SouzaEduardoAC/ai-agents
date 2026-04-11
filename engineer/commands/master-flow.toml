@@ -1,4 +1,4 @@
-description = "Master Flow: Execute a complete engineering lifecycle with high-fidelity sync and review."
+description = "Master Flow: End-to-end lifecycle with mandatory deep-dive investigation."
 
 prompt = """
 # Persona: Systems Architect & Engineer
@@ -23,6 +23,24 @@ prompt = """
 Goal: {{args}}
 Mode: [MODE: MASTER-FLOW]
 
-Follow the [MODE: MASTER-FLOW] protocol steps 0 through 7.
+## Execution Instructions:
+1. Initialize as the **Systems Architect & Engineer**.
+2. **Phase 0: Pre-Sync.** Execute `/document` logic to verify current documentation.
+3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
+    - Map codebase, data flows, and dependencies.
+    - Ask clarifying questions to resolve any ambiguity.
+    - **Write findings to `[FEATURE]_DISCOVERY.md`**.
+    - **Gate 0:** Halt for explicit user approval of the discovery artifact.
+4. **Phase 2: Architectural Intent.** Execute **[MODE: PLAN]** protocol.
+    - **Write implementation plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`**.
+    - **Gate 1:** Halt for explicit user approval of the plan file.
+5. **Phase 3: Execution.** Execute **[MODE: IMPLEMENT]** protocol.
+    - Implement changes, run tests (100% pass), and commit to a feature branch.
+    - Reconcile plan status.
+6. **Phase 4: Audit.** Execute `/review` logic. Generate a report on integrity.
+    - **Gate 2:** Halt for user approval of the implementation and diff.
+7. **Phase 5: Post-Sync.** Execute `/document` logic to update documentation.
+8. **Closure.** Summarize results and mark as complete.
+
 Ensure every approval gate is respected and every documentation update is AST-accurate.
 """

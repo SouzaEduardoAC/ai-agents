@@ -4,13 +4,13 @@ A high-performance software engineering agent for Gemini CLI, capable of archite
 
 ## Overview
 
-The Engineering Agent is designed for rigorous, logic-driven development. It operates in distinct modes (PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every change is validated against project standards and ROI logic before execution.
+The Engineering Agent is designed for rigorous, logic-driven development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every change is validated against project standards and ROI logic before execution.
 
 ## Core Components
 
 - **Brain (`brain/persona.md`):** Defines the identity for the Systems Architect, Software Engineer, and Senior Reviewer.
 - **Skills:**
-    - `protocol.md`: Engineering Execution Protocol covering PLAN, IMPLEMENT, and MASTER-FLOW modes.
+    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and MASTER-FLOW modes.
     - `reviewer.md`: Specialized senior-level code review and audit logic.
     - `doc_maintainer.md`: High-fidelity documentation sync with AST-level precision.
     - `security_auditor.md`: 7-step security audit covering OWASP Top 10, dependencies, and compliance.
@@ -24,12 +24,13 @@ The Engineering Agent is designed for rigorous, logic-driven development. It ope
     - `bottlenecks.md`: 8-vector Performance Audit checklist.
     - `security_standards.md`: OWASP Top 10, severity levels, and compliance references.
 - **Commands:**
-    - `/plan`: Research and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md`.
+    - `/investigate`: Perform a deep-dive research into a request and generate a `[FEATURE]_DISCOVERY.md`.
+    - `/plan`: Research and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md` based on discovery.
     - `/develop`: Execute an approved implementation plan.
     - `/bottlenecks`: Perform a deep performance audit and plan fixes.
     - `/review`: Audit code for patterns, security, and standards.
     - `/document`: Sync codebase logic with high-precision documentation.
-    - `/master-flow`: Execute a complete, end-to-end engineering lifecycle with approval gates.
+    - `/master-flow`: Execute a complete, end-to-end engineering lifecycle with mandatory discovery and approval gates.
     - `/security-audit`: Perform a comprehensive security audit with a prioritized findings report.
 
 ## Installation
@@ -43,6 +44,7 @@ ln -s /path/to/ai-agents/engineer ~/.gemini/agents/engineer
 ### 2. Global Commands
 Register the engineering commands by symlinking them to your global commands directory:
 ```bash
+ln -s ~/.gemini/agents/engineer/commands/investigate.toml ~/.gemini/commands/investigate.toml
 ln -s ~/.gemini/agents/engineer/commands/plan.toml ~/.gemini/commands/plan.toml
 ln -s ~/.gemini/agents/engineer/commands/develop.toml ~/.gemini/commands/develop.toml
 ln -s ~/.gemini/agents/engineer/commands/bottlenecks.toml ~/.gemini/commands/bottlenecks.toml
@@ -54,16 +56,22 @@ ln -s ~/.gemini/agents/engineer/commands/security-audit.toml ~/.gemini/commands/
 
 ## Usage
 
-### Phase 1: Planning
-Start by generating an architectural plan for the task. The agent writes the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md` before requesting approval — the user reviews the file, not inline text:
+### Phase 0: Discovery (Deep Dive)
+Before planning, perform a deep dive into the request to map dependencies and clarify requirements. The agent writes to `[FEATURE]_DISCOVERY.md`:
 ```text
-/plan "Implement a new JWT-based authentication service using the existing user model."
+/investigate "Refactor the authentication module to support OAuth2 providers."
+```
+
+### Phase 1: Planning
+Start by generating an architectural plan for the task. The agent writes the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md` before requesting approval:
+```text
+/plan "OAuth2 Refactor"
 ```
 
 ### Phase 2: Implementation
 Once the plan file is approved, execute it. The agent will check for private feed dependencies before restoring packages and ask for the config file if needed:
 ```text
-/develop "JWT Auth Service"
+/develop "OAuth2 Refactor"
 ```
 After committing, the agent updates the plan file with what was implemented and what remains (`[DONE]` or `[PARTIAL]`).
 
@@ -71,13 +79,13 @@ After committing, the agent updates the plan file with what was implemented and 
 Audit for performance, conduct a code review, sync documentation, or run a security audit:
 ```text
 /bottlenecks "Analyze the current database query layer for N+1 issues."
-/review "Review the newly implemented JWT Auth Service."
+/review "Review the newly implemented OAuth2 Refactor."
 /document "Synchronize the current authentication module with the technical specs."
 /security-audit "Audit the authentication module for vulnerabilities."
 ```
 
-### Full Lifecycle
-Execute a complete task with pre-sync, planning, review, and post-sync:
+### Full Lifecycle (Master Flow)
+Execute a complete task with mandatory discovery, planning, implementation, and review gates:
 ```text
 /master-flow "Add a rate-limiter middleware to all API endpoints."
 ```
