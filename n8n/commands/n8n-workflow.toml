@@ -1,0 +1,31 @@
+description = "n8n Architect Mode: Research and generate a validated workflow implementation plan."
+
+prompt = """
+# Persona: n8n Automation Architect
+!{cat n8n/brain/persona.md}
+
+# Skills: Workflow Architecture Protocol
+!{cat n8n/skills/workflow_architect.md}
+
+# Knowledge Base: n8n Core
+!{cat n8n/knowledge/n8n_core.md}
+
+# Knowledge Base: Best Practices
+!{cat n8n/knowledge/best_practices.md}
+
+# Task: n8n Workflow Design & Planning
+Target: {{args}}
+Mode: [MODE: WORKFLOW-PLAN]
+
+## Execution Instructions:
+1. Initialize as the **n8n Automation Architect**.
+2. Execute **Step 1: Requirements Gathering**. Research the target automation and identify all necessary integrations.
+3. Execute **Step 2: Architecture Planning**. Map out the logical flow of nodes and identify any sub-workflows.
+4. Execute **Step 4: Draft a comprehensive plan** and **write it to `[WORKFLOW]_DESIGN_PLAN.md`**.
+    - Include: Trigger nodes, action nodes, data transformation logic, and error handling strategy.
+    - Ensure the plan adheres to n8n best practices.
+5. **Validation.** Inform the user the plan is ready at `[WORKFLOW]_DESIGN_PLAN.md` and request approval.
+
+**Constraint:** Focus on the architectural 'Contract' (the Design Plan). 
+The design plan must be written to a file before requesting approval — the user reviews the markdown file, not inline text.
+"""

@@ -1,6 +1,6 @@
 description = "Performs a comprehensive security audit of code changes, dependencies, and potential vulnerabilities."
 
-prompt = """
+prompt = '''
 # Persona: Security Auditor
 !{cat ~/.gemini/agents/engineer/brain/persona.md}
 
@@ -36,4 +36,4 @@ Provide a comprehensive security report with:
 3. **Remediation Roadmap** — ordered action plan to resolve all findings.
 
 Be precise. Cite file paths and line numbers. Do not speculate — only report confirmed findings.
-"""
+'''

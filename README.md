@@ -13,6 +13,7 @@ This repository defines a framework of autonomous AI Agents (Engineer, Complianc
 - **[Engineer](./engineer/)**: Specialized in software design, implementation, and review.
 - **[Compliance](./compliance/)**: Focused on regulatory audits (GDPR, HIPAA, SOC2, etc.).
 - **[Researcher](./researcher/)**: Information gathering and synthesis.
+- **[n8n Specialist](./n8n/)**: Architecting, implementing, and optimizing complex automation workflows.
 
 ## How It Works
 Agents are triggered via TOML-based commands in the Gemini CLI. They follow strict execution protocols with human-in-the-loop approval gates to ensure safety and correctness.

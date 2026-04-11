@@ -11,6 +11,7 @@ A standardized framework for building and orchestrating specialized, autonomous 
 * [**Regulatory & Compliance Audit**](./use_cases/regulatory_compliance_audit.md): Audit codebase and processes against GDPR, HIPAA, or SOC2 standards.
 * [**Research & Information Synthesis**](./use_cases/research_information_synthesis.md): Gather data and technical insights to generate comprehensive research reports.
 * [**Security Audit**](./use_cases/security_audit.md): Scan code, dependencies, and configuration for vulnerabilities and deliver a prioritized remediation roadmap.
+* [**n8n Workflow Automation**](./use_cases/n8n_workflow_automation.md): Architect, implement, and optimize complex automation workflows using n8n.
 
 ## 3. Global Business Rules
 *General rules that apply across multiple use cases.*
