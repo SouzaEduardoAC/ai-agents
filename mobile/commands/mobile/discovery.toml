@@ -35,7 +35,7 @@ Mode: [MODE: DISCOVERY] -> [MODE: PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **Mobile Architect**.
-2. **MCP Integration:** Check the 'Probes' section. If 'stitch', 'dart', or 'flutter' MCP servers are available, you MUST leverage their specialized tools for deep-crawling the codebase and mapping widget structures.
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7', 'stitch', 'dart', or 'flutter' MCP servers are available, you MUST leverage their specialized tools for deep-crawling the codebase and mapping widget structures.
 3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
     - Deep-crawl the codebase to map widget structures and data flows.
     - Identify mobile ambiguities and ask the user clarifying questions if needed.

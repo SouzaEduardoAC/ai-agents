@@ -31,7 +31,7 @@ Target: {{args}}
 
 Initialize Documentation Maintainer Protocol.
 
-1. **MCP Integration:** Check the 'Probes' section. If 'stitch' or 'dart/flutter' MCP servers are available, you MUST leverage them for AST-accurate documentation extraction.
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7', 'stitch', or 'dart/flutter' MCP servers are available, you MUST leverage them for AST-accurate documentation extraction.
 
 2. **State Detection (Phase 0):** Analyze the target mobile components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
 

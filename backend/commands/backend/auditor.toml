@@ -15,11 +15,16 @@ prompt = """
 !{cat ~/.gemini/agents/backend/knowledge/bottlenecks.md}
 !{cat ~/.gemini/agents/backend/knowledge/patterns.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 # Auditor Task
 Target: {{args}}
 
 ## Execution Instructions:
-1. **Route the Request:** Based on the input `{{args}}`, determine the audit type:
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for static analysis, security probing, or performance benchmarking.
+2. **Route the Request:** Based on the input `{{args}}`, determine the audit type:
     - **[SECURITY]:** If keywords like 'security', 'vulnerability', 'auth', or 'secret' are present.
     - **[PERFORMANCE]:** If keywords like 'perf', 'bottleneck', 'slow', or 'latency' are present.
     - **[GENERAL]:** Default if no specific type is requested.

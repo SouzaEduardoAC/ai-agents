@@ -8,7 +8,7 @@ This repository defines a framework of autonomous AI Agents (**Architect, Backen
 - **Specialized Engineering Suite:** Dedicated agents for systems architecture, server-side logic, web UI (React/Vue/Angular), and mobile (Flutter/Dart).
 - **Namespaced Command Structure:** Clear, standardized triggers (e.g., `/architect:create`, `/mobile:discovery`).
 - **High-End Architectural Knowledge:** Embedded expertise in SOLID, Clean Architecture, Resilience Patterns, and Web Vitals.
-- **MCP Integration:** Native support for the Model Context Protocol (Stitch, Dart/Flutter, DevTools, Playwright) to enhance codebase analysis and auditing.
+- **MCP Integration:** Native support for the Model Context Protocol (Stitch, Context7, Dart/Flutter, DevTools, Playwright) to enhance codebase analysis and auditing.
 - **Human-in-the-Loop Safety:** Strict execution protocols with mandatory approval gates for research, planning, and implementation.
 
 ## Quick Documentation Links

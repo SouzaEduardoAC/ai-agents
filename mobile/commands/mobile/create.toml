@@ -29,7 +29,7 @@ Mode: [MODE: MASTER-FLOW]
 
 ## Execution Instructions:
 1. Initialize as the **Mobile Architect & Specialist**.
-2. **MCP Integration:** Check the 'Probes' section above. If 'stitch', 'dart', or 'flutter' MCP servers are 'CONNECTED', you MUST prioritize using their specialized tools for codebase analysis, refactoring, and documentation sync.
+2. **MCP Integration:** Check the 'Probes' section above. If 'Context7', 'stitch', 'dart', or 'flutter' MCP servers are 'CONNECTED', you MUST prioritize using their specialized tools for codebase analysis, refactoring, and documentation sync.
 3. **Phase 0: Pre-Sync.** Execute `/mobile:docs` logic to verify current documentation.
 4. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
     - Map mobile structures, widget trees, and data flows.

@@ -35,7 +35,7 @@ Mode: [MODE: DISCOVERY] -> [MODE: PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **Frontend Architect**.
-2. **MCP Integration:** Check the 'Probes' section. If 'stitch', 'devtools', or 'playwright' MCP servers are available, you MUST leverage them for deep component inspection, DOM analysis, and automated research.
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for deep-crawling, data mapping, and technical research.
 3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
     - Deep-crawl the codebase to map component structures and data flows.
     - Identify UI ambiguities and ask the user clarifying questions if needed.

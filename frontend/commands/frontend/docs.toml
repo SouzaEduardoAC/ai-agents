@@ -29,11 +29,11 @@ prompt = """
 # Documentation Task
 Target: {{args}}
 
-Initialize Documentation Maintainer Protocol.
+## Execution Instructions:
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for documentation generation, consistency checking, or API reference mapping.
+2. Initialize Documentation Maintainer Protocol.
 
-1. **MCP Integration:** Check the 'Probes' section. If 'stitch' or 'devtools' MCP servers are available, you MUST leverage them for AST-accurate component extraction and UI state visualization.
-
-2. **State Detection (Phase 0):** Analyze the target UI components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
+3. **State Detection (Phase 0):** Analyze the target UI components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
 
 3. **AST-Driven Analysis:**
     - Map **User Journeys** to **UI Components**.

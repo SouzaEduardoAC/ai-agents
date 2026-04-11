@@ -29,11 +29,11 @@ prompt = """
 # Documentation Task
 Target: {{args}}
 
-Initialize Documentation Maintainer Protocol.
+## Execution Instructions:
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for documentation generation, consistency checking, or API reference mapping.
+2. Initialize Documentation Maintainer Protocol.
 
-1. **MCP Integration:** Check the 'Probes' section. If any MCP servers are available, leverage them for AST-accurate documentation extraction or system-wide mapping.
-
-2. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
+3. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
 
 3. **AST-Driven Analysis:**
     - Map **Business Use Cases** to **User Roles**.

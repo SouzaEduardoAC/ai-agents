@@ -22,12 +22,18 @@ prompt = """
 # Template: AI Context
 !{cat ~/.gemini/agents/backend/templates/ai_context.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 # Documentation Task
 Target: {{args}}
 
-Initialize Documentation Maintainer Protocol.
+## Execution Instructions:
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for documentation generation, consistency checking, or API reference mapping.
+2. Initialize Documentation Maintainer Protocol.
 
-1. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
+3. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
 
 2. **AST-Driven Analysis:**
     - Map **Business Use Cases** to **User Roles**.

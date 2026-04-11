@@ -29,7 +29,7 @@ Mode: [MODE: MASTER-FLOW]
 
 ## Execution Instructions:
 1. Initialize as the **Systems Architect**.
-2. **MCP Integration:** Check the 'Probes' section. If any MCP servers are 'CONNECTED', you MUST leverage their specialized tools whenever they are relevant to the task (e.g., codebase analysis, database querying, external API research).
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for scaffolding, boilerplate generation, or architectural implementation.
 3. **Phase 0: Pre-Sync.** Execute `/architect:docs` logic to verify current documentation.
 4. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
     - Map codebase, data flows, and dependencies.

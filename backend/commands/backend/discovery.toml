@@ -25,13 +25,18 @@ prompt = """
 # Knowledge Base: Authentication Standards
 !{cat ~/.gemini/agents/backend/knowledge/auth_standard.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 # Task: Investigative Planning
 Target: {{args}}
 Mode: [MODE: DISCOVERY] -> [MODE: PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **Systems Architect**.
-2. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for deep-crawling, data mapping, and technical research.
+3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
     - Deep-crawl the codebase to map data flows and dependencies.
     - Identify ambiguities and ask the user clarifying questions if needed.
     - **Write findings to `[FEATURE]_DISCOVERY.md`**.

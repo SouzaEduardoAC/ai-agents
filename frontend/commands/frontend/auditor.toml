@@ -22,7 +22,7 @@ prompt = """
 Target: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'stitch', 'devtools', or 'playwright' MCP servers are available, you MUST leverage them for real-time DOM auditing, Lighthouse metrics, and E2E security scanning.
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for static analysis, security probing, or performance benchmarking.
 2. **Route the Request:** Based on the input `{{args}}`, determine the audit type:
     - **[SECURITY]:** If keywords like 'security', 'xss', 'csrf', or 'auth' are present.
     - **[PERFORMANCE]:** If keywords like 'perf', 'lighthouse', 'vitals', or 'slow' are present.

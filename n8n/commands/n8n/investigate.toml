@@ -13,13 +13,18 @@ prompt = """
 # Knowledge Base: Best Practices
 !{cat n8n/knowledge/best_practices.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 # Task: n8n Discovery & Investigation
 Target: {{args}}
 Mode: [MODE: n8n-DISCOVERY]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. Execute **Step 0: Investigative Deep Dive (DISCOVERY)**.
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers are available, you MUST leverage their specialized tools for API research, authentication pattern mapping, or technical documentation extraction.
+3. Execute **Step 0: Investigative Deep Dive (DISCOVERY)**.
     - Deep-research target APIs, documentation, and authentication patterns.
     - Identify ambiguities and ask the user targeted questions to resolve them.
     - **Write findings to `[WORKFLOW]_DISCOVERY.md`**.

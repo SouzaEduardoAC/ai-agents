@@ -13,13 +13,18 @@ prompt = """
 # Knowledge Base: Best Practices
 !{cat n8n/knowledge/best_practices.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 # Task: n8n Workflow Design & Planning
 Target: {{args}}
 Mode: [MODE: n8n-DISCOVERY] -> [MODE: n8n-PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
+2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers are available, you MUST leverage their specialized tools for API research, data structure mapping, or technical documentation extraction.
+3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
     - Research target APIs, documentation, and authentication patterns.
     - Ask clarifying questions to resolve any ambiguity.
     - **Write findings to `[WORKFLOW]_DISCOVERY.md`**.

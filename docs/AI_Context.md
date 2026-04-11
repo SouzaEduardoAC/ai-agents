@@ -31,7 +31,7 @@
 ## 5. Critical Paths & Constraints
 - **Critical Path:** Command -> Persona -> Protocol -> Implementation.
 - **Constraint:** "Infrastructure (Gemini CLI) must be used to load all context; no manual file reads outside the protocol."
-- **MCP Usage:** If relevant Model Context Protocol (MCP) servers are available (e.g., Stitch, Playwright), agents MUST prioritize their tools for deep analysis and automation.
+- **MCP Usage:** If relevant Model Context Protocol (MCP) servers are available (e.g., Stitch, Context7, Playwright), agents MUST prioritize their tools for deep analysis and automation.
 
 ## 6. Documentation Standards
 - **Path:** All technical and business documentation resides in the root `/docs` folder.

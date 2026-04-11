@@ -15,7 +15,7 @@
 
 ## 2. Dependency Rules & Lifecycle
 - **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `[AGENT]/commands/[AGENT]/create.toml`)
-- **MCP Tool Calling:** Agents dynamically detect and leverage Model Context Protocol (MCP) servers (e.g., Stitch, Playwright, Dart) for specialized tasks. (ref: `/mcp list`)
+- **MCP Tool Calling:** Agents dynamically detect and leverage Model Context Protocol (MCP) servers (e.g., Stitch, Context7, Playwright, Dart) for specialized tasks. (ref: `/mcp list`)
 - **External Dependencies:** Gemini CLI as the runtime platform for executing shell commands and parsing Markdown/TOML.
 - **Inversion of Control:** Each agent encapsulates its own persona and skills (AMD). The Gemini CLI orchestrates the execution flow.
 

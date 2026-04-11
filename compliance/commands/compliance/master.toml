@@ -28,10 +28,16 @@ prompt = """
 # Audit Report Template
 !{cat ~/.gemini/agents/compliance/templates/master_audit.md}
 
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
 [MISSION: UNIFIED REGULATORY AUDIT 2026]
 Target: {{args}}
 
-Using the Privacy Auditor persona and the Unified Compliance Overlap logic, conduct a deep-reasoning audit. 
+## Execution Instructions:
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for comprehensive compliance assessment or master audit orchestration.
+2. Using the Privacy Auditor persona and the Unified Compliance Overlap logic, conduct a deep-reasoning audit. 
 
 CRITICAL INSTRUCTIONS:
 1. Identify if the January 2026 Brazil-EU Adequacy decision applies to the target.

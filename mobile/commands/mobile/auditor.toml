@@ -22,7 +22,7 @@ prompt = """
 Target: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'stitch', 'dart', or 'flutter' MCP servers are available, you MUST leverage their specialized tools for advanced static analysis and security scanning.
+1. **MCP Integration:** Check the 'Probes' section. If 'Context7', 'stitch', 'dart', or 'flutter' MCP servers are available, you MUST leverage their specialized tools for advanced static analysis and security scanning.
 2. **Route the Request:** Based on the input `{{args}}`, determine the audit type:
     - **[SECURITY]:** If keywords like 'security', 'storage', 'auth', or 'permission' are present.
     - **[PERFORMANCE]:** If keywords like 'perf', 'jank', 'frame', or 'slow' are present.
