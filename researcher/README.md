@@ -4,17 +4,20 @@ A high-fidelity information filter and strategic analyst agent for Gemini CLI. T
 
 ## Overview
 
-The Researcher agent operates with a clinical, objective, and intellectually honest persona (INTJ-A profile). It avoids analogies and conversational filler, prioritizing raw data and verified facts from primary sources.
+The Researcher agent operates with a clinical, objective, and intellectually honest persona (INTJ-A profile). It operates in distinct modes (DISCOVERY, FULL-RESEARCH) to ensure every investigation is properly scoped and grounded in high-quality sources.
 
 ## Core Components
 
 - **Brain (`brain/persona.md`):** Defines the "Strategic Researcher" identity, communication style, and operational logic.
 - **Skills (`skills/browsing.md`):** Implements a strict Research & Browsing Protocol, including:
+    - **Phase 0: DISCOVERY:** Autonomous source mapping and interactive scope clarification.
     - **Triangulation:** Cross-referencing at least three independent sources.
     - **Temporal Relevance:** Prioritizing data from the last 12-24 months (6 months for fast-moving sectors).
     - **Data Hierarchy:** Prioritizing primary documentation and official statistics.
-- **Templates (`templates/report.md`):** Standardized markdown format for research outputs, including executive summaries, verified knowledge bases, and critical analysis.
-- **Commands (`commands/research.toml`):** Defines the `/research` slash command.
+- **Templates (`templates/report.md`):** Standardized markdown format for research outputs.
+- **Commands:**
+    - `/research-investigate`: Deep-dive research into topics, sources, and scope to generate `[RESEARCH]_DISCOVERY.md`.
+    - `/research`: Execute a data-driven research task based on an approved discovery artifact.
 
 ## Installation
 
@@ -26,26 +29,25 @@ cp -r researcher/ ~/.gemini/agents/
 ```
 
 ### 2. Global Command
-Link the research command to your global commands directory:
+Link the research commands to your global commands directory:
 ```bash
+ln -s ~/.gemini/agents/researcher/commands/research-investigate.toml ~/.gemini/commands/research-investigate.toml
 ln -s ~/.gemini/agents/researcher/commands/research.toml ~/.gemini/commands/research.toml
 ```
 
 ## Usage
 
-Once installed, you can trigger the researcher from any Gemini CLI session:
-
+### Phase 0: Discovery (Deep Dive)
+Before full research, map the landscape and clarify requirements. The agent writes to `[RESEARCH]_DISCOVERY.md`:
 ```text
-/research [target subject]
+/research-investigate "the current state of the Rust-to-WebAssembly ecosystem"
 ```
 
-**Example:**
-`/research "the current state of the Rust-to-WebAssembly ecosystem"`
-
-The agent will then:
-1. Adopt the Strategic Researcher persona.
-2. Execute the Research & Browsing Protocol.
-3. Output a structured report based on the provided template.
+### Phase 1: Comprehensive Research
+Execute the full research task once the discovery artifact is approved:
+```text
+/research "Rust-to-WebAssembly"
+```
 
 ## Directory Structure
 

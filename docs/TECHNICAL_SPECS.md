@@ -11,6 +11,7 @@
 | [TOML] | `/investigate` | Deep Dive Investigation | `Systems Architect` | Gemini CLI Context |
 | [TOML] | `/audit` | Regulatory Compliance | `Compliance Officer` | Gemini CLI Context |
 | [TOML] | `/research` | Research & Synthesis | `Researcher` | Gemini CLI Context |
+| [TOML] | `/research-investigate` | Research Deep Dive | `Researcher` | Gemini CLI Context |
 | [TOML] | `/security-audit` | Security Vulnerability Audit | `Security Auditor` | Gemini CLI Context |
 | [TOML] | `/n8n-workflow` | n8n Workflow Design | `n8n Specialist` | Gemini CLI Context |
 | [TOML] | `/n8n-investigate` | n8n Deep Dive Investigation | `n8n Specialist` | Gemini CLI Context |
