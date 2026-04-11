@@ -5,21 +5,20 @@
 ## 1. Entry Points & Access Control
 | Type | Endpoint/Trigger | Description | Allowed Roles | Security/Auth |
 | :--- | :--- | :--- | :--- | :--- |
-| [TOML] | `/develop` | Software Execution | `Engineer` | Gemini CLI Context |
-| [TOML] | `/plan` | Architectural Planning | `Architect` | Gemini CLI Context |
-| [TOML] | `/master-flow` | End-to-End Execution | `Systems Architect` | Gemini CLI Context |
-| [TOML] | `/investigate` | Deep Dive Investigation | `Systems Architect` | Gemini CLI Context |
-| [TOML] | `/audit` | Regulatory Compliance | `Compliance Officer` | Gemini CLI Context |
-| [TOML] | `/research` | Research & Synthesis | `Researcher` | Gemini CLI Context |
-| [TOML] | `/research-investigate` | Research Deep Dive | `Researcher` | Gemini CLI Context |
-| [TOML] | `/security-audit` | Security Vulnerability Audit | `Security Auditor` | Gemini CLI Context |
-| [TOML] | `/n8n-workflow` | n8n Workflow Design | `n8n Specialist` | Gemini CLI Context |
-| [TOML] | `/n8n-investigate` | n8n Deep Dive Investigation | `n8n Specialist` | Gemini CLI Context |
+| [TOML] | `/architect:*` | Systems design, high-level planning, and cross-cutting reviews. | `Systems Architect` | Gemini CLI Context |
+| [TOML] | `/backend:*` | Server-side implementation, OO logic, and enterprise patterns. | `Systems Engineer` | Gemini CLI Context |
+| [TOML] | `/frontend:*` | Web UI development (Vue, Angular, React) and UX optimization. | `Frontend Specialist` | Gemini CLI Context |
+| [TOML] | `/mobile:*` | Cross-platform mobile development (Dart/Flutter) and smooth UI. | `Mobile Specialist` | Gemini CLI Context |
+| [TOML] | `/compliance:*` | Regulatory audits (GDPR, HIPAA, SOC2) and master audits. | `Compliance Officer` | Gemini CLI Context |
+| [TOML] | `/researcher:*` | Information gathering, synthesis, and deep research reports. | `Researcher` | Gemini CLI Context |
+| [TOML] | `/n8n:*` | n8n workflow architecture, implementation, and optimization. | `n8n Specialist` | Gemini CLI Context |
 
 ## 2. Dependency Rules & Lifecycle
-- **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `engineer/commands/develop.toml`)
+- **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `[AGENT]/commands/[AGENT]/create.toml`)
+- **MCP Tool Calling:** Agents dynamically detect and leverage Model Context Protocol (MCP) servers (e.g., Stitch, Playwright, Dart) for specialized tasks. (ref: `/mcp list`)
 - **External Dependencies:** Gemini CLI as the runtime platform for executing shell commands and parsing Markdown/TOML.
 - **Inversion of Control:** Each agent encapsulates its own persona and skills (AMD). The Gemini CLI orchestrates the execution flow.
+
 
 ## 3. Data & Persistence Standards
 ### Database: [N/A - File-Based Configuration]
@@ -29,29 +28,29 @@
 
 ## 4. Resilience & Reliability
 ### Retry Policies
-- **Entry Point Retries:** [MODE: MASTER-FLOW] includes a "Gate 1 (Human Approval)" and "Gate 2 (Human Approval)" (ref: `engineer/skills/protocol.md`).
+- **Entry Point Retries:** [MODE: MASTER-FLOW] includes a "Gate 1 (Human Approval)" and "Gate 2 (Human Approval)" (ref: `[AGENT]/skills/protocol.md`).
 - **External Call Retries:** N/A (Client-side responsibility).
 - **Audit Retries:** On rejection, the flow reverts to Step 3 of the Implementation phase (ref: `protocol.md` Step 5).
 - **Private Feed Guard:** If private/internal registries are detected in dependency manifests, execution halts and the user is prompted for the feed config file before the restore proceeds. (ref: `protocol.md` Step 5: Package Restore)
 
 ## 5. Logic Deep Dive (Sequential)
-### Master-Flow Lifecycle (ref: `engineer/skills/protocol.md`)
-1. **Trigger:** User issues `/master-flow` command. (ref: `master-flow.toml`)
+### Master-Flow Lifecycle (ref: `architect/skills/protocol.md`)
+1. **Trigger:** User issues `/architect:create` command. (ref: `architect/commands/architect/create.toml`)
 2. **Validations:** Pre-Sync checks documentation vs code reality. (ref: `doc_maintainer.md`)
 3. **Planning:** Agent writes the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md` and halts for user approval. (ref: `protocol.md` Step 4: [MODE: PLAN])
 4. **Package Restore:** Before running tests, agent scans for private feeds. Halts if detected until config file is provided. (ref: `protocol.md` Step 5: [MODE: IMPLEMENT])
 5. **Execution:** Implementation of changes, running tests, and committing to a feature branch. (ref: `protocol.md` Steps 4–8: [MODE: IMPLEMENT])
 6. **Plan Reconciliation:** After commit, agent updates the plan file with implemented items (+ commit ref) and pending items, stamped `[DONE]` or `[PARTIAL]`. (ref: `protocol.md` Step 9: [MODE: IMPLEMENT])
-7. **Review:** Execution of `/review` logic to generate an audit report. (ref: `protocol.md` Step 4: Audit)
+7. **Review:** Execution of `/architect:auditor` logic to generate an audit report. (ref: `protocol.md` Step 4: Audit)
 
 ### 5.1 Technical Flow Visualization
 ```mermaid
 sequenceDiagram
     participant U as User
     participant G as Gemini CLI
-    participant E as Engineer Agent
+    participant E as Architect Agent
 
-    U->>G: Issue Command /master-flow
+    U->>G: Issue Command /architect:create
     G->>E: Load Persona & Skills
     E->>E: Execute [MODE: PLAN]
     E->>E: Write [FEATURE]_IMPLEMENTATION_PLAN.md
@@ -67,7 +66,7 @@ sequenceDiagram
     E->>E: Run tests (100% pass required)
     E->>E: git commit to feature branch
     E->>E: Update [FEATURE]_IMPLEMENTATION_PLAN.md [DONE/PARTIAL]
-    G->>E: Execute /review logic
+    G->>E: Execute /architect:auditor logic
     E-->>U: Present review report
     U->>G: Approve Implementation
     G->>E: Sync & Document Final State

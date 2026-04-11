@@ -7,7 +7,7 @@ A standardized framework for building and orchestrating specialized, autonomous 
 ## 2. Business Use Cases
 *List of automated business processes, each with its own detailed documentation and visual logic.*
 
-* [**Software Engineering Lifecycle**](./use_cases/software_engineering_lifecycle.md): Move from business requirements to validated, peer-reviewed implementations through deep-dive research.
+* [**Specialized Engineering Lifecycle**](./use_cases/software_engineering_lifecycle.md): Move from business requirements to validated, peer-reviewed implementations across **Architectural, Backend, Frontend, and Mobile** domains.
 * [**Regulatory & Compliance Audit**](./use_cases/regulatory_compliance_audit.md): Audit codebase and processes against GDPR, HIPAA, or SOC2 standards.
 * [**Research & Information Synthesis**](./use_cases/research_information_synthesis.md): Gather data and technical insights to generate comprehensive research reports with approved scope.
 * [**Security Audit**](./use_cases/security_audit.md): Scan code, dependencies, and configuration for vulnerabilities and deliver a prioritized remediation roadmap.

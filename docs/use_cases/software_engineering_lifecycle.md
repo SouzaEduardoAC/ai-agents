@@ -1,17 +1,17 @@
-# Use Case: Software Engineering Lifecycle
+# Use Case: Specialized Engineering Lifecycle
 **Status:** [ACTIVE] | **Last AST Sync:** 2026-04-11
 
 ## 1. Description
-An autonomous workflow that moves from a business requirement to a validated, documented implementation through mandatory deep-dive research, planning, execution, and review.
+An autonomous workflow that moves from a business requirement to a validated, documented implementation through mandatory deep-dive research, planning, execution, and review. This lifecycle is specialized for **Systems Architecture, Backend logic, Frontend UI, and Mobile apps**.
 
 ## 2. Details
-- **Primary Role:** Software Engineer / Systems Architect
+- **Primary Roles:** Systems Architect, Backend Engineer, Frontend Specialist, Mobile Specialist.
 - **Success Criteria:** 100% test pass rate, updated documentation, mandatory discovery artifact, peer-reviewed plan, and plan reconciliation log.
 
 ## 3. Visual Logic (Mermaid)
 ```mermaid
 graph TD
-    A[Role: User] --> B[Trigger: Command /master-flow]
+    A[Role: User] --> B[Trigger: /architect:* | /backend:* | /frontend:* | /mobile:*]
     B --> C[Phase 0: Deep Dive Investigation]
     C --> C1[Write FEATURE_DISCOVERY.md]
     C1 --> C2{Gate 0: Human Approval of Discovery}

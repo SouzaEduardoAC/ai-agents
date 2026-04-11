@@ -1,0 +1,51 @@
+description = "Frontend Discovery: Deep-dive research and implementation planning for UI."
+
+prompt = """
+# Persona: Frontend Architect
+!{cat ~/.gemini/agents/frontend/brain/persona.md}
+
+# Skills: Engineering Protocol
+!{cat ~/.gemini/agents/frontend/skills/protocol.md}
+
+# Knowledge Base: Git Standards
+!{cat ~/.gemini/agents/frontend/knowledge/git_standard.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/frontend/knowledge/docs_standard.md}
+
+# Knowledge Base: ROI Logic
+!{cat ~/.gemini/agents/frontend/knowledge/roi_logic.md}
+
+# Knowledge Base: Frontend Patterns
+!{cat ~/.gemini/agents/frontend/knowledge/patterns.md}
+
+# Knowledge Base: Frontend Ecosystem
+!{cat ~/.gemini/agents/frontend/knowledge/dependencies.md}
+
+# Knowledge Base: Frontend Security
+!{cat ~/.gemini/agents/frontend/knowledge/security_standards.md}
+
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
+# Task: Investigative Planning
+Target: {{args}}
+Mode: [MODE: DISCOVERY] -> [MODE: PLAN]
+
+## Execution Instructions:
+1. Initialize as the **Frontend Architect**.
+2. **MCP Integration:** Check the 'Probes' section. If 'stitch', 'devtools', or 'playwright' MCP servers are available, you MUST leverage them for deep component inspection, DOM analysis, and automated research.
+3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
+    - Deep-crawl the codebase to map component structures and data flows.
+    - Identify UI ambiguities and ask the user clarifying questions if needed.
+    - **Write findings to `[FEATURE]_DISCOVERY.md`**.
+    - Halt and request approval of the discovery artifact.
+4. **Phase 2: Architectural Planning.** (Upon follow-up approval) Execute the **[MODE: PLAN]** protocol.
+    - Load the discovery artifact.
+    - Draft a comprehensive UI plan and **write it to `[FEATURE]_IMPLEMENTATION_PLAN.md`**.
+    - Halt and request approval of the plan.
+
+**Constraint:** Do not write implementation code. Your goal is the 'Contract' (Discovery -> Plan).
+Each artifact must be written to its respective file before requesting approval.
+"""

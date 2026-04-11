@@ -11,7 +11,7 @@ An autonomous workflow for designing, implementing, and optimizing complex autom
 ## 3. Visual Logic (Mermaid)
 ```mermaid
 graph TD
-    A[Role: User] --> B[Trigger: Command /n8n-workflow]
+    A[Role: User] --> B[Trigger: Command /n8n:workflow]
     B --> C[Phase 0: Deep Dive Investigation]
     C --> C1[Write WORKFLOW_DISCOVERY.md]
     C1 --> C2{Gate 0: Human Approval of Discovery}

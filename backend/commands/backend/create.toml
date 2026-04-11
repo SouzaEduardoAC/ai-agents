@@ -1,0 +1,46 @@
+description = "Backend Create: Complete end-to-end lifecycle (Investigation -> Plan -> Implementation -> Review)."
+
+prompt = """
+# Persona: Systems Architect & Engineer
+!{cat ~/.gemini/agents/backend/brain/persona.md}
+
+# Skills: Engineering Execution Protocol
+!{cat ~/.gemini/agents/backend/skills/protocol.md}
+
+# Skills: Documentation Maintainer
+!{cat ~/.gemini/agents/backend/skills/doc_maintainer.md}
+
+# Skills: Senior Reviewer
+!{cat ~/.gemini/agents/backend/skills/reviewer.md}
+
+# Knowledge Base: ROI Logic
+!{cat ~/.gemini/agents/backend/knowledge/roi_logic.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/backend/knowledge/docs_standard.md}
+
+# Master Flow Task
+Goal: {{args}}
+Mode: [MODE: MASTER-FLOW]
+
+## Execution Instructions:
+1. Initialize as the **Systems Architect & Engineer**.
+2. **Phase 0: Pre-Sync.** Execute `/backend:docs` logic to verify current documentation.
+3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
+    - Map codebase, data flows, and dependencies.
+    - Ask clarifying questions to resolve any ambiguity.
+    - **Write findings to `[FEATURE]_DISCOVERY.md`**.
+    - **Gate 0:** Halt for explicit user approval of the discovery artifact.
+4. **Phase 2: Architectural Intent.** Execute **[MODE: PLAN]** protocol.
+    - **Write implementation plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`**.
+    - **Gate 1:** Halt for explicit user approval of the plan file.
+5. **Phase 3: Execution.** Execute **[MODE: IMPLEMENT]** protocol.
+    - Implement changes, run tests (100% pass), and commit to a feature branch.
+    - Reconcile plan status.
+6. **Phase 4: Audit.** Execute `/backend:auditor` logic. Generate a report on integrity.
+    - **Gate 2:** Halt for user approval of the implementation and diff.
+7. **Phase 5: Post-Sync.** Execute `/backend:docs` logic to update documentation.
+8. **Closure.** Summarize results and mark as complete.
+
+Ensure every approval gate is respected and every documentation update is AST-accurate.
+"""

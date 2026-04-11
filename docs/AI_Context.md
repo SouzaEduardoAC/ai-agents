@@ -22,7 +22,7 @@
 
 ## 4. Conventions & Patterns
 - **Naming:** 
-    - Commands: `kebab-case.toml` (e.g., `master-flow.toml`).
+    - Commands: `[agent]:[action].toml` (e.g., `architect:create`). Filenames use the format `commands/[agent]/[action].toml`.
     - Skills/Persona: `snake_case.md` or `kebab-case.md` (e.g., `doc_maintainer.md`).
     - Folders: Pluralized lowercase (e.g., `skills/`, `commands/`).
 - **Logging:** Protocol steps (0-7) must be explicitly announced during execution.
@@ -31,6 +31,7 @@
 ## 5. Critical Paths & Constraints
 - **Critical Path:** Command -> Persona -> Protocol -> Implementation.
 - **Constraint:** "Infrastructure (Gemini CLI) must be used to load all context; no manual file reads outside the protocol."
+- **MCP Usage:** If relevant Model Context Protocol (MCP) servers are available (e.g., Stitch, Playwright), agents MUST prioritize their tools for deep analysis and automation.
 
 ## 6. Documentation Standards
 - **Path:** All technical and business documentation resides in the root `/docs` folder.

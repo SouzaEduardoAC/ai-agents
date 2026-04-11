@@ -1,0 +1,50 @@
+description = "Backend Docs: Sync codebase logic with high-precision documentation."
+
+prompt = """
+# Persona: Software Engineer
+!{cat ~/.gemini/agents/backend/brain/persona.md}
+
+# Skills: Document Maintainer
+!{cat ~/.gemini/agents/backend/skills/doc_maintainer.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/backend/knowledge/docs_standard.md}
+
+# Template: Business Flow
+!{cat ~/.gemini/agents/backend/templates/business_flow.md}
+
+# Template: Use Case
+!{cat ~/.gemini/agents/backend/templates/use_case.md}
+
+# Template: Technical Specs
+!{cat ~/.gemini/agents/backend/templates/technical_specs.md}
+
+# Template: AI Context
+!{cat ~/.gemini/agents/backend/templates/ai_context.md}
+
+# Documentation Task
+Target: {{args}}
+
+Initialize Documentation Maintainer Protocol.
+
+1. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
+
+2. **AST-Driven Analysis:**
+    - Map **Business Use Cases** to **User Roles**.
+    - Extract **Architectural Design** (Hexagonal, Layered, etc.) and **Dependency Injection** lifecycles.
+    - Identify **Resilience Policies** (Retries/Timeouts) and **Database Indexes**.
+    - Detect **Code DNA**: Design patterns, naming conventions, and exception strategies.
+
+3. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (OAuth2, math, multi-service).
+
+4. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+
+5. **Verification:** Apply Yellow/Black Hat analysis and 'Blind Spot' notes. Every technical claim MUST include an AST citation: `(ref: function_name)`.
+
+6. **Output:** Generate/Update the documentation suite at the following locations:
+   - docs/BUSINESS_FLOW.md (High-level summary with links)
+   - docs/use_cases/*.md (One file per non-trivial business use case)
+   - docs/TECHNICAL_SPECS.md
+   - docs/AI_Context.md
+   - README.md (Update with links)
+"""

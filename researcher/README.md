@@ -16,23 +16,21 @@ The Researcher agent operates with a clinical, objective, and intellectually hon
     - **Data Hierarchy:** Prioritizing primary documentation and official statistics.
 - **Templates (`templates/report.md`):** Standardized markdown format for research outputs.
 - **Commands:**
-    - `/research-investigate`: Deep-dive research into topics, sources, and scope to generate `[RESEARCH]_DISCOVERY.md`.
-    - `/research`: Execute a data-driven research task based on an approved discovery artifact.
+    - `/researcher:investigate`: Deep-dive research into topics, sources, and scope to generate `[RESEARCH]_DISCOVERY.md`.
+    - `/researcher:report`: Execute a data-driven research task based on an approved discovery artifact.
 
 ## Installation
 
 ### 1. Agent Files
-Place the `researcher/` directory in your global Gemini agents folder:
+Symlink the `researcher/` directory to your global Gemini agents folder:
 ```bash
-mkdir -p ~/.gemini/agents/
-cp -r researcher/ ~/.gemini/agents/
+ln -s /path/to/ai-agents/researcher ~/.gemini/agents/researcher
 ```
 
-### 2. Global Command
-Link the research commands to your global commands directory:
+### 2. Global Commands
+Register the researcher commands by symlinking the namespaced directory to your global commands:
 ```bash
-ln -s ~/.gemini/agents/researcher/commands/research-investigate.toml ~/.gemini/commands/research-investigate.toml
-ln -s ~/.gemini/agents/researcher/commands/research.toml ~/.gemini/commands/research.toml
+ln -s ~/.gemini/agents/researcher/commands/researcher ~/.gemini/commands/researcher
 ```
 
 ## Usage
@@ -40,13 +38,13 @@ ln -s ~/.gemini/agents/researcher/commands/research.toml ~/.gemini/commands/rese
 ### Phase 0: Discovery (Deep Dive)
 Before full research, map the landscape and clarify requirements. The agent writes to `[RESEARCH]_DISCOVERY.md`:
 ```text
-/research-investigate "the current state of the Rust-to-WebAssembly ecosystem"
+/researcher:investigate "the current state of the Rust-to-WebAssembly ecosystem"
 ```
 
 ### Phase 1: Comprehensive Research
 Execute the full research task once the discovery artifact is approved:
 ```text
-/research "Rust-to-WebAssembly"
+/researcher:report "Rust-to-WebAssembly"
 ```
 
 ## Directory Structure

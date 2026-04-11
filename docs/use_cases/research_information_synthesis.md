@@ -11,7 +11,7 @@ A high-fidelity investigative workflow designed to gather, filter, and synthesiz
 ## 3. Visual Logic (Mermaid)
 ```mermaid
 graph TD
-    A[Role: User] --> B[Trigger: Command /research]
+    A[Role: User] --> B[Trigger: Command /researcher:report]
     B --> C[Phase 0: Deep Dive Investigation]
     C --> C1[Write RESEARCH_DISCOVERY.md]
     C1 --> C2{Gate 0: Human Approval of Scope}

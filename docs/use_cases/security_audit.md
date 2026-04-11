@@ -11,7 +11,7 @@ An autonomous workflow that performs a comprehensive security audit of a target 
 ## 3. Visual Logic (Mermaid)
 ```mermaid
 graph TD
-    A[Role: Engineer] --> B[Trigger: Command /security-audit]
+    A[Role: Engineer] --> B[Trigger: Command /architect:auditor security]
     B --> C[Probe: Secret Scan + npm audit + git log]
     C --> D[Step 1: Code Vulnerability Scan]
     D --> E[Step 2: Dependency Security]

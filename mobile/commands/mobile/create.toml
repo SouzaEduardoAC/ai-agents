@@ -1,0 +1,51 @@
+description = "Mobile Create: Complete end-to-end mobile lifecycle (Investigation -> Plan -> Implementation -> Review)."
+
+prompt = """
+# Persona: Mobile Architect & Specialist (Dart/Flutter)
+!{cat ~/.gemini/agents/mobile/brain/persona.md}
+
+# Skills: Engineering Execution Protocol
+!{cat ~/.gemini/agents/mobile/skills/protocol.md}
+
+# Skills: Documentation Maintainer
+!{cat ~/.gemini/agents/mobile/skills/doc_maintainer.md}
+
+# Skills: Senior Reviewer
+!{cat ~/.gemini/agents/mobile/skills/reviewer.md}
+
+# Knowledge Base: ROI Logic
+!{cat ~/.gemini/agents/mobile/knowledge/roi_logic.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/mobile/knowledge/docs_standard.md}
+
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
+# Master Flow Task
+Goal: {{args}}
+Mode: [MODE: MASTER-FLOW]
+
+## Execution Instructions:
+1. Initialize as the **Mobile Architect & Specialist**.
+2. **MCP Integration:** Check the 'Probes' section above. If 'stitch', 'dart', or 'flutter' MCP servers are 'CONNECTED', you MUST prioritize using their specialized tools for codebase analysis, refactoring, and documentation sync.
+3. **Phase 0: Pre-Sync.** Execute `/mobile:docs` logic to verify current documentation.
+4. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: DISCOVERY]** protocol.
+    - Map mobile structures, widget trees, and data flows.
+    - Ask clarifying questions to resolve any mobile ambiguity.
+    - **Write findings to `[FEATURE]_DISCOVERY.md`**.
+    - **Gate 0:** Halt for explicit user approval of the discovery artifact.
+5. **Phase 2: Architectural Intent.** Execute **[MODE: PLAN]** protocol.
+    - **Write implementation plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`**.
+    - **Gate 1:** Halt for explicit user approval of the plan file.
+6. **Phase 3: Execution.** Execute **[MODE: IMPLEMENT]** protocol.
+    - Implement features, run tests (flutter_test/integration_test), and commit to a feature branch.
+    - Reconcile plan status.
+7. **Phase 4: Audit.** Execute `/mobile:auditor` logic. Generate a report on mobile integrity.
+    - **Gate 2:** Halt for user approval of the implementation and diff.
+8. **Phase 5: Post-Sync.** Execute `/mobile:docs` logic to update documentation.
+9. **Closure.** Summarize results and mark as complete.
+
+Ensure every approval gate is respected and every documentation update is AST-accurate.
+"""

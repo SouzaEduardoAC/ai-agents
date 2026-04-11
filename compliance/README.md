@@ -21,41 +21,37 @@ The Compliance Auditor operates with a "Zero Trust" posture regarding data handl
     - `audit_report.md`: Standardized format for privacy-focused audits.
     - **`master_audit.md`**: Advanced 2026 unified regulatory audit format.
 - **Commands:**
-    - `compliance.toml`: Standard privacy audit across GDPR, HIPAA, and LGPD.
-    - **`master-audit.toml`**: Deep-reasoning audit cross-referencing all 2026 privacy and internal controls.
+    - `/compliance:audit`: Standard privacy audit across GDPR, HIPAA, and LGPD.
+    - `/compliance:master`: Deep-reasoning audit cross-referencing all 2026 privacy and internal controls.
 
 ## Installation
 
 ### 1. Agent Files
-Place the `compliance/` directory in your global Gemini agents folder:
+Symlink the `compliance/` directory to your global Gemini agents folder:
 ```bash
-mkdir -p ~/.gemini/agents/
-cp -r compliance/ ~/.gemini/agents/
+ln -s /path/to/ai-agents/compliance ~/.gemini/agents/compliance
 ```
 
 ### 2. Global Commands
-Register the compliance commands to your global commands directory:
+Register the compliance commands by symlinking the namespaced directory to your global commands:
 ```bash
-cp compliance/commands/compliance.toml ~/.gemini/commands/compliance.toml
-cp compliance/commands/master-audit.toml ~/.gemini/commands/master-audit.toml
+ln -s ~/.gemini/agents/compliance/commands/compliance ~/.gemini/commands/compliance
 ```
 
 ## Usage
 
-Once installed, you can trigger the auditor from any Gemini CLI session:
-
 ### Standard Privacy Audit
 ```text
-/compliance [target system or data flow description]
+/compliance:audit [target system or data flow description]
 ```
 
 ### 2026 Unified Master Audit
 ```text
-/master-audit [target system or data flow description]
+/compliance:master [target system or data flow description]
 ```
 
 **Example:**
-`/master-audit "Our customer data is stored in AWS S3 (US-East) and includes emails from EU and Brazil users, integrated with internal financial controls."`
+`/compliance:master "Our customer data is stored in AWS S3 (US-East) and includes emails from EU and Brazil users, integrated with internal financial controls."`
 
 The agent will then:
 1. Adopt the Privacy Auditor persona.

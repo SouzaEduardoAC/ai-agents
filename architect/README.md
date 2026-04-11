@@ -1,0 +1,83 @@
+# Systems Architect Agent
+
+A high-performance systems architect agent for Gemini CLI, capable of architectural planning, feature implementation, performance auditing, security audits, and senior-level code review.
+
+## Overview
+
+The Architect Agent is designed for rigorous, design-driven development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every change is validated against architectural standards and ROI logic before execution.
+
+## Core Components
+
+- **Brain (`brain/persona.md`):** Defines the identity for the Systems Architect.
+- **Skills:**
+    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and MASTER-FLOW modes.
+    - `reviewer.md`: Specialized senior-level code review and audit logic.
+    - `doc_maintainer.md`: High-fidelity documentation sync with AST-level precision.
+    - `security_auditor.md`: 7-step security audit covering OWASP Top 10, dependencies, and compliance.
+- **Knowledge Base (`knowledge/`):**
+    - `git_standard.md`: Standards for commits and branching.
+    - `docs_standard.md`: Documentation and code comment requirements.
+    - `patterns.md`: Preferred architectural and design patterns.
+    - `roi_logic.md`: Decision-making framework for refactoring and new features.
+    - `dependencies.md`: System-wide dependency management.
+    - `auth_standard.md`: Security and authentication protocols.
+    - `bottlenecks.md`: 8-vector Performance Audit checklist.
+    - `security_standards.md`: OWASP Top 10, severity levels, and compliance references.
+- **Commands:**
+    - `/architect:create`: Execute a complete, end-to-end engineering lifecycle (Investigation -> Plan -> Implementation -> Review).
+    - `/architect:discovery`: Perform a deep-dive research into a request and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md`.
+    - `/architect:auditor`: Audit code for patterns, security, and performance.
+    - `/architect:docs`: Synchronize the current codebase logic with the technical documentation suite.
+
+## Installation
+
+### 1. Agent Files
+Symlink the `architect/` directory to your global Gemini agents folder:
+```bash
+ln -s /path/to/ai-agents/architect ~/.gemini/agents/architect
+```
+
+### 2. Global Commands
+Register the architect commands by symlinking the namespaced directory to your global commands:
+```bash
+ln -s ~/.gemini/agents/architect/commands/architect ~/.gemini/commands/architect
+```
+
+## Usage
+
+### 1. Full Lifecycle (The Architect)
+Execute a complete task with mandatory discovery, planning, implementation, and review gates:
+```text
+/architect:create "Add a rate-limiter middleware to all API endpoints."
+```
+
+### 2. Discovery & Planning (The Researcher)
+Start by generating an architectural plan for the task without implementing it. The agent writes findings to `[FEATURE]_DISCOVERY.md` and then `[FEATURE]_IMPLEMENTATION_PLAN.md`:
+```text
+/architect:discovery "Refactor the authentication module to support OAuth2 providers."
+```
+
+### 3. Auditing & Quality (The Auditor)
+Perform a general review, security audit, or performance check:
+```text
+/architect:auditor "Review the newly implemented OAuth2 Refactor."
+/architect:auditor security "Audit the authentication module for vulnerabilities."
+```
+
+### 4. Documentation (The Chronicler)
+Sync the codebase logic with the technical documentation:
+```text
+/architect:docs "Synchronize the current authentication module with the technical specs."
+```
+
+
+## Directory Structure
+
+```text
+architect/
+├── brain/          # Persona and identity definitions
+├── commands/       # Slash command configurations (.toml)
+├── knowledge/      # Technical standards and logic bases
+├── skills/         # Specialized engineering protocols
+└── templates/      # Plan and report templates
+```

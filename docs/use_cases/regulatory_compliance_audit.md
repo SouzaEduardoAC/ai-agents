@@ -11,7 +11,7 @@ A specialized process to audit codebase changes or business processes against sp
 ## 3. Visual Logic (Mermaid)
 ```mermaid
 graph TD
-    A[Role: Compliance Officer] --> B[Trigger: Command /compliance]
+    A[Role: Compliance Officer] --> B[Trigger: Command /compliance:audit]
     B --> C[Phase 1: Knowledge Retrieval]
     C --> D[Phase 2: Audit Execution]
     D --> E[Phase 3: Report Generation]

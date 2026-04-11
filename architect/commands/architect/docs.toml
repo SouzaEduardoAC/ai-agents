@@ -1,0 +1,56 @@
+description = "Architect Docs: Sync codebase logic with high-precision documentation."
+
+prompt = """
+# Persona: Systems Architect
+!{cat ~/.gemini/agents/architect/brain/persona.md}
+
+# Skills: Document Maintainer
+!{cat ~/.gemini/agents/architect/skills/doc_maintainer.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/architect/knowledge/docs_standard.md}
+
+# Template: Business Flow
+!{cat ~/.gemini/agents/architect/templates/business_flow.md}
+
+# Template: Use Case
+!{cat ~/.gemini/agents/architect/templates/use_case.md}
+
+# Template: Technical Specs
+!{cat ~/.gemini/agents/architect/templates/technical_specs.md}
+
+# Template: AI Context
+!{cat ~/.gemini/agents/architect/templates/ai_context.md}
+
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
+# Documentation Task
+Target: {{args}}
+
+Initialize Documentation Maintainer Protocol.
+
+1. **MCP Integration:** Check the 'Probes' section. If any MCP servers are available, leverage them for AST-accurate documentation extraction or system-wide mapping.
+
+2. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
+
+3. **AST-Driven Analysis:**
+    - Map **Business Use Cases** to **User Roles**.
+    - Extract **Architectural Design** (Hexagonal, Layered, etc.) and **Dependency Injection** lifecycles.
+    - Identify **Resilience Policies** (Retries/Timeouts) and **Database Indexes**.
+    - Detect **Code DNA**: Design patterns, naming conventions, and exception strategies.
+
+4. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (OAuth2, math, multi-service).
+
+5. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+
+6. **Verification:** Apply Yellow/Black Hat analysis and 'Blind Spot' notes. Every technical claim MUST include an AST citation: `(ref: function_name)`.
+
+7. **Output:** Generate/Update the documentation suite at the following locations:
+   - docs/BUSINESS_FLOW.md (High-level summary with links)
+   - docs/use_cases/*.md (One file per non-trivial business use case)
+   - docs/TECHNICAL_SPECS.md
+   - docs/AI_Context.md
+   - README.md (Update with links)
+"""

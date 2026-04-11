@@ -1,0 +1,56 @@
+description = "Frontend Docs: Sync UI logic with high-precision documentation."
+
+prompt = """
+# Persona: Frontend Specialist
+!{cat ~/.gemini/agents/frontend/brain/persona.md}
+
+# Skills: Document Maintainer
+!{cat ~/.gemini/agents/frontend/skills/doc_maintainer.md}
+
+# Knowledge Base: Documentation Standards
+!{cat ~/.gemini/agents/frontend/knowledge/docs_standard.md}
+
+# Template: Business Flow
+!{cat ~/.gemini/agents/frontend/templates/business_flow.md}
+
+# Template: Use Case
+!{cat ~/.gemini/agents/frontend/templates/use_case.md}
+
+# Template: Technical Specs
+!{cat ~/.gemini/agents/frontend/templates/technical_specs.md}
+
+# Template: AI Context
+!{cat ~/.gemini/agents/frontend/templates/ai_context.md}
+
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
+# Documentation Task
+Target: {{args}}
+
+Initialize Documentation Maintainer Protocol.
+
+1. **MCP Integration:** Check the 'Probes' section. If 'stitch' or 'devtools' MCP servers are available, you MUST leverage them for AST-accurate component extraction and UI state visualization.
+
+2. **State Detection (Phase 0):** Analyze the target UI components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
+
+3. **AST-Driven Analysis:**
+    - Map **User Journeys** to **UI Components**.
+    - Extract **Component Hierarchy** and **State Management Flow**.
+    - Identify **Rendering Strategy** (SSR, CSR, Hydration) and **Lazy Loading** patterns.
+    - Detect **UI DNA**: Styling conventions (Tailwind, SASS), naming, and A11y strategies.
+
+4. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (Auth flows, complex forms, state transitions).
+
+5. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+
+6. **Verification:** Apply UI/UX Yellow/Black Hat analysis. Every technical claim MUST include an AST citation: `(ref: ComponentName)`.
+
+7. **Output:** Generate/Update the documentation suite at the following locations:
+   - docs/BUSINESS_FLOW.md
+   - docs/use_cases/*.md
+   - docs/TECHNICAL_SPECS.md
+   - docs/AI_Context.md
+   - README.md
+"""
