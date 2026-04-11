@@ -1,4 +1,4 @@
-description = "n8n Architect Mode: Research and generate a validated workflow implementation plan."
+description = "n8n Architect Mode: Deep-dive research and workflow design planning."
 
 prompt = """
 # Persona: n8n Automation Architect
@@ -15,17 +15,21 @@ prompt = """
 
 # Task: n8n Workflow Design & Planning
 Target: {{args}}
-Mode: [MODE: WORKFLOW-PLAN]
+Mode: [MODE: n8n-DISCOVERY] -> [MODE: n8n-PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. Execute **Step 1: Requirements Gathering**. Research the target automation and identify all necessary integrations.
-3. Execute **Step 2: Architecture Planning**. Map out the logical flow of nodes and identify any sub-workflows.
-4. Execute **Step 4: Draft a comprehensive plan** and **write it to `[WORKFLOW]_DESIGN_PLAN.md`**.
-    - Include: Trigger nodes, action nodes, data transformation logic, and error handling strategy.
-    - Ensure the plan adheres to n8n best practices.
-5. **Validation.** Inform the user the plan is ready at `[WORKFLOW]_DESIGN_PLAN.md` and request approval.
+2. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
+    - Research target APIs, documentation, and authentication patterns.
+    - Ask clarifying questions to resolve any ambiguity.
+    - **Write findings to `[WORKFLOW]_DISCOVERY.md`**.
+    - Halt and request approval of the discovery artifact.
+3. **Phase 2: Architecture Design.** (Upon follow-up approval) Execute the **[MODE: n8n-PLAN]** protocol.
+    - Load the discovery artifact.
+    - Map out trigger and action nodes.
+    - **Write design plan to `[WORKFLOW]_DESIGN_PLAN.md`**.
+    - Halt and request approval of the plan.
 
-**Constraint:** Focus on the architectural 'Contract' (the Design Plan). 
-The design plan must be written to a file before requesting approval — the user reviews the markdown file, not inline text.
+**Constraint:** Focus on the architectural 'Contract' (Discovery -> Design Plan).
+Each artifact must be written to its respective file before requesting approval.
 """

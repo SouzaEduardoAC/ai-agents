@@ -13,6 +13,7 @@
 | [TOML] | `/research` | Research & Synthesis | `Researcher` | Gemini CLI Context |
 | [TOML] | `/security-audit` | Security Vulnerability Audit | `Security Auditor` | Gemini CLI Context |
 | [TOML] | `/n8n-workflow` | n8n Workflow Design | `n8n Specialist` | Gemini CLI Context |
+| [TOML] | `/n8n-investigate` | n8n Deep Dive Investigation | `n8n Specialist` | Gemini CLI Context |
 
 ## 2. Dependency Rules & Lifecycle
 - **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `engineer/commands/develop.toml`)
