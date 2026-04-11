@@ -15,8 +15,8 @@ The n8n Specialist Agent is designed to architect, implement, and optimize compl
     - `n8n_core.md`: Reference to n8n core concepts and the official GitHub repository.
     - `best_practices.md`: Industry standards for n8n workflow design and error handling.
 - **Commands:**
-    - `/n8n:investigate`: Deep-dive research into APIs, auth, and data structures to generate `[WORKFLOW]_DISCOVERY.md`.
-    - `/n8n:workflow`: Research and generate a validated `[WORKFLOW]_DESIGN_PLAN.md` based on discovery.
+    - `/n8n:brainstorm`: Deep-dive research into APIs, auth, and data structures to generate `[WORKFLOW]_DISCOVERY.md`.
+    - `/n8n:plan`: Research and generate a validated `[WORKFLOW]_DESIGN_PLAN.md` based on discovery.
 
 ## Installation
 
@@ -32,19 +32,34 @@ Register the n8n commands by symlinking the namespaced directory to your global 
 ln -s ~/.gemini/agents/n8n/commands/n8n ~/.gemini/commands/n8n
 ```
 
-## Usage
+## Usage (The n8n Lifecycle)
 
-### Phase 0: Discovery (Deep Dive)
-Before planning, perform a deep dive into the integration requirements. The agent writes to `[WORKFLOW]_DISCOVERY.md`:
+The agent operates in three distinct phases to ensure reliability and architectural integrity:
+
+### Step 1: `/n8n:brainstorm` (Deep Brainstorm & Discovery)
+Before any building, the agent validates your request, researches APIs, identifies edge cases, and checks for "garbage" inputs.
+- **Goal:** Validate feasibility and research technical requirements.
+- **Output:** `[WORKFLOW]_DISCOVERY.md`
 ```text
-/n8n:investigate "Sync HubSpot CRM contacts with a Google Sheets spreadsheet."
+/n8n:brainstorm "Sync HubSpot CRM contacts with a Google Sheets spreadsheet."
 ```
 
-### Phase 1: Planning
-Start by generating an architectural design plan. The agent writes the plan to `[WORKFLOW]_DESIGN_PLAN.md` before requesting approval:
+### Step 2: `/n8n:plan` (Architecture Planning)
+The agent takes the discovery report and builds a technical blueprint, mapping exactly which nodes and logic are needed.
+- **Goal:** Create a detailed design plan.
+- **Output:** `[WORKFLOW]_DESIGN_PLAN.md`
 ```text
-/n8n:workflow "HubSpot Sync"
+/n8n:plan "HubSpot Sync"
 ```
+
+### Step 3: `/n8n:create` (Implementation & JSON)
+The agent transforms the approved design plan into the actual n8n workflow JSON structure.
+- **Goal:** Generate a ready-to-import JSON workflow.
+- **Output:** `[WORKFLOW]_IMPLEMENTATION.json`
+```text
+/n8n:create "HubSpot Sync"
+```
+*Note: You can then import this JSON directly into your n8n platform.*
 
 ## Directory Structure
 

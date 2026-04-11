@@ -23,18 +23,18 @@ Mode: [MODE: n8n-DISCOVERY] -> [MODE: n8n-PLAN]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers are available, you MUST leverage their specialized tools for API research, data structure mapping, or technical documentation extraction.
-3. **Phase 1: Deep Dive Investigation.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
-    - Research target APIs, documentation, and authentication patterns.
-    - Ask clarifying questions to resolve any ambiguity.
-    - **Write findings to `[WORKFLOW]_DISCOVERY.md`**.
-    - Halt and request approval of the discovery artifact.
+2. **Phase 1: Deep Brainstorm & Discovery.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
+    - **Initial Validation:** Analyze the target '{{args}}' for clarity. If the request is incomplete or vague ("garbage"), **STOP IMMEDIATELY** and ask the user for specific requirements.
+    - **Brainstorming:** Identify edge cases, failure points, and data integrity concerns.
+    - **Research:** Use available tools (MCP/Search) to map APIs and documentation.
+    - **Write Discovery Artifact:** Write all findings to **`[WORKFLOW]_DISCOVERY.md`** using the `n8n/templates/discovery.md` structure.
+    - **Halt:** Request approval of the discovery artifact.
 3. **Phase 2: Architecture Design.** (Upon follow-up approval) Execute the **[MODE: n8n-PLAN]** protocol.
     - Load the discovery artifact.
-    - Map out trigger and action nodes.
+    - Map out the full architecture.
     - **Write design plan to `[WORKFLOW]_DESIGN_PLAN.md`**.
     - Halt and request approval of the plan.
 
-**Constraint:** Focus on the architectural 'Contract' (Discovery -> Design Plan).
+**Constraint:** Focus on validating the logic and feasibility before any design plan.
 Each artifact must be written to its respective file before requesting approval.
 """

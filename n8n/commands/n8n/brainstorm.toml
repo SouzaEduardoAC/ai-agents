@@ -1,0 +1,35 @@
+description = "n8n Deep Dive Investigation: Research APIs, authentication, and data structures to clarify workflow requirements."
+
+prompt = """
+# Persona: n8n Automation Architect
+!{cat n8n/brain/persona.md}
+
+# Skills: Workflow Architecture Protocol
+!{cat n8n/skills/workflow_architect.md}
+
+# Knowledge Base: n8n Core
+!{cat n8n/knowledge/n8n_core.md}
+
+# Knowledge Base: Best Practices
+!{cat n8n/knowledge/best_practices.md}
+
+# Probes
+## MCP Server Availability
+!{gemini mcp list}
+
+# Task: n8n Deep Brainstorm & Discovery
+Target: {{args}}
+Mode: [MODE: n8n-DISCOVERY]
+
+## Execution Instructions:
+1. Initialize as the **n8n Automation Architect**.
+2. **Step 0: Deep Brainstorm & Discovery.**
+    - **Initial Validation:** Analyze the target '{{args}}' for clarity. If the request is incomplete or vague ("garbage"), **STOP IMMEDIATELY** and ask the user for specific requirements.
+    - **Brainstorming:** Identify edge cases, failure points, and data integrity concerns.
+    - **MCP Research:** If 'Context7' or other relevant MCP servers are available, you MUST leverage their specialized tools for API research and documentation extraction based on your brainstormed requirements.
+    - **Write Discovery Artifact:** Write all findings to **`[WORKFLOW]_DISCOVERY.md`** following the structure in `n8n/templates/discovery.md`.
+    - **Halt:** Request approval of the discovery artifact. Do not proceed to planning until approved.
+
+**Constraint:** Your primary goal is to validate the feasibility and logic of the request before any technical planning.
+The discovery artifact must be written before requesting approval.
+"""

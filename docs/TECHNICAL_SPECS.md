@@ -11,7 +11,9 @@
 | [TOML] | `/mobile:*` | Cross-platform mobile development (Dart/Flutter) and smooth UI. | `Mobile Specialist` | Gemini CLI Context |
 | [TOML] | `/compliance:*` | Regulatory audits (GDPR, HIPAA, SOC2) and master audits. | `Compliance Officer` | Gemini CLI Context |
 | [TOML] | `/researcher:*` | Information gathering, synthesis, and deep research reports. | `Researcher` | Gemini CLI Context |
-| [TOML] | `/n8n:*` | n8n workflow architecture, implementation, and optimization. | `n8n Specialist` | Gemini CLI Context |
+| [TOML] | `/n8n:brainstorm` | n8n deep-brainstorming, API research, and request validation. | `n8n Specialist` | Gemini CLI Context |
+| [TOML] | `/n8n:plan` | n8n workflow architecture design and planning. | `n8n Specialist` | Gemini CLI Context |
+| [TOML] | `/n8n:create` | n8n workflow implementation and JSON generation. | `n8n Specialist` | Gemini CLI Context |
 
 ## 2. Dependency Rules & Lifecycle
 - **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `[AGENT]/commands/[AGENT]/create.toml`)
