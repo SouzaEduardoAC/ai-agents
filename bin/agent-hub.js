@@ -13,7 +13,7 @@ const program = new Command();
 program
   .name("agent-hub")
   .description("Universal bridge for AI Agents")
-  .version("1.0.0");
+  .version("1.1.0");
 
 program
   .command("serve")
@@ -37,15 +37,10 @@ program
       console.error(`Error: Agent '${agent}' not found.`);
       process.exit(1);
     }
-
     const absoluteTarget = path.resolve(process.cwd(), target);
     await fs.ensureDir(path.dirname(absoluteTarget));
-    
-    // We'll create a symlink
     try {
-      if (await fs.pathExists(absoluteTarget)) {
-        await fs.remove(absoluteTarget);
-      }
+      if (await fs.pathExists(absoluteTarget)) await fs.remove(absoluteTarget);
       await fs.symlink(personaPath, absoluteTarget);
       console.log(`Success: Linked ${agent} persona to ${target}`);
     } catch (err) {
@@ -55,49 +50,55 @@ program
   });
 
 program
-  .command("list")
-  .description("List available agents")
-  .action(async () => {
-    const dirs = await fs.readdir(ROOT, { withFileTypes: true });
-    const agents = dirs
-      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules" && d.name !== "bin")
-      .map((d) => d.name);
-    console.log("Available Agents:");
-    agents.forEach(a => console.log(` - ${a}`));
-  });
-
-program
   .command("bootstrap")
-  .description("Automatically install all Gemini slash commands locally")
+  .description("Install all agent personas and slash commands into local LLM environments")
   .action(async () => {
     const GEMINI_COMMANDS_ROOT = path.join(process.env.HOME, ".gemini", "commands");
+    const ANTIGRAVITY_BRAIN_ROOT = path.join(process.env.HOME, ".gemini", "antigravity", "brain");
+
     await fs.ensureDir(GEMINI_COMMANDS_ROOT);
+    await fs.ensureDir(ANTIGRAVITY_BRAIN_ROOT);
 
     const agents = (await fs.readdir(ROOT, { withFileTypes: true }))
-      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules" && d.name !== "bin")
+      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && !["node_modules", "bin", "docs"].includes(d.name))
       .map((d) => d.name);
 
-    console.log("🚀 Bootstrapping Gemini Slash Commands...");
+    console.log("\n🚀 Bootstrapping Universal Agent Hub...");
 
     for (const agent of agents) {
+      console.log(`\n📦 Processing Agent: [${agent.toUpperCase()}]`);
+
+      // 1. Install Gemini Slash Commands
       const cmdSource = path.join(ROOT, agent, "commands", agent);
       if (await fs.pathExists(cmdSource)) {
         const cmdTarget = path.join(GEMINI_COMMANDS_ROOT, agent);
         await fs.ensureDir(cmdTarget);
-        
         const tomlFiles = await fs.readdir(cmdSource);
         for (const file of tomlFiles) {
           if (file.endsWith(".toml")) {
             const content = await fs.readFile(path.join(cmdSource, file), "utf-8");
-            // Important: Replace relative paths with absolute paths from the Hub's ROOT
             const updatedContent = content.replace(/~\/\.gemini\/agents/g, ROOT).replace(/\.\.\/\.\.\/\.\./g, ROOT);
             await fs.writeFile(path.join(cmdTarget, file), updatedContent);
-            console.log(` - Installed /${agent}:${path.basename(file, ".toml")}`);
+            console.log(`   ✅ [Gemini] Installed /${agent}:${path.basename(file, ".toml")}`);
           }
         }
       }
+
+      // 2. Install AntiGravity Personas
+      const personaSource = path.join(ROOT, agent, "brain", "persona.md");
+      if (await fs.pathExists(personaSource)) {
+        const personaTarget = path.join(ANTIGRAVITY_BRAIN_ROOT, `${agent}.md`);
+        await fs.copy(personaSource, personaTarget);
+        console.log(`   ✅ [AntiGravity] Installed persona: ${agent}.md`);
+      }
     }
-    console.log("\n✅ Done! Restart your terminal or Gemini CLI to see the new commands.");
+
+    console.log("\n✨ Bootstrap Complete!");
+    console.log("--------------------------------------------------");
+    console.log("1. Gemini CLI: Restart terminal to use slash commands.");
+    console.log("2. AntiGravity: Personas are now in your Manager View.");
+    console.log("3. Claude Code: Use 'call_agent_command' via the MCP server.");
+    console.log("--------------------------------------------------");
   });
 
 program.parse();
