@@ -1,0 +1,21 @@
+description = "Master Orchestrator: Unified command to run the full pipeline via the Agent Hub MCP."
+
+prompt = """
+# Task: Orchestrate High-Level Project
+Goal: {{args}}
+Mode: [MODE: MASTER-ORCHESTRATOR]
+
+# Context Preparation
+1. Check the availability of the `agent-hub` MCP server.
+2. Call `agent_hub:get_agent_prompt(agent="master")` to initialize your project manager persona.
+3. Follow the **Pipeline Protocol** defined in the master persona:
+    - Call the Brainstormer to discover and draft the PRD.
+    - Call the Architect to analyze the PRD and plan the implementation.
+    - Call the appropriate Developer agent for the tech stack to write the code.
+
+## Probes
+!{gemini mcp list}
+
+## Execution
+Begin the Brainstorming Phase now for the goal: {{args}}
+"""
