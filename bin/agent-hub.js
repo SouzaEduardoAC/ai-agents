@@ -66,4 +66,38 @@ program
     agents.forEach(a => console.log(` - ${a}`));
   });
 
+program
+  .command("bootstrap")
+  .description("Automatically install all Gemini slash commands locally")
+  .action(async () => {
+    const GEMINI_COMMANDS_ROOT = path.join(process.env.HOME, ".gemini", "commands");
+    await fs.ensureDir(GEMINI_COMMANDS_ROOT);
+
+    const agents = (await fs.readdir(ROOT, { withFileTypes: true }))
+      .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules" && d.name !== "bin")
+      .map((d) => d.name);
+
+    console.log("🚀 Bootstrapping Gemini Slash Commands...");
+
+    for (const agent of agents) {
+      const cmdSource = path.join(ROOT, agent, "commands", agent);
+      if (await fs.pathExists(cmdSource)) {
+        const cmdTarget = path.join(GEMINI_COMMANDS_ROOT, agent);
+        await fs.ensureDir(cmdTarget);
+        
+        const tomlFiles = await fs.readdir(cmdSource);
+        for (const file of tomlFiles) {
+          if (file.endsWith(".toml")) {
+            const content = await fs.readFile(path.join(cmdSource, file), "utf-8");
+            // Important: Replace relative paths with absolute paths from the Hub's ROOT
+            const updatedContent = content.replace(/~\/\.gemini\/agents/g, ROOT).replace(/\.\.\/\.\.\/\.\./g, ROOT);
+            await fs.writeFile(path.join(cmdTarget, file), updatedContent);
+            console.log(` - Installed /${agent}:${path.basename(file, ".toml")}`);
+          }
+        }
+      }
+    }
+    console.log("\n✅ Done! Restart your terminal or Gemini CLI to see the new commands.");
+  });
+
 program.parse();
