@@ -35,6 +35,23 @@ For IDE-specific instructions (like `.cursorrules` or `.github/copilot-instructi
 npx github:SouzaEduardoAC/ai-agents link [agent-name] [target-file]
 ```
 
+### 🔄 Updating (Pulling Changes)
+Whenever you push new agent logic, standards, or commands to your GitHub repository, update your other machines as follows:
+
+**1. Update Slash Commands & Personas:**
+Run the bootstrap command again to overwrite local Gemini/AntiGravity files:
+```bash
+npx github:SouzaEduardoAC/ai-agents bootstrap
+```
+
+**2. Update MCP Server (Claude/Gemini):**
+`npx` caches code aggressively. To force an update of the Hub server logic:
+```bash
+# Force npx to fetch the latest version from GitHub
+npx --prefer-online github:SouzaEduardoAC/ai-agents serve
+```
+*Note: If the AI still uses old logic, run `npm cache clean --force` on the machine.*
+
 ---
 
 ## The Handoff Pipeline
