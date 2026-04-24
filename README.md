@@ -1,68 +1,74 @@
 # Agentic AI Framework (Universal Agent Hub)
-**Standardized orchestration for specialized AI Agents.**
+**Standardized orchestration for specialized AI Agents across Gemini, Claude, AntiGravity, and Codex.**
 
 ## Overview
-This repository defines a framework of autonomous AI Agents designed to collaborate on complex tasks using a standardized, protocol-driven pipeline. It functions as a **Universal Agent Hub**, serving specialized personas to **Gemini CLI, Claude Code, AntiGravity, and Codex**.
+This repository is a **Universal Agent Hub**. It centralizes personas, technical knowledge, and engineering protocols, serving them dynamically to your preferred AI assistant.
 
-## The Handoff Pipeline
-We follow a strict "Sequential Persona Handoff" to ensure maximum clarity and zero context dilution:
+## Supported Environments
+| LLM / Tool | Access Method | Bootstrap Effect |
+| :--- | :--- | :--- |
+| **Gemini CLI** | Slash Commands (`/master`, `/architect`) | Installs ALL `.toml` commands locally. |
+| **Claude Code** | MCP Tools (`call_agent_command`) | Provides dynamic prompt resolution via MCP. |
+| **AntiGravity** | Manager View Personas | Installs `.md` personas into the AG Brain. |
+| **Codex / IDE** | Symlinks (`.cursorrules`, `.github/`) | Links local config to central persona files. |
 
-1.  **[Master Orchestrator](./master/) (Project Manager):** The entry point for all major tasks. Orchestrates the handoffs between sub-agents.
-2.  **[Brainstormer](./brainstormer/) (Product Owner):** Transforms vague ideas into a validated **PRD (Product Requirements Document)**.
-3.  **[Architect](./architect/) (Systems Lead):** Consumes the PRD and performs technical analysis to generate an **Implementation Plan**.
-4.  **Specific Developer:** (Backend, Frontend, or Mobile) executes the plan based on the detected tech stack.
+---
 
-## Universal Access (agent-hub)
-The framework is exposed via the `agent-hub` tool. You can run it using a local path or directly from GitHub.
+## Installation & Setup
 
-### 1. Claude Code & AntiGravity (MCP)
-Register the agents as a Model Context Protocol server.
-
-**Option A: Local Path (Recommended for Development)**
+### 1. The Hub Server (MCP)
+Required for **Claude Code** and **Gemini CLI** to access the full power of the agents.
 ```bash
-claude mcp add agent-hub -- npx /path/to/ai-agents serve
+# In Claude Code or Gemini CLI
+mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
-**Option B: Direct from GitHub (Recommended for Work Machines)**
+### 2. The Universal Bootstrap (One-Time Setup)
+Run this command on any new machine to install Gemini commands and AntiGravity personas automatically.
 ```bash
-claude mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
-```
-
-### 2. Codex / Cursor / Copilot (Linker)
-Inject a persona into a local project configuration:
-```bash
-# Using GitHub version
-npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
-```
-
-### 3. Gemini CLI (MCP + Slash Commands)
-Register the hub as an MCP server and run the bootstrap to install the slash commands:
-
-```bash
-# Register the MCP tools
-gemini mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
-
-# One-time setup to install the /master and /architect commands
 npx github:SouzaEduardoAC/ai-agents bootstrap
 ```
 
-Then use the namespaced slash commands directly:
+---
+
+## The Handoff Pipeline
+We follow a "Sequential Persona Handoff" to ensure zero context dilution:
+
+1.  **[Master Orchestrator](./master/) (Project Manager):** The entry point. Orchestrates the full lifecycle.
+2.  **[Brainstormer](./brainstormer/) (Product Owner):** Transforms ideas into a validated **PRD**.
+3.  **[Architect](./architect/) (Systems Lead):** Transforms PRD into an **Implementation Plan**.
+4.  **Specialized Developer:** (Backend, Frontend, or Mobile) executes the code.
+
+---
+
+## Usage Examples
+
+### Gemini CLI
 ```text
-/master "Build a new feature for X"
+/master "Implement OAuth2 login for our Express API"
+/architect:auditor security "Audit the auth module"
 ```
 
-## Core Agents
-- **[Master](./master/)**: **Chief Orchestrator.** Manages the full PRD -> Plan -> Code lifecycle.
-- **[Brainstormer](./brainstormer/)**: **Gateway Agent.** Elicitation, Research, and PRD generation.
-- **[Architect](./architect/)**: Systems design, technical analysis, and senior review.
-- **[Backend](./backend/)**: Server-side implementation (Node.js, Python, Go).
-- **[Frontend](./frontend/)**: UI/UX specialist (Angular, React, Vue).
-- **[Mobile](./mobile/)**: Cross-platform specialist (Flutter/Dart).
-- **[Compliance](./compliance/)**: Regulatory audits (GDPR, HIPAA, SOC2).
-- **[Researcher](./researcher/)**: General info synthesis.
-- **[n8n Specialist](./n8n/)**: Complex workflow automation.
+### Claude Code
+```text
+"Use the agent-hub to call the 'master' 'run' command for task: Build a task manager"
+"Fetch the 'architect' persona and review this file"
+```
 
-## Documentation
-- [Business Flow](./docs/BUSINESS_FLOW.md) – Value proposition and use cases.
-- [Technical Specifications](./docs/TECHNICAL_SPECS.md) – Entry points, logic flows, and architecture.
-- [AI Context](./docs/AI_Context.md) – Architectural design, patterns, and conventions.
+### AntiGravity
+Open the **Manager View**; all agents (Brainstormer, Architect, etc.) are now available as native personas.
+
+### Codex / Cursor / Copilot
+```bash
+npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
+```
+
+---
+
+## Core Agents
+- **[Master](./master/)**: Chief Orchestrator.
+- **[Brainstormer](./brainstormer/)**: Gateway Agent (PRD generation).
+- **[Architect](./architect/)**: Systems design and review.
+- **[Backend](./backend/)**, **[Frontend](./frontend/)**, **[Mobile](./mobile/)**: Implementation specialists.
+- **[Compliance](./compliance/)**: Regulatory audits.
+- **[n8n Specialist](./n8n/)**: Automation workflow architect.
