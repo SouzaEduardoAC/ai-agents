@@ -7,26 +7,32 @@ This repository is a **Universal Agent Hub**. It centralizes personas, technical
 ## Supported Environments
 | LLM / Tool | Access Method | Bootstrap Effect |
 | :--- | :--- | :--- |
-| **Gemini CLI** | Slash Commands (`/master`, `/architect`) | Installs ALL `.toml` commands locally. |
-| **Claude Code** | MCP Tools (`call_agent_command`) | Provides dynamic prompt resolution via MCP. |
-| **AntiGravity** | Manager View Personas | Installs `.md` personas into the AG Brain. |
-| **Codex / IDE** | Symlinks (`.cursorrules`, `.github/`) | Links local config to central persona files. |
+| **Gemini CLI** | Slash Commands (All Agents) | Installs ALL agent commands (Master, Architect, Backend, etc.) locally. |
+| **Claude Code** | MCP Tools (All Agents) | Provides dynamic prompt resolution for all agent commands via MCP. |
+| **AntiGravity** | Manager View (All Agents) | Installs ALL personas into the AG Brain for parallel orchestration. |
+| **Codex / IDE** | Symlinks (Individual) | Links local project config to your chosen agent persona. |
 
 ---
 
 ## Installation & Setup
 
 ### 1. The Hub Server (MCP)
-Required for **Claude Code** and **Gemini CLI** to access the full power of the agents.
+Required for **Claude Code** and **Gemini CLI**.
 ```bash
 # In Claude Code or Gemini CLI
 mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
 ### 2. The Universal Bootstrap (One-Time Setup)
-Run this command on any new machine to install Gemini commands and AntiGravity personas automatically.
+Run this to install **all** Gemini commands and **all** AntiGravity personas automatically.
 ```bash
 npx github:SouzaEduardoAC/ai-agents bootstrap
+```
+
+### 3. Codex / Cursor / IDE Setup
+For IDE-specific instructions (like `.cursorrules` or `.github/copilot-instructions.md`), link your desired agent:
+```bash
+npx github:SouzaEduardoAC/ai-agents link [agent-name] [target-file]
 ```
 
 ---
