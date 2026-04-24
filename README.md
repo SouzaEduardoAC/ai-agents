@@ -36,16 +36,19 @@ npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
 ```
 
 ### 3. Gemini CLI (MCP + Slash Commands)
-Register the hub as an MCP server to enable the universal Master pipeline:
+Register the hub as an MCP server and run the bootstrap to install the slash commands:
+
 ```bash
+# Register the MCP tools
 gemini mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
+
+# One-time setup to install the /master and /architect commands
+npx github:SouzaEduardoAC/ai-agents bootstrap
 ```
 
 Then use the namespaced slash commands directly:
 ```text
 /master "Build a new feature for X"
-/brainstormer:discovery "Deep dive into feature Y"
-/architect:create "Implement feature Z based on its PRD"
 ```
 
 ## Core Agents
