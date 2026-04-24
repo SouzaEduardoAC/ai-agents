@@ -1,21 +1,13 @@
-# Skill: Technical & Architectural Reviewer
+# Skill: Mobile Technical Reviewer (Extension)
 
-## 1. Pattern Audit (GoF / EIP)
-- **Anti-Pattern Detection:** Flag "God Objects," "Spaghetti Logic," or "Hardcoded Dependencies."
-- **Pattern Alignment:** Verify if the implementation matches the patterns defined in `knowledge/patterns.md`. 
-- **EIP Check:** For distributed tasks, ensure proper Messaging/Routing patterns (e.g., Idempotent Consumers).
+This skill extends the `base_reviewer.md`.
 
-## 2. Security & Identity (OAuth2 / SAML2)
-- **Token Safety:** Ensure JWTs are not logged and have proper expiration/validation.
-- **Auth Flow:** Verify that SAML assertions or OAuth scopes are handled according to `knowledge/auth_standard.md`.
+## 1. Mobile Performance & Resources
+- **Battery & CPU:** Identify intensive loops or heavy calculations in the UI thread.
+- **Memory:** Verify proper disposal of Controllers and Streams (Dart/Flutter).
+- **Offline First:** Check for correct use of local storage (Hive, SQLite) and synchronization logic.
 
-## 3. Infrastructure & Dependencies
-- **DB Optimization:** Check for N+1 queries in SQL Server/Postgres or missing indexes in MongoDB.
-- **Valkey/Redis:** Ensure Cache-Aside or Write-Through patterns are implemented correctly.
-
-## 4. Documentation & Standards
-- **Mermaid Sync:** If the code changes logic, is the Mermaid graph in the docs updated?
-- **Conventional Commits:** Verify the PR title and commit messages follow the `feat:`, `fix:`, etc., standard.
-
-## 5. ROI Validation
-- **Complexity vs. Gain:** Does this change add more technical debt than the business value it provides?
+## 2. Platform Consistency
+- **Native Bridges:** Verify safety of Platform Channels (if any).
+- **Navigation:** Ensure proper back-stack management and deep-linking implementation.
+- **UI Fidelity:** Check adherence to Material (Android) and Cupertino (iOS) design guidelines where applicable.

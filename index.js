@@ -125,9 +125,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const tomlData = toml.parse(await fs.readFile(tomlPath, "utf-8"));
       let prompt = tomlData.prompt || "";
       
-      // Inject Common Knowledge
+      // Inject Common Knowledge & Skills
       const commonKnowledge = await readMarkdownDir(path.join(AGENTS_ROOT, "common", "knowledge")).catch(() => "");
-      prompt = `# Common Standards\n${commonKnowledge}\n\n${prompt}`;
+      const commonSkills = await readMarkdownDir(path.join(AGENTS_ROOT, "common", "skills")).catch(() => "");
+      prompt = `# Common Standards\n${commonKnowledge}\n\n# Common Skills\n${commonSkills}\n\n${prompt}`;
       
       // Resolve {{args}}
       prompt = prompt.replace(/\{\{args\}\}/g, taskArgs);
@@ -145,6 +146,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const skills = await readMarkdownDir(path.join(agentPath, "skills")).catch(() => "");
       const knowledge = await readMarkdownDir(path.join(agentPath, "knowledge")).catch(() => "");
       const commonKnowledge = await readMarkdownDir(path.join(AGENTS_ROOT, "common", "knowledge")).catch(() => "");
+      const commonSkills = await readMarkdownDir(path.join(AGENTS_ROOT, "common", "skills")).catch(() => "");
 
       const fullPrompt = `
 # Persona: ${agent}
@@ -152,6 +154,9 @@ ${persona}
 
 # Common Standards
 ${commonKnowledge}
+
+# Common Skills
+${commonSkills}
 
 # Skills
 ${skills}
