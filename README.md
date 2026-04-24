@@ -12,20 +12,26 @@ We follow a strict "Sequential Persona Handoff" to ensure maximum clarity and ze
 3.  **Specific Developer:** (Backend, Frontend, or Mobile) executes the plan based on the detected tech stack.
 
 ## Universal Access (agent-hub)
-The framework is exposed via the `agent-hub` tool, allowing you to use these agents across any environment using `npx`.
+The framework is exposed via the `agent-hub` tool. You can run it using a local path or directly from GitHub.
 
 ### 1. Claude Code & AntiGravity (MCP)
-Register the agents as a Model Context Protocol server:
+Register the agents as a Model Context Protocol server.
+
+**Option A: Local Path (Recommended for Development)**
 ```bash
-# In Claude Code
 claude mcp add agent-hub -- npx /path/to/ai-agents serve
+```
+
+**Option B: Direct from GitHub (Recommended for Work Machines)**
+```bash
+claude mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
 ### 2. Codex / Cursor / Copilot (Linker)
 Inject a persona into a local project configuration:
 ```bash
-# Link the Architect persona to a local .cursorrules file
-npx /path/to/ai-agents link architect .cursorrules
+# Using GitHub version
+npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
 ```
 
 ### 3. Gemini CLI (Direct)
