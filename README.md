@@ -35,8 +35,13 @@ Inject a persona into a local project configuration:
 npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
 ```
 
-### 3. Gemini CLI (Direct)
-Use the namespaced slash commands directly:
+### 3. Gemini CLI (MCP + Slash Commands)
+Register the hub as an MCP server to enable the universal Master pipeline:
+```bash
+gemini mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
+```
+
+Then use the namespaced slash commands directly:
 ```text
 /master "Build a new feature for X"
 /brainstormer:discovery "Deep dive into feature Y"
