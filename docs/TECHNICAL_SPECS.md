@@ -1,80 +1,57 @@
-# Technical Specifications: Agentic AI Framework
-**Grounding:** Strictly extracted from Agent Definitions (AMD).
-**Verification:** (ref: Agent Commands, Protocol Skills)
+# Technical Specifications: Universal Agent Hub
+**Grounding:** Strictly extracted from the `agent-hub` implementation and AMD v2 logic.
+**Verification:** (ref: index.js, bin/agent-hub.js, common/knowledge)
 
 ## 1. Entry Points & Access Control
-| Type | Endpoint/Trigger | Description | Allowed Roles | Security/Auth |
-| :--- | :--- | :--- | :--- | :--- |
-| [TOML] | `/architect:*` | Systems design, high-level planning, and cross-cutting reviews. | `Systems Architect` | Gemini CLI Context |
-| [TOML] | `/backend:*` | Server-side implementation, OO logic, and enterprise patterns. | `Systems Engineer` | Gemini CLI Context |
-| [TOML] | `/frontend:*` | Web UI development (Vue, Angular, React) and UX optimization. | `Frontend Specialist` | Gemini CLI Context |
-| [TOML] | `/mobile:*` | Cross-platform mobile development (Dart/Flutter) and smooth UI. | `Mobile Specialist` | Gemini CLI Context |
-| [TOML] | `/compliance:*` | Regulatory audits (GDPR, HIPAA, SOC2) and master audits. | `Compliance Officer` | Gemini CLI Context |
-| [TOML] | `/researcher:*` | Information gathering, synthesis, and deep research reports. | `Researcher` | Gemini CLI Context |
-| [TOML] | `/n8n:brainstorm` | n8n deep-brainstorming, API research, and request validation. | `n8n Specialist` | Gemini CLI Context |
-| [TOML] | `/n8n:plan` | n8n workflow architecture design and planning. | `n8n Specialist` | Gemini CLI Context |
-| [TOML] | `/n8n:create` | n8n workflow implementation and JSON generation. | `n8n Specialist` | Gemini CLI Context |
+| Type | Endpoint / Tool | Description | Target |
+| :--- | :--- | :--- | :--- |
+| [CLI] | `agent-hub bootstrap` | One-time local environment setup. | Gemini / AntiGravity |
+| [MCP] | `get_agent_prompt` | Retrieves mixed (Common + Specific) persona. | Claude / Gemini |
+| [MCP] | `call_agent_command` | Resolves and executes TOML-based commands. | Claude / Gemini |
+| [TOML]| `/master:run` | Triggers the Master Orchestrator PM loop. | Gemini CLI |
+| [SYM] | `agent-hub link` | Symlinks central personas to local IDE configs. | Codex / Cursor |
 
-## 2. Dependency Rules & Lifecycle
-- **Internal Dependencies:** Agents use `!{cat ...}` to load persona, skills, and templates. (ref: `[AGENT]/commands/[AGENT]/create.toml`)
-- **MCP Tool Calling:** Agents dynamically detect and leverage Model Context Protocol (MCP) servers (e.g., Stitch, Context7, Playwright, Dart) for specialized tasks. (ref: `/mcp list`)
-- **External Dependencies:** Gemini CLI as the runtime platform for executing shell commands and parsing Markdown/TOML.
-- **Inversion of Control:** Each agent encapsulates its own persona and skills (AMD). The Gemini CLI orchestrates the execution flow.
-
+## 2. Infrastructure: The Agent Hub
+- **Runtime:** Node.js (ESM).
+- **Core Package:** `@modelcontextprotocol/sdk`.
+- **Logic mixing:** The Hub server dynamically scans `common/knowledge` and `common/skills` and appends them to every agent prompt returned via MCP.
+- **Portability:** Distributed via GitHub and executable via `npx` to ensure zero-setup installation on work machines.
 
 ## 3. Data & Persistence Standards
-### Database: [N/A - File-Based Configuration]
-- **Storage Strategy:** Agent personas, skills, and knowledge are stored as Markdown files. Commands are stored as TOML files.
-- **Write Strategy:** Atomic file writes for plan documents and implementation artifacts. (ref: `protocol.md` Step 4: [MODE: PLAN])
-- **Plan Naming Convention:** Implementation plans are written as `[FEATURE]_IMPLEMENTATION_PLAN.md`, where `[FEATURE]` is a short UPPER_SNAKE_CASE slug derived from the task (e.g., `AUTH_REFACTOR_IMPLEMENTATION_PLAN.md`). (ref: `protocol.md` Step 4: Naming)
+- **Artifact Pipeline:**
+    1.  **PRD:** `[FEATURE]_PRD.md` (Owner: Brainstormer).
+    2.  **Analysis:** `[FEATURE]_TECHNICAL_ANALYSIS.md` (Owner: Architect).
+    3.  **Plan:** `[FEATURE]_IMPLEMENTATION_PLAN.md` (Owner: Architect).
+    4.  **Tests:** Business logic coverage (Owner: Developer).
+- **Licensing Gate:** `common/knowledge/licensing.md` mandates a "Halt & Ask" for commercial libraries.
 
-## 4. Resilience & Reliability
-### Retry Policies
-- **Entry Point Retries:** [MODE: MASTER-FLOW] includes a "Gate 1 (Human Approval)" and "Gate 2 (Human Approval)" (ref: `[AGENT]/skills/protocol.md`).
-- **External Call Retries:** N/A (Client-side responsibility).
-- **Audit Retries:** On rejection, the flow reverts to Step 3 of the Implementation phase (ref: `protocol.md` Step 5).
-- **Private Feed Guard:** If private/internal registries are detected in dependency manifests, execution halts and the user is prompted for the feed config file before the restore proceeds. (ref: `protocol.md` Step 5: Package Restore)
+## 4. Logic Deep Dive (The Master Pipeline)
+1. **Bootstrap:** User runs `npx github:... bootstrap` to install local shortcuts.
+2. **Elicitation:** Master calls `brainstormer` to finalize the requirements.
+3. **Analysis:** Master calls `architect` to map technical debt and design the fix.
+4. **Implementation:** Master detects tech stack (Angular/Node/Flutter) and calls the specific developer agent.
+5. **Quality:** Each phase requires an explicit "Approved" gate before the Hub allows the next persona to load.
 
-## 5. Logic Deep Dive (Sequential)
-### Master-Flow Lifecycle (ref: `architect/skills/protocol.md`)
-1. **Trigger:** User issues `/architect:create` command. (ref: `architect/commands/architect/create.toml`)
-2. **Validations:** Pre-Sync checks documentation vs code reality. (ref: `doc_maintainer.md`)
-3. **Planning:** Agent writes the plan to `[FEATURE]_IMPLEMENTATION_PLAN.md` and halts for user approval. (ref: `protocol.md` Step 4: [MODE: PLAN])
-4. **Package Restore:** Before running tests, agent scans for private feeds. Halts if detected until config file is provided. (ref: `protocol.md` Step 5: [MODE: IMPLEMENT])
-5. **Execution:** Implementation of changes, running tests, and committing to a feature branch. (ref: `protocol.md` Steps 4–8: [MODE: IMPLEMENT])
-6. **Plan Reconciliation:** After commit, agent updates the plan file with implemented items (+ commit ref) and pending items, stamped `[DONE]` or `[PARTIAL]`. (ref: `protocol.md` Step 9: [MODE: IMPLEMENT])
-7. **Review:** Execution of `/architect:auditor` logic to generate an audit report. (ref: `protocol.md` Step 4: Audit)
-
-### 5.1 Technical Flow Visualization
+## 5. Technical Flow Visualization
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant G as Gemini CLI
-    participant E as Architect Agent
+    participant H as Agent Hub (MCP)
+    participant L as LLM (Claude/Gemini)
 
-    U->>G: Issue Command /architect:create
-    G->>E: Load Persona & Skills
-    E->>E: Execute [MODE: PLAN]
-    E->>E: Write [FEATURE]_IMPLEMENTATION_PLAN.md
-    E-->>U: "Plan ready at [FEATURE]_IMPLEMENTATION_PLAN.md — approve?"
-    U->>G: Approve Plan
-    G->>E: Execute [MODE: IMPLEMENT]
-    E->>E: Scan for private feeds in dependency manifest
-    alt Private feed detected
-        E-->>U: "Private feed detected — provide config file"
-        U->>E: Provide config file
-    end
-    E->>E: Restore packages & implement changes
-    E->>E: Run tests (100% pass required)
-    E->>E: git commit to feature branch
-    E->>E: Update [FEATURE]_IMPLEMENTATION_PLAN.md [DONE/PARTIAL]
-    G->>E: Execute /architect:auditor logic
-    E-->>U: Present review report
-    U->>G: Approve Implementation
-    G->>E: Sync & Document Final State
+    U->>L: /master "Create App"
+    L->>H: call_agent_command(master, run)
+    H-->>L: Mixed Prompt (Master + Common)
+    L->>H: get_agent_prompt(brainstormer)
+    H-->>L: Mixed Prompt (Brainstormer + Common)
+    L->>U: "PRD Ready - Approve?"
+    U->>L: "Approve"
+    L->>H: get_agent_prompt(architect)
+    H-->>L: Mixed Prompt (Architect + Common)
+    L->>U: "Plan Ready - Approve?"
 ```
 
-## 6. Complexity Analysis (Dialectical)
-- **Yellow Hat (Robustness):** Human approval gates at every critical junction prevent hallucinated implementations from reaching production. Plan-first persistence ensures the user reviews structured Markdown, not ephemeral chat text. (ref: `protocol.md`)
-- **Black Hat (Risks):** Tight coupling between the agents and the Gemini CLI's context-loading (`!{cat ...}`) mechanism means changes in local file structure will break command definitions. (ref: `master-flow.toml`)
-- **Blind Spots:** The system lacks an automated rollback mechanism if a commit fails or if documentation sync fails mid-task. Private feed detection relies on static manifest inspection — dynamic registry resolution is not audited.
+## 6. Resilience & Safety
+- **Conflict Resolution:** The Hub resolves path aliases (like `~/.gemini/agents`) to the actual Hub root dynamically.
+- **Cache Management:** Use `npx --prefer-online` to bypass aggressive `npx` caching when agent logic changes.
+- **Zero Context Dilution:** Persons are swapped, not appended. The AI "forgets" the Brainstormer when it becomes the Architect, preventing instruction drift.
