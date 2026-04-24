@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "agent-hub": {
+      "command": "npx",
+      "args": [
+        "github:SouzaEduardoAC/ai-agents",
+        "serve"
+      ]
+    }
+  }
+}

@@ -71,6 +71,15 @@ npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
 
 ---
 
+## Testing & Quality
+The framework enforces a **"Test-First"** mindset across all technical agents:
+- **Business Logic Coverage:** Mandatory unit tests for all domain rules.
+- **Regression Protection:** Bug fixes must include a failing test case reproduction.
+- **Unified Standards:** Centralized quality gates in `common/knowledge/testing_standard.md`.
+- **100% Pass Rate:** Implementation is not complete until all tests pass.
+
+---
+
 ## Core Agents
 - **[Master](./master/)**: Chief Orchestrator.
 - **[Brainstormer](./brainstormer/)**: Gateway Agent (PRD generation).
