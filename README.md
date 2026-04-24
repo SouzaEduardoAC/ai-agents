@@ -7,9 +7,10 @@ This repository defines a framework of autonomous AI Agents designed to collabor
 ## The Handoff Pipeline
 We follow a strict "Sequential Persona Handoff" to ensure maximum clarity and zero context dilution:
 
-1.  **[Brainstormer](./brainstormer/) (Product Owner):** Transforms vague ideas into a validated **PRD (Product Requirements Document)**.
-2.  **[Architect](./architect/) (Systems Lead):** Consumes the PRD and performs technical analysis to generate an **Implementation Plan**.
-3.  **Specific Developer:** (Backend, Frontend, or Mobile) executes the plan based on the detected tech stack.
+1.  **[Master Orchestrator](./master/) (Project Manager):** The entry point for all major tasks. Orchestrates the handoffs between sub-agents.
+2.  **[Brainstormer](./brainstormer/) (Product Owner):** Transforms vague ideas into a validated **PRD (Product Requirements Document)**.
+3.  **[Architect](./architect/) (Systems Lead):** Consumes the PRD and performs technical analysis to generate an **Implementation Plan**.
+4.  **Specific Developer:** (Backend, Frontend, or Mobile) executes the plan based on the detected tech stack.
 
 ## Universal Access (agent-hub)
 The framework is exposed via the `agent-hub` tool. You can run it using a local path or directly from GitHub.
@@ -37,11 +38,13 @@ npx github:SouzaEduardoAC/ai-agents link architect .cursorrules
 ### 3. Gemini CLI (Direct)
 Use the namespaced slash commands directly:
 ```text
-/brainstormer:discovery "Add a rate-limiter to the API"
-/architect:create "Implement the rate-limiter based on the PRD"
+/master "Build a new feature for X"
+/brainstormer:discovery "Deep dive into feature Y"
+/architect:create "Implement feature Z based on its PRD"
 ```
 
 ## Core Agents
+- **[Master](./master/)**: **Chief Orchestrator.** Manages the full PRD -> Plan -> Code lifecycle.
 - **[Brainstormer](./brainstormer/)**: **Gateway Agent.** Elicitation, Research, and PRD generation.
 - **[Architect](./architect/)**: Systems design, technical analysis, and senior review.
 - **[Backend](./backend/)**: Server-side implementation (Node.js, Python, Go).
