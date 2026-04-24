@@ -24,7 +24,6 @@ The Mobile Agent is designed for building beautiful, 60/120 FPS mobile applicati
     - `bottlenecks.md`: Jank, Memory Leaks, and Binary Size performance checklist.
 - **Commands:**
     - `/mobile:create`: Execute a complete, end-to-end mobile lifecycle (Investigation -> Plan -> Implementation -> Review).
-    - `/mobile:discovery`: Perform a deep-dive mobile research into a request and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md`.
     - `/mobile:auditor`: Audit mobile code for patterns, security, and performance.
     - `/mobile:docs`: Synchronize the mobile codebase logic with the technical documentation suite.
 
@@ -45,25 +44,19 @@ ln -s ~/.gemini/agents/mobile/commands/mobile ~/.gemini/commands/mobile
 ## Usage
 
 ### 1. Full Mobile Lifecycle
-Execute a complete mobile task with mandatory discovery, planning, implementation, and review gates:
+Execute a complete mobile task starting from a PRD file created by the Brainstormer. This includes mandatory planning, implementation, and review gates:
 ```text
-/mobile:create "Add a real-time chat screen with message bubbles and scroll-to-bottom logic."
+/mobile:create "Add a real-time chat screen as specified in docs/prds/chat_feature.md"
 ```
 
-### 2. Mobile Discovery & Planning
-Start by generating an architectural mobile plan. The agent writes findings to `[FEATURE]_DISCOVERY.md` and then `[FEATURE]_IMPLEMENTATION_PLAN.md`:
-```text
-/mobile:discovery "Refactor the local database layer to use Drift for reactive persistence."
-```
-
-### 3. Auditing & Quality
+### 2. Auditing & Quality
 Perform a general mobile review, security audit, or performance check:
 ```text
 /mobile:auditor "Review the newly implemented Riverpod providers for state sharing."
 /mobile:auditor security "Audit the secure storage implementation for sensitive tokens."
 ```
 
-### 4. Documentation
+### 3. Documentation
 Sync the mobile codebase logic with the technical documentation:
 ```text
 /mobile:docs "Synchronize the authentication flow widgets with the technical specs."

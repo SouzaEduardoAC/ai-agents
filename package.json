@@ -1,0 +1,21 @@
+{
+  "name": "@your-org/agent-hub",
+  "version": "1.0.0",
+  "description": "Universal bridge for AI Agents (Gemini, Claude, Codex)",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "agent-hub": "bin/agent-hub.js"
+  },
+  "scripts": {
+    "start": "node bin/agent-hub.js",
+    "serve": "node bin/agent-hub.js serve"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "commander": "^12.0.0",
+    "toml": "^3.0.0",
+    "glob": "^10.3.10",
+    "fs-extra": "^11.2.0"
+  }
+}

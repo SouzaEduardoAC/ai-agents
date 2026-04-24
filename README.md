@@ -1,39 +1,51 @@
-# Agentic AI Framework
+# Agentic AI Framework (Universal Agent Hub)
 **Standardized orchestration for specialized AI Agents.**
 
 ## Overview
-This repository defines a framework of autonomous AI Agents (**Architect, Backend, Frontend, Mobile**, Compliance, Researcher) designed to collaborate on complex tasks using the **Agentic Modular Design (AMD)** architecture. Each agent is a self-contained module of persona, skills, commands, and knowledge, specialized for a specific domain.
+This repository defines a framework of autonomous AI Agents designed to collaborate on complex tasks using a standardized, protocol-driven pipeline. It functions as a **Universal Agent Hub**, serving specialized personas to **Gemini CLI, Claude Code, AntiGravity, and Codex**.
 
-## Core Features
-- **Specialized Engineering Suite:** Dedicated agents for systems architecture, server-side logic, web UI (React/Vue/Angular), and mobile (Flutter/Dart).
-- **Namespaced Command Structure:** Clear, standardized triggers (e.g., `/architect:create`, `/mobile:discovery`).
-- **High-End Architectural Knowledge:** Embedded expertise in SOLID, Clean Architecture, Resilience Patterns, and Web Vitals.
-- **MCP Integration:** Native support for the Model Context Protocol (Stitch, Context7, Dart/Flutter, DevTools, Playwright) to enhance codebase analysis and auditing.
-- **Human-in-the-Loop Safety:** Strict execution protocols with mandatory approval gates for research, planning, and implementation.
+## The Handoff Pipeline
+We follow a strict "Sequential Persona Handoff" to ensure maximum clarity and zero context dilution:
 
-## Quick Documentation Links
+1.  **[Brainstormer](./brainstormer/) (Product Owner):** Transforms vague ideas into a validated **PRD (Product Requirements Document)**.
+2.  **[Architect](./architect/) (Systems Lead):** Consumes the PRD and performs technical analysis to generate an **Implementation Plan**.
+3.  **Specific Developer:** (Backend, Frontend, or Mobile) executes the plan based on the detected tech stack.
+
+## Universal Access (agent-hub)
+The framework is exposed via the `agent-hub` tool, allowing you to use these agents across any environment using `npx`.
+
+### 1. Claude Code & AntiGravity (MCP)
+Register the agents as a Model Context Protocol server:
+```bash
+# In Claude Code
+claude mcp add agent-hub -- npx /path/to/ai-agents serve
+```
+
+### 2. Codex / Cursor / Copilot (Linker)
+Inject a persona into a local project configuration:
+```bash
+# Link the Architect persona to a local .cursorrules file
+npx /path/to/ai-agents link architect .cursorrules
+```
+
+### 3. Gemini CLI (Direct)
+Use the namespaced slash commands directly:
+```text
+/brainstormer:discovery "Add a rate-limiter to the API"
+/architect:create "Implement the rate-limiter based on the PRD"
+```
+
+## Core Agents
+- **[Brainstormer](./brainstormer/)**: **Gateway Agent.** Elicitation, Research, and PRD generation.
+- **[Architect](./architect/)**: Systems design, technical analysis, and senior review.
+- **[Backend](./backend/)**: Server-side implementation (Node.js, Python, Go).
+- **[Frontend](./frontend/)**: UI/UX specialist (Angular, React, Vue).
+- **[Mobile](./mobile/)**: Cross-platform specialist (Flutter/Dart).
+- **[Compliance](./compliance/)**: Regulatory audits (GDPR, HIPAA, SOC2).
+- **[Researcher](./researcher/)**: General info synthesis.
+- **[n8n Specialist](./n8n/)**: Complex workflow automation.
+
+## Documentation
 - [Business Flow](./docs/BUSINESS_FLOW.md) – Value proposition and use cases.
 - [Technical Specifications](./docs/TECHNICAL_SPECS.md) – Entry points, logic flows, and architecture.
 - [AI Context](./docs/AI_Context.md) – Architectural design, patterns, and conventions.
-
-## Core Agents
-- **[Architect](./architect/)**: Specialized in systems design, implementation, and review.
-- **[Backend](./backend/)**: Specialized in software implementation and server-side logic.
-- **[Frontend](./frontend/)**: Specialized in UI/UX architecture, Vue, Angular, and React.
-- **[Mobile](./mobile/)**: Specialized in cross-platform mobile apps using Dart and Flutter.
-- **[Compliance](./compliance/)**: Focused on regulatory audits (GDPR, HIPAA, SOC2, etc.).
-- **[Researcher](./researcher/)**: Information gathering and synthesis.
-- **[n8n Specialist](./n8n/)**: Architecting, implementing, and optimizing complex automation workflows.
-
-## How It Works
-Agents are triggered via TOML-based commands in the Gemini CLI. They follow strict execution protocols with human-in-the-loop approval gates to ensure safety and correctness.
-
-```mermaid
-graph LR
-    User --> Command
-    Command --> Agent
-    Agent --> Plan
-    Plan --> UserApproval{Approval}
-    UserApproval -- Yes --> Implementation
-    UserApproval -- No --> Plan
-```

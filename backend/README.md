@@ -25,7 +25,6 @@ The Backend Agent is designed for rigorous, logic-driven server-side development
     - `security_standards.md`: OWASP Top 10, severity levels, and compliance references.
 - **Commands:**
     - `/backend:create`: Execute a complete, end-to-end backend lifecycle (Investigation -> Plan -> Implementation -> Review).
-    - `/backend:discovery`: Perform a deep-dive research into a request and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md`.
     - `/backend:auditor`: Audit code for patterns, security, and performance.
     - `/backend:docs`: Synchronize the current codebase logic with the technical documentation suite.
 
@@ -46,25 +45,19 @@ ln -s ~/.gemini/agents/backend/commands/backend ~/.gemini/commands/backend
 ## Usage
 
 ### 1. Full Backend Lifecycle
-Execute a complete task with mandatory discovery, planning, implementation, and review gates:
+Execute a complete task starting from a PRD file created by the Brainstormer. This includes mandatory planning, implementation, and review gates:
 ```text
-/backend:create "Add a rate-limiter middleware to all API endpoints."
+/backend:create "Add a rate-limiter middleware as specified in docs/prds/rate_limiter.md"
 ```
 
-### 2. Discovery & Planning
-Start by generating an architectural plan for the task. The agent writes findings to `[FEATURE]_DISCOVERY.md` and then `[FEATURE]_IMPLEMENTATION_PLAN.md`:
-```text
-/backend:discovery "Refactor the authentication module to support OAuth2 providers."
-```
-
-### 3. Auditing & Quality
+### 2. Auditing & Quality
 Perform a general review, security audit, or performance check:
 ```text
 /backend:auditor "Review the newly implemented OAuth2 Refactor."
 /backend:auditor security "Audit the authentication module for vulnerabilities."
 ```
 
-### 4. Documentation
+### 3. Documentation
 Sync the backend codebase logic with the technical documentation:
 ```text
 /backend:docs "Synchronize the current authentication module with the technical specs."

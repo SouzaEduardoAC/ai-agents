@@ -24,7 +24,6 @@ The Frontend Agent is designed for building accessible, high-performance user in
     - `bottlenecks.md`: Web Vitals, Bundle Size, and Rendering performance checklist.
 - **Commands:**
     - `/frontend:create`: Execute a complete, end-to-end frontend lifecycle (Investigation -> Plan -> Implementation -> Review).
-    - `/frontend:discovery`: Perform a deep-dive UI research into a request and generate a validated `[FEATURE]_IMPLEMENTATION_PLAN.md`.
     - `/frontend:auditor`: Audit UI code for patterns, security, accessibility, and performance.
     - `/frontend:docs`: Synchronize the UI codebase logic with the technical documentation suite.
 
@@ -45,25 +44,19 @@ ln -s ~/.gemini/agents/frontend/commands/frontend ~/.gemini/commands/frontend
 ## Usage
 
 ### 1. Full Frontend Lifecycle
-Execute a complete UI task with mandatory discovery, planning, implementation, and review gates:
+Execute a complete UI task starting from a PRD file created by the Brainstormer. This includes mandatory planning, implementation, and review gates:
 ```text
-/frontend:create "Add a multi-step registration form with validation and progress bar."
+/frontend:create "Add a multi-step registration form as specified in docs/prds/registration_form.md"
 ```
 
-### 2. UI Discovery & Planning
-Start by generating an architectural UI plan. The agent writes findings to `[FEATURE]_DISCOVERY.md` and then `[FEATURE]_IMPLEMENTATION_PLAN.md`:
-```text
-/frontend:discovery "Refactor the product listing page to use TanStack Virtual for performance."
-```
-
-### 3. Auditing & Quality
+### 2. Auditing & Quality
 Perform a general UI review, security audit, or performance check:
 ```text
 /frontend:auditor "Review the newly implemented React Context for global state."
 /frontend:auditor security "Audit the user input fields for potential XSS vulnerabilities."
 ```
 
-### 4. Documentation
+### 3. Documentation
 Sync the UI codebase logic with the technical documentation:
 ```text
 /frontend:docs "Synchronize the checkout flow components with the technical specs."

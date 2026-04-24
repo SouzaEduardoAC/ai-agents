@@ -19,7 +19,7 @@ Mode: [MODE: n8n-IMPLEMENT]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. **Context Loading:** Read the approved `[WORKFLOW]_DISCOVERY.md` and `[WORKFLOW]_DESIGN_PLAN.md` files for the target '{{args}}'.
+2. **Context Loading:** Read the approved `[FEATURE]_PRD.md`, `[WORKFLOW]_DISCOVERY.md`, and `[WORKFLOW]_DESIGN_PLAN.md` files for the target '{{args}}'.
 3. **Implementation Logic:**
     - Transform the design plan into a valid n8n JSON structure.
     - Ensure all nodes are correctly configured according to the discovery findings.
