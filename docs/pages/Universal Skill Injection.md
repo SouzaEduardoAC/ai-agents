@@ -1,0 +1,11 @@
+- type:: [[Use Case]]
+- status:: [ACTIVE]
+- tags:: #knowledge #research
+
+- # Universal Skill Injection
+	- ## Description
+		- Instantly upgrade any LLM with private engineering knowledge base.
+	- ## Primary Roles
+		- [[Researcher]]
+	- ## Success Criteria
+		- Accurate synthesis of technical information across multiple sources.
