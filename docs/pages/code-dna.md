@@ -6,5 +6,8 @@
 	- ## Architectural Styles
 		- **Clean Architecture**: Separation of concerns. (ref: `architect/knowledge/patterns.md`)
 		- **SOLID**: Standard OO design principles. (ref: `architect/knowledge/patterns.md`)
+	- ## Documentation DNA
+		- **Signal Preservation**: Documentation MUST capture Agent Identities, Commands, and Guardrails. (ref: `architect/knowledge/docs_standard.md`)
+		- **Graph Integrity**: "No Ghost Pages." All linked nodes must be initialized. (ref: `common/skills/logseq_knowledge.md`)
 	- ## Testing DNA
 		- **"Unverified Code is Debt"**: Core testing philosophy. (ref: `common/knowledge/testing_standard.md`)
