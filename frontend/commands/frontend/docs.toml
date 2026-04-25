@@ -1,26 +1,14 @@
-description = "Frontend Docs: Sync UI logic with high-precision documentation."
+description = "Frontend Docs: Sync UI logic with high-precision Logseq-based documentation."
 
 prompt = """
 # Persona: Frontend Specialist
-!{cat ~/.gemini/agents/frontend/brain/persona.md}
+!{cat frontend/brain/persona.md}
 
-# Skills: Document Maintainer
-!{cat ~/.gemini/agents/frontend/skills/doc_maintainer.md}
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
 
 # Knowledge Base: Documentation Standards
-!{cat ~/.gemini/agents/frontend/knowledge/docs_standard.md}
-
-# Template: Business Flow
-!{cat ~/.gemini/agents/frontend/templates/business_flow.md}
-
-# Template: Use Case
-!{cat ~/.gemini/agents/frontend/templates/use_case.md}
-
-# Template: Technical Specs
-!{cat ~/.gemini/agents/frontend/templates/technical_specs.md}
-
-# Template: AI Context
-!{cat ~/.gemini/agents/frontend/templates/ai_context.md}
+!{cat frontend/knowledge/docs_standard.md}
 
 # Probes
 ## MCP Server Availability
@@ -30,27 +18,27 @@ prompt = """
 Target: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for documentation generation, consistency checking, or API reference mapping.
-2. Initialize Documentation Maintainer Protocol.
+1. **MCP Integration:** Check the 'Probes' section. If relevant MCP servers (e.g., 'filesystem') are available, leverage them for Logseq graph manipulation.
+2. Initialize **Logseq Knowledge** protocol.
 
-3. **State Detection (Phase 0):** Analyze the target UI components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
+3. **Phase 0: State Detection.** 
+    - Verify current Logseq documentation in `docs/pages/`.
+    - Declare state: [GREENFIELD], [ADAPT], or [SYNC].
 
-3. **AST-Driven Analysis:**
+4. **Phase 1: Frontend-Focused Analysis.**
     - Map **User Journeys** to **UI Components**.
     - Extract **Component Hierarchy** and **State Management Flow**.
     - Identify **Rendering Strategy** (SSR, CSR, Hydration) and **Lazy Loading** patterns.
-    - Detect **UI DNA**: Styling conventions (Tailwind, SASS), naming, and A11y strategies.
+    - Detect **UI DNA**: Styling conventions, naming, and A11y strategies.
 
-4. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (Auth flows, complex forms, state transitions).
+5. **Phase 2: Logseq Enrichment.**
+    - **Update/Generate Docs:** Write technical findings directly to `docs/pages/` using Logseq outliner format.
+    - **Linking:** Ensure all new pages are linked back to `[[TECHNICAL_SPECS]]` and `[[BUSINESS_FLOW]]`.
+    - **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for complex UI flows in `docs/pages/visuals.md`.
 
-5. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+6. **Phase 3: Verification.** 
+    - Apply UI/UX Yellow/Black Hat analysis. 
+    - Every technical claim MUST include an AST citation: `(ref: ComponentName)`.
 
-6. **Verification:** Apply UI/UX Yellow/Black Hat analysis. Every technical claim MUST include an AST citation: `(ref: ComponentName)`.
-
-7. **Output:** Generate/Update the documentation suite at the following locations:
-   - docs/BUSINESS_FLOW.md
-   - docs/use_cases/*.md
-   - docs/TECHNICAL_SPECS.md
-   - docs/AI_Context.md
-   - README.md
+7. **Closure.** Summarize the frontend-specific updates made to the Logseq graph.
 """

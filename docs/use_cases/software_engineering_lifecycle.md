@@ -24,13 +24,14 @@ graph TD
     E --> E1{Private Feed Detected?}
     E1 -- Yes --> E2[STOP: Request feed config file]
     E2 --> E1
-    E1 -- No --> E3[Restore Packages & Implement]
+    E1 -- No --> E2a[Phase 2a: Dynamic Stack Detection]
+    E2a --> E3[Restore Packages & Implement]
     E3 --> F[Phase 3: Code Review]
     F --> G{Gate 2: Human Approval}
     G -- Denied --> E3
     G -- Approved --> H[Commit to Feature Branch]
     H --> H1[Update Plan: Implemented / Pending]
-    H1 --> I[Phase 4: Sync & Document]
+    H1 --> I[Phase 5: Sync & Document]
     I --> J[Task Success]
 ```
 
@@ -41,4 +42,5 @@ graph TD
 * **Rule 4: Discovery-First Persistence:** Findings and confirmed understanding are written to `[FEATURE]_DISCOVERY.md` before planning begins.
 * **Rule 5: Plan-First Persistence:** The implementation plan is written to `[FEATURE]_IMPLEMENTATION_PLAN.md` before requesting approval.
 * **Rule 6: Private Feed Safety:** If private/internal package registries are detected, execution halts until the user provides the feed configuration file.
-* **Rule 7: Plan Reconciliation:** After every commit, the plan file is updated with what was implemented (with commit ref) and what remains pending, stamped `[DONE]` or `[PARTIAL]`.
+* **Rule 7: Stack Detection:** The system automatically optimizes knowledge injection based on detected signature files (.csproj, go.mod, etc.) or task hints.
+* **Rule 8: Plan Reconciliation:** After every commit, the plan file is updated with what was implemented (with commit ref) and what remains pending, stamped `[DONE]` or `[PARTIAL]`.

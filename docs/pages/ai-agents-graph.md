@@ -1,0 +1,15 @@
+- type:: [[Index]]
+- title:: [[ai-agents]] Knowledge Graph
+
+- # Project Overview
+	- The Universal Agent Hub for AI-driven software engineering.
+- # Navigation
+	- [[TECHNICAL_SPECS]] - Core architecture and MCP details.
+	- [[BUSINESS_FLOW]] - Value prop and business rules.
+	- [[code-dna]] - Architectural patterns and standards.
+	- [[resilience-policies]] - Stability and error handling.
+	- [[visuals]] - Mermaid diagrams.
+- # Use Cases
+	- [[Standardized Pipeline]]
+	- [[PRD Generation]]
+	- [[Security Infrastructure Audit]]

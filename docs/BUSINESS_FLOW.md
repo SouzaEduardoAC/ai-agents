@@ -1,5 +1,5 @@
 # Business Flow: Universal Agent Hub
-**Status:** [SYNC] | **Last AST Sync:** 2026-04-24
+**Status:** [SYNC] | **Last AST Sync:** 2026-04-25
 
 ## 1. Value Proposition
 A universal, portable framework for orchestrating specialized AI Agents. It enables seamless software engineering lifecycles across personal and corporate environments (Gemini, Claude, AntiGravity, Codex) with 100% conceptual integrity and high-fidelity artifacts.
@@ -16,7 +16,8 @@ A universal, portable framework for orchestrating specialized AI Agents. It enab
 
 * **Rule 0: PRD-First:** No planning occurs without a validated `[FEATURE]_PRD.md` from the Brainstormer.
 * **Rule 1: Human Approval Gates:** Mandatory user sign-off at each transition: PRD ready -> Analysis ready -> Plan ready -> Implementation ready.
-* **Rule 2: Test-First Integrity:** Implementation is incomplete until business logic is covered by unit/integration tests with a 100% pass rate.
-* **Rule 3: Commercial License Guard:** Agents MUST halt and request explicit permission before introducing any paid dependency.
-* **Rule 4: Multi-Environment Portability:** Agent logic must be accessible via `npx` and Model Context Protocol (MCP) to ensure consistency between work and home.
-* **Rule 5: Zero Context Dilution:** Use sequential persona handoffs to keep the AI focused on the current phase's specific skills.
+* **Rule 2: Test-First Integrity:** Implementation is incomplete until business logic is covered by unit/integration tests with a 100% pass rate. (ref: common/knowledge/testing_standard.md)
+* **Rule 3: Commercial License Guard:** Agents MUST halt and request explicit permission before introducing any paid dependency. (ref: common/knowledge/licensing.md)
+* **Rule 4: Multi-Environment Portability:** Agent logic must be accessible via `npx` and Model Context Protocol (MCP) to ensure consistency. (ref: bin/agent-hub.js)
+* **Rule 5: Zero Context Dilution:** Use sequential persona handoffs to keep the AI focused on the current phase's specific skills. (ref: index.js)
+* **Rule 6: Stack-Aware Intelligence:** Agents automatically adapt their knowledge base to the detected project stack (Go, .NET, React, etc.). (ref: index.js -> getDynamicKnowledge)

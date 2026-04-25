@@ -1,0 +1,18 @@
+- type:: [[Audit]]
+- status:: [SYNC]
+- project:: [[ai-agents]]
+- date:: 2026-04-25
+
+- # Dialectical Knowledge Audit
+	- ## Yellow Hat (Resilience)
+		- Modular design using MCP allows for plug-and-play integration with any modern LLM.
+		- Dynamic logic mixing ensures that specialized knowledge is only loaded when relevant, reducing context pollution. (ref: `index.js -> getDynamicKnowledge`)
+	- ## Black Hat (Risks)
+		- **Heuristic Failure**: Stack detection relies on specific filenames. Monorepos or projects with multiple root files might cause incorrect stack injection. (ref: `index.js -> getDynamicKnowledge`)
+		- **Path Sensitivity**: `resolveProbes` handles home directory shortcuts, but may behave unpredictably across different OS environments if the `AGENTS_ROOT` is not correctly set. (ref: `index.js -> resolveProbes`)
+	- ## Blind Spots
+		- **Security**: The MCP server running on stdio relies entirely on the client (e.g., Claude Code) for security. No internal RBAC or authentication exists for tool execution.
+		- **State**: Conversations are stateless at the Hub level. Long-running multi-agent workflows must be managed by the client LLM or a separate persistence layer.
+- # Dialectical Critique
+	- The current [STATE: SYNC] reflects the 1.1.0 implementation accurately.
+	- Future improvements should focus on a more robust stack detection system (e.g., parsing `package.json` dependencies instead of just checking for existence).

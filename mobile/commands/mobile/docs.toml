@@ -1,26 +1,14 @@
-description = "Mobile Docs: Sync Mobile logic with high-precision documentation."
+description = "Mobile Docs: Sync Mobile logic with high-precision Logseq-based documentation."
 
 prompt = """
 # Persona: Mobile Specialist
-!{cat ~/.gemini/agents/mobile/brain/persona.md}
+!{cat mobile/brain/persona.md}
 
-# Skills: Document Maintainer
-!{cat ~/.gemini/agents/mobile/skills/doc_maintainer.md}
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
 
 # Knowledge Base: Documentation Standards
-!{cat ~/.gemini/agents/mobile/knowledge/docs_standard.md}
-
-# Template: Business Flow
-!{cat ~/.gemini/agents/mobile/templates/business_flow.md}
-
-# Template: Use Case
-!{cat ~/.gemini/agents/mobile/templates/use_case.md}
-
-# Template: Technical Specs
-!{cat ~/.gemini/agents/mobile/templates/technical_specs.md}
-
-# Template: AI Context
-!{cat ~/.gemini/agents/mobile/templates/ai_context.md}
+!{cat mobile/knowledge/docs_standard.md}
 
 # Probes
 ## MCP Server Availability
@@ -29,28 +17,28 @@ prompt = """
 # Documentation Task
 Target: {{args}}
 
-Initialize Documentation Maintainer Protocol.
+## Execution Instructions:
+1. **MCP Integration:** Check the 'Probes' section. If relevant MCP servers (e.g., 'filesystem') are available, leverage them for Logseq graph manipulation.
+2. Initialize **Logseq Knowledge** protocol.
 
-1. **MCP Integration:** Check the 'Probes' section. If 'Context7', 'stitch', or 'dart/flutter' MCP servers are available, you MUST leverage them for AST-accurate documentation extraction.
+3. **Phase 0: State Detection.** 
+    - Verify current Logseq documentation in `docs/pages/`.
+    - Declare state: [GREENFIELD], [ADAPT], or [SYNC].
 
-2. **State Detection (Phase 0):** Analyze the target mobile components and declare state: [GREENFIELD], [ADAPT], or [SYNC].
-
-3. **AST-Driven Analysis:**
+4. **Phase 1: Mobile-Focused Analysis.**
     - Map **User Journeys** to **Mobile Screens**.
     - Extract **Widget Hierarchy** and **State Management Flow**.
     - Identify **Navigation Strategy** and **Platform Integration** patterns.
-    - Detect **Mobile DNA**: Dart conventions, BLoC/Riverpod usage, and A11y strategies.
+    - Detect **Mobile DNA**: Platform conventions, state management usage, and A11y strategies.
 
-4. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (Auth flows, Method Channels, state transitions).
+5. **Phase 2: Logseq Enrichment.**
+    - **Update/Generate Docs:** Write technical findings directly to `docs/pages/` using Logseq outliner format.
+    - **Linking:** Ensure all new pages are linked back to `[[TECHNICAL_SPECS]]` and `[[BUSINESS_FLOW]]`.
+    - **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for complex mobile flows in `docs/pages/visuals.md`.
 
-5. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+6. **Phase 3: Verification.** 
+    - Apply Mobile Yellow/Black Hat analysis. 
+    - Every technical claim MUST include an AST citation: `(ref: WidgetName)`.
 
-6. **Verification:** Apply Mobile Yellow/Black Hat analysis. Every technical claim MUST include an AST citation: `(ref: WidgetName)`.
-
-7. **Output:** Generate/Update the documentation suite at the following locations:
-   - docs/BUSINESS_FLOW.md
-   - docs/use_cases/*.md
-   - docs/TECHNICAL_SPECS.md
-   - docs/AI_Context.md
-   - README.md
+7. **Closure.** Summarize the mobile-specific updates made to the Logseq graph.
 """

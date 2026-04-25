@@ -1,26 +1,14 @@
-description = "Backend Docs: Sync codebase logic with high-precision documentation."
+description = "Backend Docs: Sync codebase logic with high-precision Logseq-based documentation."
 
 prompt = """
-# Persona: Software Engineer
-!{cat ~/.gemini/agents/backend/brain/persona.md}
+# Persona: Backend Specialist
+!{cat backend/brain/persona.md}
 
-# Skills: Document Maintainer
-!{cat ~/.gemini/agents/backend/skills/doc_maintainer.md}
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
 
 # Knowledge Base: Documentation Standards
-!{cat ~/.gemini/agents/backend/knowledge/docs_standard.md}
-
-# Template: Business Flow
-!{cat ~/.gemini/agents/backend/templates/business_flow.md}
-
-# Template: Use Case
-!{cat ~/.gemini/agents/backend/templates/use_case.md}
-
-# Template: Technical Specs
-!{cat ~/.gemini/agents/backend/templates/technical_specs.md}
-
-# Template: AI Context
-!{cat ~/.gemini/agents/backend/templates/ai_context.md}
+!{cat backend/knowledge/docs_standard.md}
 
 # Probes
 ## MCP Server Availability
@@ -30,27 +18,26 @@ prompt = """
 Target: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for documentation generation, consistency checking, or API reference mapping.
-2. Initialize Documentation Maintainer Protocol.
+1. **MCP Integration:** Check the 'Probes' section. If relevant MCP servers (e.g., 'filesystem') are available, leverage them for Logseq graph manipulation.
+2. Initialize **Logseq Knowledge** protocol.
 
-3. **State Detection (Phase 0):** Analyze the target and declare state: [GREENFIELD], [ADAPT], or [SYNC]. State the reasoning (e.g., 'Detected 30% logic drift in ADAPT state').
+3. **Phase 0: State Detection.** 
+    - Verify current Logseq documentation in `docs/pages/`.
+    - Declare state: [GREENFIELD], [ADAPT], or [SYNC].
 
-2. **AST-Driven Analysis:**
-    - Map **Business Use Cases** to **User Roles**.
-    - Extract **Architectural Design** (Hexagonal, Layered, etc.) and **Dependency Injection** lifecycles.
+4. **Phase 1: Backend-Focused Analysis.**
+    - Map API endpoints, data models, and service dependencies.
     - Identify **Resilience Policies** (Retries/Timeouts) and **Database Indexes**.
-    - Detect **Code DNA**: Design patterns, naming conventions, and exception strategies.
+    - Detect **Backend DNA**: Error handling strategies, authentication flows, and background task processing.
 
-3. **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for any process meeting the 'Complexity Threshold' (OAuth2, math, multi-service).
+5. **Phase 2: Logseq Enrichment.**
+    - **Update/Generate Docs:** Write technical findings directly to `docs/pages/` using Logseq outliner format.
+    - **Linking:** Ensure all new pages are linked back to `[[TECHNICAL_SPECS]]` and `[[BUSINESS_FLOW]]`.
+    - **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for complex backend logic in `docs/pages/visuals.md`.
 
-4. **Template Enforcement:** Populated templates provided in context. Do not deviate from the structure.
+6. **Phase 3: Verification.** 
+    - Apply Yellow/Black Hat analysis and 'Blind Spot' notes. 
+    - Every technical claim MUST include an AST citation: `(ref: function_name)`.
 
-5. **Verification:** Apply Yellow/Black Hat analysis and 'Blind Spot' notes. Every technical claim MUST include an AST citation: `(ref: function_name)`.
-
-6. **Output:** Generate/Update the documentation suite at the following locations:
-   - docs/BUSINESS_FLOW.md (High-level summary with links)
-   - docs/use_cases/*.md (One file per non-trivial business use case)
-   - docs/TECHNICAL_SPECS.md
-   - docs/AI_Context.md
-   - README.md (Update with links)
+7. **Closure.** Summarize the backend-specific updates made to the Logseq graph.
 """
