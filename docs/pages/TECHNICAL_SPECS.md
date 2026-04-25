@@ -3,13 +3,27 @@
 - version:: 1.1.0
 - project:: [[ai-agents]]
 
-- # Core Infrastructure: Universal Agent Hub (Deep Mode)
+- # Core Infrastructure: Universal Agent Hub (Deep Specification)
 	- ## Entry Point Logic (Binary Execution)
 		- Binary:: `bin/agent-hub.js` (ref: `package.json -> bin`)
-		- Commands::
-			- `serve`: Spawns the Hub server (ref: `index.js`).
-			- `bootstrap`: Installs Gemini TOMLs into `~/.gemini/commands` and AntiGravity personas into `~/.gemini/antigravity/brain`. (ref: `bin/agent-hub.js -> bootstrap`)
-			- `link <agent> <target>`: Creates a symlink between an agent's `persona.md` and a project-specific instruction file.
+		- **Command: `serve`**: 
+			- Function:: Spawns the Hub server (ref: `index.js`).
+			- Transport:: Uses `StdioServerTransport` for direct CLI-to-Hub communication.
+		- **Command: `bootstrap` (Environment Initialization)**: 
+			- Function:: One-time local environment setup for Gemini and AntiGravity.
+			- **Step 0: MCP Configuration**:
+				- Path:: `~/.gemini/settings.json`
+				- Logic:: Dynamically injects the `filesystem` MCP server configuration if missing, targeting the project's `/docs` folder.
+			- **Step 1: Gemini Slash Commands**:
+				- Source:: `[agent]/commands/[agent]/*.toml`
+				- Target:: `~/.gemini/commands/[agent]/`
+				- Logic:: Performs path reconciliation, replacing `~/.gemini/agents` and relative paths with the absolute Hub root. (ref: `bin/agent-hub.js -> bootstrap`)
+			- **Step 2: AntiGravity Personas**:
+				- Source:: `[agent]/brain/persona.md`
+				- Target:: `~/.gemini/antigravity/brain/[agent].md`
+				- Logic:: Physical copy of persona files for native AntiGravity orchestration.
+		- **Command: `link <agent> <target>`**: 
+			- Function:: Creates a hard filesystem symlink between the agent's core `persona.md` and a project-specific instruction file (e.g., `.cursorrules`).
 	- ## The Orchestration Engine (The Bridge)
 		- **Logic Mixing (AMD Core)**: 
 			- The Hub server performs a multi-stage prompt assembly before delivering to the LLM.
