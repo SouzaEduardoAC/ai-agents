@@ -1,13 +1,36 @@
 - type:: [[Technical Specification]]
 - status:: [SYNC]
+- version:: 1.1.0
 - project:: [[ai-agents]]
 
-- # Core Infrastructure: Universal Agent Hub
-	- ## Entry Points
-		- [CLI] `agent-hub serve`: Starts the MCP server on stdio. (ref: `bin/agent-hub.js`)
-		- [MCP] `list_agents`: Returns a list of all available agent directories. (ref: `index.js -> list_agents`)
-		- [MCP] `get_agent_prompt`: Retrieves mixed persona (Persona + Common + Skills). (ref: `index.js -> get_agent_prompt`)
-		- [MCP] `call_agent_command`: Executes TOML-based commands with dynamic mixing. (ref: `index.js -> call_agent_command`)
-	- ## Logic Mixing Core
-		- **Dynamic Stack Detection**: Scans CWD for signature files (Go, .NET, React, etc.) to inject relevant knowledge. (ref: `index.js -> getDynamicKnowledge`)
-		- **Probe Resolution**: Automatically resolves `!{cat path}` expressions. (ref: `index.js -> resolveProbes`)
+- # Core Infrastructure: Universal Agent Hub (Deep Mode)
+	- ## Entry Point Logic (Binary Execution)
+		- Binary:: `bin/agent-hub.js` (ref: `package.json -> bin`)
+		- Commands::
+			- `serve`: Spawns the Hub server (ref: `index.js`).
+			- `bootstrap`: Installs Gemini TOMLs into `~/.gemini/commands` and AntiGravity personas into `~/.gemini/antigravity/brain`. (ref: `bin/agent-hub.js -> bootstrap`)
+			- `link <agent> <target>`: Creates a symlink between an agent's `persona.md` and a project-specific instruction file.
+	- ## The Orchestration Engine (The Bridge)
+		- **Logic Mixing (AMD Core)**: 
+			- The Hub server performs a multi-stage prompt assembly before delivering to the LLM.
+			- Formula:: `Prompt = Common Standards + Common Skills + Dynamic Stack Skills + Agent Persona + Agent Skills + Agent Knowledge + Command Prompt`.
+			- (ref: `index.js -> call_agent_command`)
+		- **Dynamic Stack Detection (The Heuristic Engine)**:
+			- Activated for: `architect`, `backend`, `frontend`, `mobile`.
+			- Detection Markers:
+				- **.NET**: `.csproj`, `.sln`, `global.json`.
+				- **Java**: `pom.xml`, `build.gradle`, `build.gradle.kts`.
+				- **Go**: `go.mod`, `go.sum`, `*.go`.
+				- **React**: `package.json` (containing "react") + `App.tsx` or `src/`.
+				- **Angular**: `angular.json`, `nx.json`.
+				- **Flutter**: `pubspec.yaml`.
+			- (ref: `index.js -> getDynamicKnowledge`)
+		- **Probe Resolution Logic (The !{cat} Pattern)**:
+			- Pattern:: `/!\{cat\s+([^\}]+)\}/g`
+			- Behavior:: Resolves paths relative to `AGENTS_ROOT` or `~/.gemini/agents`.
+			- Fail-safe:: Replaces failed reads with `[Error reading file: path]`.
+			- (ref: `index.js -> resolveProbes`)
+	- ## Data Standards & Guardrails
+		- **Testing Gate**: Mandates unit tests for business logic and regression tests for bug fixes. (ref: `common/knowledge/testing_standard.md`)
+		- **Licensing Gate**: Mandatory **HALT** and **ROI Logic** report for commercial dependencies. (ref: `common/knowledge/licensing.md`)
+		- **Git Gate**: Strictly follows Conventional Commits 1.0.0. (ref: `common/knowledge/git_standard.md`)

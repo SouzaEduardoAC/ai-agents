@@ -1,15 +1,29 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
+- tags:: #lifecycle #process #standards
 
-- # Standardized Pipeline
-	- ## Description
-		- The sequential engineering lifecycle (Brainstormer -> Architect -> Developer).
-	- ## Logic Flow
-		- ```mermaid
-		  graph TD
-		      A[Requirement] --> B[PRD]
-		      B --> C[Plan]
-		      C --> D[Code]
-		      D --> E[Review]
-		      E --> F[Commit]
-		  ```
+- # Standardized Engineering Lifecycle (Deep Specification)
+	- ## Phase 1: Discovery (Mode: INVESTIGATE)
+		- 1. **Grounding**: Read `AI Context` or `GEMINI.md`.
+		- 2. **Deep Research**: Autonomously map data flows, dependencies, and side-effects across the codebase.
+		- 3. **Interactive Clarification**: Identify ambiguities in business logic, edge cases, or constraints. **STOP** and ask targeted questions if needed.
+		- 4. **Discovery Artifact**: Write findings and confirmed understanding to `[FEATURE]_DISCOVERY.md`.
+		- 5. **Gate 0 (Human Approval)**: Await explicit user approval of the discovery artifact before drafting the plan.
+	- ## Phase 2: Architectural Planning (Mode: PLAN)
+		- 1. **Load Context**: Read `[FEATURE]_DISCOVERY.md` to align with approved understanding.
+		- 2. **Contextualize**: Trace specific logic/dependencies based on the discovery.
+		- 3. **Draft Plan**: Create a detailed Implementation Plan and write to `[FEATURE]_IMPLEMENTATION_PLAN.md`.
+		- 4. **Gate 1 (Human Approval)**: Await explicit user approval of the plan before proceeding to implementation.
+	- ## Phase 3: Implementation (Mode: IMPLEMENT)
+		- 1. **Load Contract**: Read `[FEATURE]_IMPLEMENTATION_PLAN.md`.
+		- 2. **Sync**: Verify current codebase still matches the plan's assumptions.
+		- 3. **Tasking**: Create a `TODO.md` based on the plan.
+		- 4. **Pre-Test Guard (Private Feed Check)**:
+			- Inspect `package.json`, `*.csproj`, `requirements.txt`.
+			- **HALT**: If private/internal registries are detected, ask user for the configuration file (`.npmrc`, `nuget.config`, etc.).
+		- 5. **Execution & Testing**: Implement changes; write and run unit/integration tests.
+		- 6. **Verification**: 100% pass rate required. (ref: `common/knowledge/testing_standard.md`)
+		- 7. **Gate 2 (Human Approval)**: Present final diff and review report.
+	- ## Phase 4: Reconciliation & Sync
+		- 1. **Plan Reconciliation**: Update `[FEATURE]_IMPLEMENTATION_PLAN.md` with final status (`[DONE]` or `[PARTIAL]`).
+		- 2. **Post-Sync**: Update Logseq graph to reflect the final code state. (ref: `architect/commands/architect/docs.toml`)
