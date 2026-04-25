@@ -21,6 +21,11 @@ Before modification, the agent **MUST** classify the environment:
 2.  **Tab Indentation:** Use hierarchy to denote relationships.
 3.  **Properties:** Use `key:: value` for metadata. (Mandatory: `type::`, `status::`).
 4.  **Task Management:** Use `TODO`/`DONE` markers for implementation tracking.
+5.  **Graph Integrity (The No-Ghost-Page Rule):** Any agent creating a link `[[PageName]]` is MANDATED to initialize that file. If the content is not yet available, it must contain a `status:: [[STUB]]` and a `TODO` for the responsible persona.
+6.  **Persona-Driven Accountability:** Documentation is not "secondary." 
+    *   **Architects** are responsible for structural blocks (ADRs, Pipelines).
+    *   **Developers** are responsible for implementation blocks (Logic flows, AST citations).
+    *   **Compliance** is responsible for audit/regulatory blocks.
 
 ---
 
@@ -29,14 +34,17 @@ Before modification, the agent **MUST** classify the environment:
 ### Phase 1: The Brainstorm (Logseq PRD)
 *   **Action:** Generate Logseq PRD in `docs/pages/[project]-prd.md`.
 *   **Requirement:** Every FR must be a top-level block with a `[[FR-XX]]` link.
+*   **Integrity Check:** Populate the `[[FR-XX]]` pages immediately with requirement details.
 
 ### Phase 2: The Architect (Logseq ADR/Design)
 *   **Action:** Generate ADR in `docs/pages/[project]-architecture.md`.
 *   **Requirement:** Link decisions back to PRD requirements. Include **Mermaid** sequence diagrams as sub-blocks.
+*   **Integrity Check:** Ensure all linked architectural nodes are initialized.
 
 ### Phase 3: The Consolidator (Journal & Rules)
 *   **Action:** Update `docs/journals/YYYY_MM_DD.md` and `docs/pages/business-rules.md`.
 *   **Extraction:** Identify IoC/DI registrations, Database Traces, and Retry Policies to update the graph.
+*   **Accuracy:** Use the **Documentation Maintainer** skill to verify AST citations `(ref: symbol)`.
 
 ---
 
