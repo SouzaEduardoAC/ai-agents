@@ -33,8 +33,10 @@ Before modification, the agent **MUST** classify the environment:
 
 ### Phase 1: The Brainstorm (Logseq PRD)
 *   **Action:** Generate Logseq PRD in `docs/pages/[project]-prd.md`.
-*   **Requirement:** Every FR must be a top-level block with a `[[FR-XX]]` link.
-*   **Integrity Check:** Populate the `[[FR-XX]]` pages immediately with requirement details.
+*   **Mandatory Requirements Syntax:**
+    *   **User Stories:** Every functional requirement must follow the `As a [Role], I want [Action] so that [Value]` format.
+    *   **Acceptance Criteria (AC):** Every `[[FR-XX]]` block MUST contain a nested list of verifiable Acceptance Criteria.
+*   **Integrity Check:** Populate the `[[FR-XX]]` pages immediately with these details to prevent "Ghost Requirements."
 
 ### Phase 2: The Architect (Logseq ADR/Design)
 *   **Action:** Generate ADR in `docs/pages/[project]-architecture.md`.
@@ -43,7 +45,11 @@ Before modification, the agent **MUST** classify the environment:
 
 ### Phase 3: The Consolidator (Journal & Rules)
 *   **Action:** Update `docs/journals/YYYY_MM_DD.md` and `docs/pages/business-rules.md`.
-*   **Extraction:** Identify IoC/DI registrations, Database Traces, and Retry Policies to update the graph.
+*   **Forensic Extraction (Parity with doc_maintainer):**
+    *   **Boundary Audit:** Identify if "Infrastructure" is leaking into "Domain" (ref: `doc_maintainer` §3A).
+    *   **Auth & Role Mapping:** Trace `@authorized` or conditional roles to entry points.
+    *   **Resilience & Data Logic:** Extract IoC/DI registrations, Database Traces (Tables/Indexes), and specific Retry Policies (ms/backoff).
+    *   **Complexity Visualization:** **MANDATORY** Mermaid sequence diagrams for: OAuth2, Distributed Transactions, and Recursive Logic.
 *   **Accuracy:** Use the **Documentation Maintainer** skill to verify AST citations `(ref: symbol)`.
 
 ---
