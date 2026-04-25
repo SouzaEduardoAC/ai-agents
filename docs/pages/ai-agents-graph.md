@@ -1,5 +1,7 @@
 - type:: [[Index]]
 - title:: [[ai-agents]] Knowledge Graph
+- status:: [SYNC]
+- project:: [[ai-agents]]
 
 - # Project Overview
 	- The Universal Agent Hub for AI-driven software engineering.
@@ -10,6 +12,8 @@
 	- [[resilience-policies]] - Stability and error handling.
 	- [[visuals]] - Mermaid diagrams.
 - # Use Cases
-	- [[Standardized Pipeline]]
-	- [[PRD Generation]]
-	- [[Security Infrastructure Audit]]
+	- [[Standardized Pipeline]] - The sequential engineering workflow.
+	- [[PRD Generation]] - Requirements elicitation.
+	- [[Security Infrastructure Audit]] - Vulnerability scanning.
+	- [[Regulatory & Compliance Audit]] - Governance.
+	- [[Universal Skill Injection]] - Knowledge synthesis.

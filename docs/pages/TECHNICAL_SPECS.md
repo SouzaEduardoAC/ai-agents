@@ -1,27 +1,13 @@
 - type:: [[Technical Specification]]
 - status:: [SYNC]
 - project:: [[ai-agents]]
-- last_sync:: 2026-04-25
 
 - # Core Infrastructure: Universal Agent Hub
-	- ## Entry Points & Access Control
-		- [CLI] `agent-hub serve`: Starts the MCP server on stdio. Target: Claude / Gemini.
-		- [CLI] `agent-hub bootstrap`: One-time local environment setup (Gemini/AntiGravity). (ref: `bin/agent-hub.js`)
-		- [CLI] `agent-hub link <agent> <target>`: Symlinks agent persona to local file (e.g. .cursorrules). (ref: `bin/agent-hub.js`)
+	- ## Entry Points
+		- [CLI] `agent-hub serve`: Starts the MCP server on stdio. (ref: `bin/agent-hub.js`)
 		- [MCP] `list_agents`: Returns a list of all available agent directories. (ref: `index.js -> list_agents`)
-		- [MCP] `get_agent_prompt`: Retrieves full mixed persona (Persona + Common + Skills). (ref: `index.js -> get_agent_prompt`)
-		- [MCP] `call_agent_command`: Executes TOML-based commands with dynamic mixing. (ref: `index.js -> call_agent_command`)
-	- ## Runtime & Logic Mixing
-		- Runtime:: Node.js (ESM)
-		- Core SDK:: `@modelcontextprotocol/sdk` (ref: `package.json`)
-		- **Logic Mixing (The "AMD" Core)**:
-			- Dynamic scan of `common/knowledge` and `common/skills`.
-			- **Dynamic Stack Detection**: Scans CWD for signature files to inject relevant stack knowledge. (ref: `index.js -> getDynamicKnowledge`)
-			- **Probe Resolution**: Automatically resolves `!{cat path}` expressions. (ref: `index.js -> resolveProbes`)
-	- ## Data & Persistence Standards
-		- Pipeline:
-			- 1. PRD: `[FEATURE]_PRD.md` (Owner: [[Brainstormer]])
-			- 2. Analysis: `[FEATURE]_TECHNICAL_ANALYSIS.md` (Owner: [[Architect]])
-			- 3. Plan: `[FEATURE]_IMPLEMENTATION_PLAN.md` (Owner: [[Architect]])
-			- 4. Tests: Business logic coverage (Owner: [[Developer]])
-		- Licensing Gate: `common/knowledge/licensing.md` mandates "Halt & Ask" for commercial libraries.
+		- [MCP] `get_agent_prompt`: Retrieves mixed persona. (ref: `index.js -> get_agent_prompt`)
+		- [MCP] `call_agent_command`: Executes commands. (ref: `index.js -> call_agent_command`)
+	- ## Logic Mixing
+		- **Dynamic Stack Detection**: Scans CWD for signature files. (ref: `index.js -> getDynamicKnowledge`)
+		- **Probe Resolution**: Resolves `!{cat path}` expressions. (ref: `index.js -> resolveProbes`)

@@ -1,16 +1,12 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #requirements #n8n
+- tags:: #requirements
 
 - # PRD Generation
 	- ## Description
-		- Transform chaotic business requirements into high-fidelity Product Requirements Documents (PRD).
-	- ## Primary Roles
-		- [[Brainstormer]]
+		- Transforming requirements into high-fidelity documents.
 	- ## Workflow
-		- 1. **Elicitation**: Interview user for requirements.
-		- 2. **Analysis**: Categorize into Functional/Non-Functional.
-		- 3. **Drafting**: Generate `[FEATURE]_PRD.md`.
-		- 4. **Review**: User sign-off.
-	- ## Success Criteria
-		- Clear, unambiguous user stories and acceptance criteria.
+		- 1. Elicitation
+		- 2. Analysis
+		- 3. Drafting
+		- 4. Review

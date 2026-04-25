@@ -1,16 +1,9 @@
 - type:: [[Knowledge]]
 - status:: [ADOPT]
-- project:: [[ai-agents]]
 - tags:: #resilience #stability
 
 - # Stability & Resilience Protocols
 	- ## Distributed Systems Patterns
 		- **Circuit Breakers**: Prevent cascading failures. (ref: `architect/knowledge/bottlenecks.md`)
-		- **Bulkheads**: Isolation of resources. (ref: `architect/knowledge/bottlenecks.md`)
 		- **Retry Patterns**: Exponential backoff with jitter. (ref: `architect/knowledge/bottlenecks.md`)
 		- **Timeouts**: Enforced on all I/O operations. (ref: `architect/knowledge/bottlenecks.md`)
-		- **Dead Letter Queues (DLQ)**: Handling unprocessable messages. (ref: `architect/knowledge/bottlenecks.md`)
-	- ## Observability
-		- **Structured Logging**: JSON-based with correlation IDs.
-		- **Distributed Tracing**: OpenTelemetry support.
-		- **Metrics**: Latency, Throughput, Error Rate tracking.

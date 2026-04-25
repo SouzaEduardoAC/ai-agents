@@ -5,16 +5,7 @@
 - # Value Proposition
 	- A universal, portable framework for orchestrating specialized AI Agents.
 - # Global Business Rules
-	- **Rule 0: PRD-First**: No planning without a validated `[FEATURE]_PRD.md` from [[Brainstormer]].
+	- **Rule 0: PRD-First**: No planning without a validated `[FEATURE]_PRD.md`.
 	- **Rule 1: Human Approval Gates**: Mandatory user sign-off at each transition.
 	- **Rule 2: Test-First Integrity**: Implementation incomplete until 100% test pass rate. (ref: `common/knowledge/testing_standard.md`)
-	- **Rule 3: Commercial License Guard**: Halt and request permission for paid dependencies. (ref: `common/knowledge/licensing.md`)
-	- **Rule 4: Multi-Environment Portability**: Logic must be accessible via `npx` and MCP. (ref: `bin/agent-hub.js`)
-	- **Rule 5: Zero Context Dilution**: Use sequential persona handoffs. (ref: `index.js`)
 	- **Rule 6: Stack-Aware Intelligence**: Automatic KB adaptation to project stack. (ref: `index.js -> getDynamicKnowledge`)
-- # Use Cases
-	- [[Standardized Pipeline]]
-	- [[PRD Generation]]
-	- [[Regulatory & Compliance Audit]]
-	- [[Security Infrastructure Audit]]
-	- [[Universal Skill Injection]]

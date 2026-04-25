@@ -1,13 +1,9 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #compliance #audit
+- tags:: #compliance
 
 - # Regulatory & Compliance Audit
 	- ## Description
-		- Audit codebase against global standards (GDPR, HIPAA, SOC2).
-	- ## Primary Roles
+		- Codebase audit against GDPR, HIPAA, etc.
+	- ## Roles
 		- [[Compliance]]
-	- ## Scope
-		- Data privacy controls.
-		- Access management audit.
-		- Retention policy verification.

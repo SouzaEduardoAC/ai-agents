@@ -1,15 +1,9 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #security #audit
+- tags:: #security
 
 - # Security Infrastructure Audit
 	- ## Description
-		- Multi-layered vulnerability scans with prioritized remediation roadmaps.
-	- ## Primary Roles
+		- Multi-layered vulnerability scanning and remediation.
+	- ## Roles
 		- [[Architect]] (Security Auditor)
-	- ## Scope
-		- Dependency vulnerability scans.
-		- Static code analysis (SAST).
-		- Infrastructure configuration review.
-	- ## Success Criteria
-		- Zero Critical/High vulnerabilities in the implementation branch.

@@ -1,17 +1,10 @@
 - type:: [[Knowledge]]
 - status:: [ADOPT]
-- project:: [[ai-agents]]
 - tags:: #patterns #coding-standards
 
 - # Code DNA & Architectural Patterns
 	- ## Architectural Styles
-		- **Clean / Hexagonal Architecture**: Strict separation of concerns. (ref: `architect/knowledge/patterns.md`)
-		- **Event-Driven (EDA)**: Asynchronous, decoupled, reactive systems. (ref: `architect/knowledge/patterns.md`)
-		- **Microservices**: Domain-based scaling (Bounded Contexts).
-	- ## Core Principles
+		- **Clean Architecture**: Separation of concerns. (ref: `architect/knowledge/patterns.md`)
 		- **SOLID**: Standard OO design principles. (ref: `architect/knowledge/patterns.md`)
-		- **DRY/KISS/YAGNI**: Lean maintainability focus.
 	- ## Testing DNA
 		- **"Unverified Code is Debt"**: Core testing philosophy. (ref: `common/knowledge/testing_standard.md`)
-		- **Regression-First**: Fixes must include a failing test reproduction. (ref: `common/knowledge/testing_standard.md`)
-		- **Level Separation**: Unit (isolated) vs. Integration (dependencies) vs. E2E (golden path).
