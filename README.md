@@ -1,69 +1,69 @@
 # Agentic AI Framework (Universal Agent Hub) v1.1.0
 **Standardized orchestration for specialized AI Agents across Gemini, Claude, AntiGravity, and Codex.**
 
-## Overview
-This repository is a **Universal Agent Hub**. It centralizes personas, technical knowledge, and engineering protocols, serving them dynamically to your preferred AI assistant via the Model Context Protocol (MCP).
-
-## Key Features
-- **Sequential Handoff:** Clean separation of concerns (Brainstormer -> Architect -> Developer).
-- **Dynamic Stack Detection:** Automatically injects knowledge for .NET, Java, Go, React, Angular, Vue, TS, JS, and Flutter.
-- **MCP Native:** Deep integration with Claude Code, Gemini CLI, and AntiGravity.
-- **One-Command Setup:** Universal bootstrap for all environments.
-- **Probe Resolution:** `!{cat ...}` support for real-time file injection in prompts.
+## 🧠 Graph-First Documentation (AI Optimized)
+This project utilizes a **Logseq-powered Knowledge Graph** for its documentation. 
+- **Efficiency**: Optimized for AI consumption to minimize token overhead while maximizing signal precision.
+- **Traceability**: Every technical claim is linked to an AST citation `(ref: symbol)`.
+- **Navigation**: Start at the **[[ai-agents-graph]]** node for a full architectural deep-dive.
 
 ---
 
-## Installation & Setup
+## 🚀 Installation & Updates
 
-### 1. The Hub Server (MCP)
+### 1. Start the MCP Server
 Required for **Claude Code** and **Gemini CLI**.
 ```bash
-# In Claude Code or Gemini CLI
+# Register the hub as an MCP tool
 mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
-### 2. The Universal Bootstrap (One-Time Setup)
-Run this to install **all** Gemini commands and **all** AntiGravity personas automatically.
+### 2. Universal Bootstrap (One-Time Setup)
+Installs all Gemini slash commands and AntiGravity personas locally.
 ```bash
 npx github:SouzaEduardoAC/ai-agents bootstrap
 ```
 
-### 3. Codex / Cursor / IDE Setup
-For IDE-specific instructions (like `.cursorrules`), link your desired agent:
+### 3. IDE Integration (Codex / Cursor)
+Link an agent persona to your local project (e.g., `.cursorrules`):
 ```bash
 npx github:SouzaEduardoAC/ai-agents link [agent-name] [target-file]
 ```
 
----
-
-## Usage Examples
-
-### Claude Code
-```text
-"Use the agent-hub to call the 'master' 'run' command for task: Build a task manager"
-```
-
-### Gemini CLI
-```text
-/master "Implement OAuth2 login for our Express API"
-/architect:auditor security "Audit the auth module"
+### 🔄 Keeping it Current
+To update the Hub logic and local personas:
+```bash
+npx --prefer-online github:SouzaEduardoAC/ai-agents bootstrap
 ```
 
 ---
 
-## Documentation Suite
-- **[AI Context](./docs/AI_Context.md)**: Technical "BIOS" and architecture.
-- **[Business Flow](./docs/BUSINESS_FLOW.md)**: Use cases and global rules.
-- **[Technical Specs](./docs/TECHNICAL_SPECS.md)**: Entry points and internal logic.
-- **[Use Cases](./docs/use_cases/)**: Detailed process flows.
+## 🛠 Contribution & Engineering Standards
+We maintain a "Zero Trust" model for code and documentation integrity.
+- **Engineering DNA**: Foundational patterns and standards are codified in **[[code-dna]]**.
+- **Stability Protocols**: Resilience policies (Retries, Circuit Breakers) are in **[[resilience-policies]]**.
+- **Conventional Commits**: We strictly follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/).
+
+### How to Contribute
+1. **PRD-First**: No logic change occurs without a validated requirements page in the graph.
+2. **Test-First**: Bug fixes require a failing test reproduction; new features require 100% logic coverage.
+3. **Graph Sync**: Every code change MUST be synchronized with the Logseq graph using `/architect:docs`.
 
 ---
 
-## Core Agents
-- **[Master](./master/)**: Chief Orchestrator.
-- **[Brainstormer](./brainstormer/)**: Gateway Agent (PRD generation).
-- **[Architect](./architect/)**: Systems design and review.
-- **[Backend](./backend/)**, **[Frontend](./frontend/)**, **[Mobile](./mobile/)**: Implementation specialists.
-- **[Compliance](./compliance/)**: Regulatory audits.
-- **[n8n Specialist](./n8n/)**: Automation workflow architect.
-- **[Researcher](./researcher/)**: Information synthesis and browsing.
+## 📂 Documentation Suite (Graph Nodes)
+- **[[ai-agents-graph]]**: The master entry point.
+- **[[TECHNICAL_SPECS]]**: Internal logic, MCP tools, and runtime specs.
+- **[[BUSINESS_FLOW]]**: Use cases and global business rules.
+- **[[Standardized Pipeline]]**: Our autonomous engineering lifecycle.
+
+---
+
+## 🤖 Core Agents
+- **[[Master Orchestrator]]**: PM / Chief Orchestrator.
+- **[[Brainstormer]]**: PO / Requirements Gateway.
+- **[[Architect]]**: Systems Lead / Security Auditor.
+- **[[Backend]]**, **[[Frontend]]**, **[[Mobile]]**: Implementation specialists.
+- **[[Compliance]]**: Regulatory & Risk Auditor.
+- **[[Researcher]]**: Strategic Analyst.
+- **[[n8n]]**: Automation Architect.
