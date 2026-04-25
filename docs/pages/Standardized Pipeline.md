@@ -1,17 +1,15 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #lifecycle
 
-- # Standardized Engineering Lifecycle
+- # Standardized Pipeline
 	- ## Description
-		- Autonomous workflow from requirement to implementation.
-	- ## Visual Logic
+		- The sequential engineering lifecycle (Brainstormer -> Architect -> Developer).
+	- ## Logic Flow
 		- ```mermaid
 		  graph TD
-		      A[User] --> B[Trigger]
-		      B --> C[Research]
-		      C --> D[Planning]
-		      D --> E[Execution]
-		      E --> F[Review]
-		      F --> G[Commit]
+		      A[Requirement] --> B[PRD]
+		      B --> C[Plan]
+		      C --> D[Code]
+		      D --> E[Review]
+		      E --> F[Commit]
 		  ```

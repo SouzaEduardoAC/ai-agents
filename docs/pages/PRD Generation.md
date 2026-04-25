@@ -1,12 +1,9 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #requirements
 
 - # PRD Generation
 	- ## Description
-		- Transforming requirements into high-fidelity documents.
-	- ## Workflow
-		- 1. Elicitation
-		- 2. Analysis
-		- 3. Drafting
-		- 4. Review
+		- Requirements elicitation and PRD drafting.
+	- ## Mandatory Syntax
+		- **User Story**: `As a [Role], I want [Action] so that [Value]`.
+		- **Acceptance Criteria**: Verifiable "Done" conditions for each FR.

@@ -6,14 +6,20 @@
 - # Project Overview
 	- The Universal Agent Hub for AI-driven software engineering.
 - # Navigation
-	- [[TECHNICAL_SPECS]] - Core architecture and MCP details.
-	- [[BUSINESS_FLOW]] - Value prop and business rules.
-	- [[code-dna]] - Architectural patterns and standards.
-	- [[resilience-policies]] - Stability and error handling.
+	- [[TECHNICAL_SPECS]] - Core architecture and MCP details. (ref: `bin/agent-hub.js`)
+	- [[BUSINESS_FLOW]] - Value prop and business rules. (ref: `index.js`)
+	- [[code-dna]] - Architectural patterns and standards. (ref: `architect/knowledge/patterns.md`)
+	- [[resilience-policies]] - Stability and error handling. (ref: `architect/knowledge/bottlenecks.md`)
 	- [[visuals]] - Mermaid diagrams.
+- # Specialized Agents
+	- [[Master Orchestrator]] - Senior Project Manager.
+	- [[Brainstormer]] - Product Owner.
+	- [[Architect]] - Systems Architect.
+	- [[Backend]] / [[Frontend]] / [[Mobile]] - Implementation.
+	- [[Compliance]] - Privacy Auditor.
+	- [[Researcher]] - Strategic Analyst.
+	- [[n8n]] - Automation Architect.
 - # Use Cases
-	- [[Standardized Pipeline]] - The sequential engineering workflow.
-	- [[PRD Generation]] - Requirements elicitation.
-	- [[Security Infrastructure Audit]] - Vulnerability scanning.
-	- [[Regulatory & Compliance Audit]] - Governance.
-	- [[Universal Skill Injection]] - Knowledge synthesis.
+	- [[Standardized Pipeline]] - Engineering lifecycle.
+	- [[PRD Generation]] - Requirements.
+	- [[Security Infrastructure Audit]] - Vulnerabilities.

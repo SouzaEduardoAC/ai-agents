@@ -4,20 +4,10 @@
 
 - # Value Proposition
 	- A universal, portable framework for orchestrating specialized AI Agents.
-	- Ensures 100% conceptual integrity across different LLM environments (Claude, Gemini, Cursor).
-- # Global Business Rules (The Hub Guardrails)
-	- **Rule 0: PRD-First**: No technical implementation allowed without a validated `[FEATURE]_PRD.md`.
-	- **Rule 1: Human Approval Gates**: Mandatory user sign-off for Discovery, Plans, and Final Implementation.
-	- **Rule 2: Test-First Integrity**: "Unverified Code is Debt." 100% pass rate required. (ref: `common/knowledge/testing_standard.md`)
-	- **Rule 3: Commercial License Guard**: HALT and ask before introducing paid dependencies. (ref: `common/knowledge/licensing.md`)
-	- **Rule 4: Multi-Environment Portability**: Logic must remain accessible via `npx` and MCP.
-	- **Rule 5: Zero Context Dilution**: Use sequential handoffs to minimize token noise and instruction drift.
-	- **Rule 6: Stack-Aware Intelligence**: Automatic adaptation to project technology.
-- # Specialized Agent Roles
-	- [[Master Orchestrator]] - The Project Manager (PM).
-	- [[Brainstormer]] - The Product Owner (PO).
-	- [[Architect]] - The Systems Lead.
-	- [[Backend]] / [[Frontend]] / [[Mobile]] - Implementation Specialists.
-	- [[Compliance]] - The Privacy & Risk Auditor.
-	- [[Researcher]] - Strategic Analyst.
-	- [[n8n]] - Automation Architect.
+- # Global Business Rules
+	- **Rule 0: PRD-First**: No planning without a validated `[FEATURE]_PRD.md`.
+	- **Rule 1: Human Approval Gates**: Mandatory user sign-off at each transition.
+	- **Rule 2: Test-First Integrity**: Implementation incomplete until 100% test pass rate. (ref: `common/knowledge/testing_standard.md`)
+	- **Rule 3: Commercial License Guard**: Halt and request permission for paid dependencies. (ref: `common/knowledge/licensing.md`)
+	- **Rule 5: Zero Context Dilution**: Use sequential persona handoffs. (ref: `index.js`)
+	- **Rule 6: Stack-Aware Intelligence**: Automatic KB adaptation to project stack. (ref: `index.js -> getDynamicKnowledge`)

@@ -1,39 +1,13 @@
 - type:: [[Technical Specification]]
 - status:: [SYNC]
-- version:: 1.1.0
 - project:: [[ai-agents]]
 
 - # Core Infrastructure: Universal Agent Hub
-	- ## Entry Points & System Access
-		- **[CLI] agent-hub serve**: 
-			- Function:: Starts the MCP server on stdio.
-			- Target:: Claude Code / Gemini CLI.
-			- (ref: `bin/agent-hub.js`)
-		- **[CLI] agent-hub bootstrap**: 
-			- Function:: Installs Gemini slash commands and AntiGravity personas locally.
-			- Guardrail:: Updates `settings.json` to include the filesystem MCP server.
-		- **[CLI] agent-hub link <agent> <target>**: 
-			- Function:: Symlinks an agent's `persona.md` to a local file (e.g., `.cursorrules`).
-	- ## The MCP Toolset (Internal Functions)
-		- `list_agents`: 
-			- Function:: Scans the root directory to return all active agent personas.
-		- `get_agent_prompt`: 
-			- Function:: Assemble a high-fidelity prompt by mixing Persona + Common Knowledge + Common Skills + Dynamic Stack Skills.
-			- (ref: `index.js -> get_agent_prompt`)
-		- `call_agent_command`: 
-			- Function:: Executes a TOML-defined command (e.g., `create`, `auditor`).
-			- Logic:: Resolves `!{cat path}` probes and injections before delivery.
-	- ## Intelligent Logic Mixing (The AMD Core)
-		- **Dynamic Stack Detection**: 
-			- Trigger:: Activated when calling `architect`, `backend`, `frontend`, or `mobile`.
-			- Capabilities:: Detects .NET, Java, Go, React, Angular, Vue, TS, JS, and Flutter.
-			- (ref: `index.js -> getDynamicKnowledge`)
-		- **Probe Resolution**: 
-			- Syntax:: `!{cat path}`
-			- Function:: Dynamically injects local file content into the prompt at runtime.
-			- (ref: `index.js -> resolveProbes`)
-	- ## The Handoff Pipeline (Execution Flow)
-		- 1. **Brainstorming**: [[Brainstormer]] generates the PRD.
-		- 2. **Architecture**: [[Architect]] generates the Implementation Plan.
-		- 3. **Implementation**: [[Backend]]/[[Frontend]]/[[Mobile]] executes the code.
-		- 4. **Review**: All agents apply the `reviewer` skill before finalizing.
+	- ## Entry Points
+		- [CLI] `agent-hub serve`: Starts the MCP server on stdio. (ref: `bin/agent-hub.js`)
+		- [MCP] `list_agents`: Returns a list of all available agent directories. (ref: `index.js -> list_agents`)
+		- [MCP] `get_agent_prompt`: Retrieves mixed persona (Persona + Common + Skills). (ref: `index.js -> get_agent_prompt`)
+		- [MCP] `call_agent_command`: Executes TOML-based commands with dynamic mixing. (ref: `index.js -> call_agent_command`)
+	- ## Logic Mixing Core
+		- **Dynamic Stack Detection**: Scans CWD for signature files (Go, .NET, React, etc.) to inject relevant knowledge. (ref: `index.js -> getDynamicKnowledge`)
+		- **Probe Resolution**: Automatically resolves `!{cat path}` expressions. (ref: `index.js -> resolveProbes`)

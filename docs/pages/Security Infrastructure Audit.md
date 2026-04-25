@@ -1,9 +1,8 @@
 - type:: [[Use Case]]
 - status:: [ACTIVE]
-- tags:: #security
 
 - # Security Infrastructure Audit
 	- ## Description
-		- Multi-layered vulnerability scanning and remediation.
-	- ## Roles
-		- [[Architect]] (Security Auditor)
+		- Multi-layered vulnerability scanning (OWASP).
+	- ## Success Criteria
+		- Zero Critical/High vulnerabilities.
