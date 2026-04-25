@@ -1,0 +1,17 @@
+- type:: [[KnowledgeBase]]
+- project:: [[Project Name]]
+- category:: [[Business Rules]]
+
+- # Core Business Logic
+	- ## Rule: [Rule Name]
+		- **Definition:** [Detailed explanation]
+		- **Implementation:** [[Code Reference]]
+		- **Related ADR:** [[ADR-01]]
+- # Domain Entities
+	- ## [[Entity Name]]
+		- **Description:** [What it represents]
+		- **Attributes:**
+			- [Attribute 1]
+			- [Attribute 2]
+- # Workflow Rules
+	- [Step-by-step logic flow]

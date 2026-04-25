@@ -1,0 +1,31 @@
+- type:: [[ADR]]
+- project:: [[Project Name]]
+- status:: draft
+- relates-to:: [[Project Name PRD]]
+
+- # Executive Summary
+	- [Brief overview of the technical direction]
+- # Architectural Decisions
+	- ## [[ADR-01]]: [Decision Title]
+		- **Context:** [Why this decision?]
+		- **Decision:** [What was chosen?]
+		- **Consequences:** [Trade-offs]
+		- **Links:**
+			- Satisfies: [[FR-01]]
+	- ## [[ADR-02]]: [Decision Title]
+		- **Context:** [Why this decision?]
+		- **Decision:** [What was chosen?]
+		- **Consequences:** [Trade-offs]
+		- **Links:**
+			- Satisfies: [[FR-02]]
+- # Technical Stack
+	- **Language:** [[Stack/Language]]
+	- **Database:** [[Stack/Database]]
+	- **Infrastructure:** [[Stack/Infrastructure]]
+- # Sequence Diagrams
+	- [Embed Mermaid here if needed]
+- # Data Model
+	- [Description or links to schema pages]
+- # Metadata
+	- created-at:: <% today %>
+	- tags:: #architecture #adr

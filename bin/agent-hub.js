@@ -65,6 +65,27 @@ program
 
     console.log("\n🚀 Bootstrapping Universal Agent Hub...");
 
+    // 0. Configure MCP Settings
+    const SETTINGS_PATH = path.join(process.env.HOME, ".gemini", "settings.json");
+    if (await fs.pathExists(SETTINGS_PATH)) {
+      try {
+        const settings = await fs.readJson(SETTINGS_PATH);
+        if (!settings.mcpServers) settings.mcpServers = {};
+        
+        // Add Filesystem MCP if missing
+        if (!settings.mcpServers.filesystem) {
+          settings.mcpServers.filesystem = {
+            command: "npx",
+            args: ["-y", "@modelcontextprotocol/server-filesystem", path.join(process.cwd(), "docs")]
+          };
+          await fs.writeJson(SETTINGS_PATH, settings, { spaces: 2 });
+          console.log("   ✅ [MCP] Configured filesystem server for /docs");
+        }
+      } catch (e) {
+        console.warn(`   ⚠️ [MCP] Could not update settings.json: ${e.message}`);
+      }
+    }
+
     for (const agent of agents) {
       console.log(`\n📦 Processing Agent: [${agent.toUpperCase()}]`);
 

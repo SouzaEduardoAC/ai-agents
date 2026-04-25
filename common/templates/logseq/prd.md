@@ -1,0 +1,34 @@
+- type:: [[PRD]]
+- project:: [[Project Name]]
+- status:: draft
+- version:: 1.0
+
+- # Overview
+	- **Goal:** [Primary Objective]
+	- **Problem Statement:** [What are we solving?]
+	- **Success Metrics:**
+		- [Metric 1]
+		- [Metric 2]
+- # Target Audience
+	- [User Persona 1]
+	- [User Persona 2]
+- # User Stories
+	- TODO AS A [role], I WANT [action], SO THAT [value].
+- # Functional Requirements
+	- [[FR-01]]: [Description]
+		- priority:: high
+	- [[FR-02]]: [Description]
+		- priority:: medium
+- # Non-Functional Requirements
+	- **Performance:** [Target]
+	- **Security:** [Target]
+	- **Compliance:** [Target]
+- # Constraints & Edge Cases
+	- [Constraint 1]
+	- [Edge Case 1]
+- # Acceptance Criteria
+	- [ ] [Criterion 1]
+	- [ ] [Criterion 2]
+- # Metadata
+	- created-at:: <% today %>
+	- tags:: #prd #draft

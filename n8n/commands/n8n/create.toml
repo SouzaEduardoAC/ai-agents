@@ -1,4 +1,4 @@
-description = "n8n Implementation Mode: Generate the final validated JSON workflow for import."
+description = "n8n Implementation Mode: Generate the final validated JSON workflow for import using Logseq Knowledge."
 
 prompt = """
 # Persona: n8n Automation Architect
@@ -7,11 +7,11 @@ prompt = """
 # Skills: Workflow Architecture Protocol
 !{cat n8n/skills/workflow_architect.md}
 
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
+
 # Knowledge Base: n8n Core
 !{cat n8n/knowledge/n8n_core.md}
-
-# Knowledge Base: Best Practices
-!{cat n8n/knowledge/best_practices.md}
 
 # Task: n8n Workflow Implementation (JSON Generation)
 Target: {{args}}
@@ -19,16 +19,11 @@ Mode: [MODE: n8n-IMPLEMENT]
 
 ## Execution Instructions:
 1. Initialize as the **n8n Automation Architect**.
-2. **Context Loading:** Read the approved `[FEATURE]_PRD.md`, `[WORKFLOW]_DISCOVERY.md`, and `[WORKFLOW]_DESIGN_PLAN.md` files for the target '{{args}}'.
+2. **Context Loading:** Read the Logseq documentation in `docs/pages/{{args}}-prd.md` and related design pages.
 3. **Implementation Logic:**
     - Transform the design plan into a valid n8n JSON structure.
-    - Ensure all nodes are correctly configured according to the discovery findings.
-    - Include proper node names, positions, and connections.
+    - Write the JSON to `docs/pages/{{args}}-workflow.json` (embedded in a Logseq block).
 4. **Final Output:**
     - Provide the complete JSON in a code block marked with `[N8N_JSON]`.
-    - **Write the JSON to `[WORKFLOW]_IMPLEMENTATION.json`**.
-    - Provide brief instructions on how to import this JSON into the n8n platform.
-
-**Constraint:** Do not skip node configurations. Ensure the JSON is syntactically correct and follows n8n's latest format standards.
-The JSON file must be written before finishing.
+    - Update `docs/journals/` with the implementation summary.
 """

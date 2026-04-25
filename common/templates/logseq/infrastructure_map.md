@@ -1,0 +1,20 @@
+- type:: [[KnowledgeBase]]
+- project:: [[Project Name]]
+- category:: [[Infrastructure]]
+
+- # Service Architecture
+	- ## [[Service Name]]
+		- **Role:** [e.g., API Gateway, Worker]
+		- **Stack:** [[Stack Name]]
+		- **Dependencies:**
+			- [[Other Service]]
+- # Deployment Pipeline
+	- **CI/CD:** [Tooling]
+	- **Environments:**
+		- [[Development]]
+		- [[Staging]]
+		- [[Production]]
+- # Network & Security
+	- **VPC/Subnets:** [Description]
+	- **Firewall Rules:** [Key ports]
+	- **Auth Mechanism:** [[Auth Standard]]

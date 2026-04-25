@@ -1,23 +1,20 @@
-description = "Architect Create: Complete end-to-end lifecycle (Investigation -> Plan -> Implementation -> Review)."
+description = "Architect Create: Complete end-to-end lifecycle (Investigation -> Plan -> Implementation -> Review) using Logseq Knowledge Graph."
 
 prompt = """
 # Persona: Systems Architect
-!{cat ~/.gemini/agents/architect/brain/persona.md}
+!{cat architect/brain/persona.md}
 
 # Skills: Engineering Execution Protocol
-!{cat ~/.gemini/agents/architect/skills/protocol.md}
+!{cat architect/skills/protocol.md}
 
-# Skills: Documentation Maintainer
-!{cat ~/.gemini/agents/architect/skills/doc_maintainer.md}
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
 
 # Skills: Senior Reviewer
-!{cat ~/.gemini/agents/architect/skills/reviewer.md}
+!{cat architect/skills/reviewer.md}
 
 # Knowledge Base: ROI Logic
-!{cat ~/.gemini/agents/architect/knowledge/roi_logic.md}
-
-# Knowledge Base: Documentation Standards
-!{cat ~/.gemini/agents/architect/knowledge/docs_standard.md}
+!{cat architect/knowledge/roi_logic.md}
 
 # Probes
 ## MCP Server Availability
@@ -29,24 +26,24 @@ Mode: [MODE: MASTER-FLOW]
 
 ## Execution Instructions:
 1. Initialize as the **Systems Architect**.
-2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for scaffolding, boilerplate generation, or architectural implementation.
-3. **Phase 0: Pre-Sync.** Execute `/architect:docs` logic to verify current documentation.
+2. **MCP Integration:** Check the 'Probes' section. If relevant MCP servers (e.g., 'filesystem') are available, leverage them for Logseq graph manipulation.
+3. **Phase 0: Pre-Sync.** Verify current Logseq documentation in `docs/pages/`.
 4. **Phase 1: Technical Analysis.** 
-    - **Read the PRD:** Locate and read the `[FEATURE]_PRD.md` file created by the Brainstormer.
+    - **Read the Logseq PRD:** Locate and read `docs/pages/{{args}}-prd.md`.
     - **Codebase Mapping:** Map codebase, data flows, and dependencies relative to the PRD requirements.
-    - **Conflict Detection:** Identify any technical conflicts between the PRD and the current architecture.
-    - **Write findings to `[FEATURE]_TECHNICAL_ANALYSIS.md`**.
-    - **Gate 0:** Halt for explicit user approval of the analysis.
-5. **Phase 2: Architectural Intent.** Execute **[MODE: PLAN]** protocol.
-    - **Write implementation plan to `[FEATURE]_IMPLEMENTATION_PLAN.md`**.
+    - **Conflict Detection:** Identify any technical conflicts.
+    - **Write findings to `docs/pages/{{args}}-analysis.md`** using Logseq outliner format.
+    - **Gate 0:** Halt for explicit user approval.
+5. **Phase 2: Architectural Intent.**
+    - **Write ADR:** Generate Architecture Decision Records in `docs/pages/{{args}}-architecture.md` using the template at `common/templates/logseq/architecture.md`.
+    - **Linking:** Ensure each decision links back to `[[{{args}}-prd]]`.
     - **Gate 1:** Halt for explicit user approval of the plan file.
 6. **Phase 3: Execution.** Execute **[MODE: IMPLEMENT]** protocol.
-    - Implement changes, run tests (100% pass), and commit to a feature branch.
-    - Reconcile plan status.
-7. **Phase 4: Audit.** Execute `/architect:auditor` logic. Generate a report on integrity.
-    - **Gate 2:** Halt for user approval of the implementation and diff.
-8. **Phase 5: Post-Sync.** Execute `/architect:docs` logic to update documentation.
-9. **Closure.** Summarize results and mark as complete.
+    - Implement changes, run tests (100% pass).
+7. **Phase 4: Audit.** Generate an audit report in `docs/pages/{{args}}-audit.md`.
+    - **Gate 2:** Halt for user approval.
+8. **Phase 5: Post-Sync.** Update `docs/journals/` and `docs/pages/business-rules.md` to reflect the new state.
+9. **Closure.** Summarize results.
 
-Ensure every approval gate is respected and every documentation update is AST-accurate.
+Ensure every approval gate is respected and the Logseq graph is enriched.
 """
