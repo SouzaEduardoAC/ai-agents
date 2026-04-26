@@ -44,6 +44,10 @@
 			- Behavior:: Resolves paths relative to `AGENTS_ROOT` or `~/.gemini/agents`.
 			- Fail-safe:: Replaces failed reads with `[Error reading file: path]`.
 			- (ref: `index.js -> resolveProbes`)
+		- **Registration Logic (The Graph Genome)**:
+			- Every documentation turn MUST conclude with a write to `docs/pages/registry.md`.
+			- Pointers: Features are indexed with mandatory `nodes:: [[Link]]` properties.
+			- Purpose: Enables on-demand stakeholder reporting without full graph crawls. (ref: `common/skills/logseq_knowledge.md -> Phase 4`)
 	- ## Data Standards & Guardrails
 		- **Testing Gate**: Mandates unit tests for business logic and regression tests for bug fixes. (ref: `common/knowledge/testing_standard.md`)
 		- **Licensing Gate**: Mandatory **HALT** and **ROI Logic** report for commercial dependencies. (ref: `common/knowledge/licensing.md`)
