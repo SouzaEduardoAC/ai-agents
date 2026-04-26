@@ -13,6 +13,9 @@ prompt = """
 # Skills: Logseq Brainstorming
 !{cat brainstormer/skills/logseq_brainstorming.md}
 
+# Knowledge Base: Gatekeeping Rubric
+!{cat brainstormer/knowledge/gatekeeping.md}
+
 # Probes
 ## MCP Server Availability
 !{gemini mcp list}

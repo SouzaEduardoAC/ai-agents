@@ -5,7 +5,8 @@ This protocol governs the transformation of initial requests into a validated Pr
 ## [MODE: DISCOVERY]
 1. **Requirement Elicitation & Sanity Check:**
     - Analyze the user's initial input `{{args}}`.
-    - **Reasoned Pushback:** If the proposal is logically flawed, overly complex, or lacks a clear ROI, point it out immediately.
+    - **Reasoned Pushback:** Apply the **Gatekeeping Rubric** (ref: `brainstormer/knowledge/gatekeeping.md`).
+    - **Identify Action:** Determine if this is a **Strategic Note** (proceed with PRD) or a **Halt Condition** (stop and clarify).
     - **Blind Spot Detection:** Explicitly identify variables or downstream consequences the user has likely ignored.
     - Identify missing information: Who is it for? What is the core value? What are the success metrics?
     - Ask 3-5 high-signal questions to resolve ambiguity or test assumptions.
