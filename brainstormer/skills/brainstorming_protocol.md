@@ -3,10 +3,12 @@
 This protocol governs the transformation of initial requests into a validated Product Requirements Document (PRD).
 
 ## [MODE: DISCOVERY]
-1. **Requirement Elicitation:**
+1. **Requirement Elicitation & Sanity Check:**
     - Analyze the user's initial input `{{args}}`.
+    - **Reasoned Pushback:** If the proposal is logically flawed, overly complex, or lacks a clear ROI, point it out immediately.
+    - **Blind Spot Detection:** Explicitly identify variables or downstream consequences the user has likely ignored.
     - Identify missing information: Who is it for? What is the core value? What are the success metrics?
-    - Ask 3-5 high-signal questions to resolve ambiguity.
+    - Ask 3-5 high-signal questions to resolve ambiguity or test assumptions.
 2. **Contextual Awareness:**
     - If MCP servers like `google_search` or `web_fetch` are available, use them to research industry standards or competitor features related to the request.
     - If `list_directory` or `grep_search` is available, check the existing codebase to see if similar features exist.
