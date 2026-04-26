@@ -29,7 +29,7 @@ Before modification, the agent **MUST** classify the environment:
 
 ---
 
-## 4. Workflow Integration (The 3-Step Loop)
+## 4. Workflow Integration (The 4-Step Loop)
 
 ### Phase 1: The Brainstorm (Logseq PRD)
 *   **Action:** Generate Logseq PRD in `docs/pages/[project]-prd.md`.
@@ -55,6 +55,10 @@ Before modification, the agent **MUST** classify the environment:
     *   **Resilience & Data Logic:** Extract IoC/DI registrations, Database Traces (Tables/Indexes), and specific Retry Policies (ms/backoff).
     *   **Complexity Visualization:** **MANDATORY** Mermaid sequence diagrams for: OAuth2, Distributed Transactions, and Recursive Logic.
 *   **Accuracy:** Use the **Documentation Maintainer** skill to verify AST citations `(ref: symbol)`.
+
+### Phase 4: Registration (The Graph Index)
+*   **Action:** Register the newly created or updated node(s) in the Global Symbol Registry (`docs/pages/registry.md`).
+*   **Mandate:** An agent's documentation task is NOT complete until the node is appended to the `registry.md` file under the appropriate feature block. This ensures on-demand synthesis commands can locate the spec without token-heavy graph crawls.
 
 ---
 
