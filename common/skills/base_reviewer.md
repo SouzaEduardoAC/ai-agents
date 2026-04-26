@@ -14,7 +14,8 @@
 - **Token Safety:** Ensure JWTs are not logged and have proper validation.
 
 ## 4. Testing & Quality
-- **Coverage:** Verify that all business logic changed or added is covered by unit tests.
+- **Coverage:** Verify that all business logic changed or added is covered by unit tests. Leverage `sonarqube` metrics if available.
+- **Automated Analysis:** Use `sonarqube` or similar static analysis tools to identify bugs, vulnerabilities, and code smells before manual review.
 - **Regression:** For bug fixes, confirm a test case exists that specifically targets the fixed vulnerability or error.
 - **Test Integrity:** Ensure tests are deterministic, independent, and readable.
 - **Pass Rate:** Verify that 100% of the test suite passes before implementation approval.

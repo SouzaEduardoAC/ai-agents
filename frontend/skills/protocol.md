@@ -31,7 +31,8 @@
    - **If private feeds are detected:** **STOP.** Ask the user to provide the private feed configuration file (e.g., `nuget.config`, `.npmrc`, `pip.conf`) before proceeding.
    - **If no private feeds:** Proceed with the restore normally.
 6. **Testing:** Write and run unit/integration tests.
-7. **Verification:** Ensure 100% pass rate (Old + New). **DO NOT PROCEED** if any fail.
+7. **Visual Verification (UI Only):** If the task involves UI changes, use `playwright-cli` to perform a real-time browser verification of the components. Take screenshots or snapshots to confirm visual alignment with the design requirements.
+8. **Verification:** Ensure 100% pass rate (Old + New). **DO NOT PROCEED** if any fail.
 8. **Delivery:** `git add` and `git commit` to a feature branch.
    - **GUARD:** Never commit to `main`, `master`, `develop`, or `development`.
 9. **Plan Reconciliation:** Update `[FEATURE]_IMPLEMENTATION_PLAN.md` with a final status section:

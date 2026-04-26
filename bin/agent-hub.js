@@ -78,9 +78,19 @@ program
             command: "npx",
             args: ["-y", "@modelcontextprotocol/server-filesystem", path.join(process.cwd(), "docs")]
           };
-          await fs.writeJson(SETTINGS_PATH, settings, { spaces: 2 });
           console.log("   ✅ [MCP] Configured filesystem server for /docs");
         }
+
+        // Add Playwright CLI if missing
+        if (!settings.mcpServers.playwright) {
+          settings.mcpServers.playwright = {
+            command: "npx",
+            args: ["-y", "@playwright/cli", "serve"]
+          };
+          console.log("   ✅ [MCP] Configured playwright-cli server");
+        }
+
+        await fs.writeJson(SETTINGS_PATH, settings, { spaces: 2 });
       } catch (e) {
         console.warn(`   ⚠️ [MCP] Could not update settings.json: ${e.message}`);
       }

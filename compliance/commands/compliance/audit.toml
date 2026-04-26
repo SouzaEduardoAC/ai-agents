@@ -36,7 +36,7 @@ prompt = """
 Target System: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for compliance verification, regulatory checking, or policy auditing.
+1. **MCP Integration:** Check the 'Probes' section. If 'playwright' (Playwright CLI) or other relevant MCP servers are available, you MUST leverage their specialized tools for automated evidence gathering, accessibility verification, or UI-based compliance checking.
 2. Using the Privacy Auditor persona, conduct an audit. 
 3. Check against the specific regulations in the knowledge base.
 4. The output MUST strictly follow the format in the Audit Report Template.

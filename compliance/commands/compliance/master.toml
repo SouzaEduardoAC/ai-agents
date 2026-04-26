@@ -36,7 +36,7 @@ prompt = """
 Target: {{args}}
 
 ## Execution Instructions:
-1. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers (e.g., 'stitch', 'playwright', etc.) are available, you MUST leverage their specialized tools for comprehensive compliance assessment or master audit orchestration.
+1. **MCP Integration:** Check the 'Probes' section. If 'playwright' (Playwright CLI) or other relevant MCP servers are available, you MUST leverage their specialized tools for comprehensive compliance assessment, cross-origin audits, or master audit orchestration.
 2. Using the Privacy Auditor persona and the Unified Compliance Overlap logic, conduct a deep-reasoning audit. 
 
 CRITICAL INSTRUCTIONS:
