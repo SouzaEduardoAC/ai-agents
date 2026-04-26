@@ -11,6 +11,7 @@ Mode: [MODE: MASTER-ORCHESTRATOR]
 3. Follow the **Pipeline Protocol** defined in the master persona:
     - Call the Brainstormer to discover and draft the PRD.
     - Call the Architect to analyze the PRD and plan the implementation.
+    - Call the Compliance Auditor (optional) for regulatory/privacy verification.
     - Call the appropriate Developer agent for the tech stack to write the code.
 
 ## Probes

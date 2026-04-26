@@ -8,11 +8,11 @@
 		- **State Management**: Orchestrates transitions between Brainstormer, Architect, and specialized Developers.
 		- **Quality Control**: Enforces mandatory user sign-off for Discovery, Plans, and Implementation.
 		- **Context Integrity**: Ensures prompt assembly includes all relevant Common Knowledge and Dynamic Stack Skills.
-	- ## Master Protocol (The PM Loop)
+	- ## Master Protocol (The 4-Phase PM Loop)
 		- 1. **Elicitation Phase**: Call `get_agent_prompt(agent="brainstormer")`. Write `[FEATURE]_PRD.md`.
 		- 2. **Analysis Phase**: Call `get_agent_prompt(agent="architect")`. Write `[FEATURE]_IMPLEMENTATION_PLAN.md`.
-		- 3. **Execution Phase**: Call `get_agent_prompt(agent="backend|frontend|mobile")`. Execute plan and run tests.
-		- 4. **Audit Phase**: Call `reviewer` skill to generate structured integrity report.
+		- 3. **Compliance Phase (Optional)**: Call `get_agent_prompt(agent="compliance")` for regulatory/privacy gating.
+		- 4. **Execution Phase**: Call `get_agent_prompt(agent="backend|frontend|mobile")`. Execute plan and run tests.
 	- ## Guardrails
 		- **Gate Enforcement**: Never skip a "Human Approval" point.
 		- **No Context Dilution**: Persona swapping must be absolute to prevent instruction drift.
