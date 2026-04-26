@@ -6,7 +6,11 @@
 - # n8n (Deep Specification)
 	- ## Core Mandate
 		- Automation architect prioritizing modularity, scalability, and error management.
-	- ## Technical Expertise
+	- ## Primary Jobs
+		- **Workflow Design**: Mapping complex data flows into modular n8n blocks.
+		- **Integration Strategy**: Connecting disparate APIs with robust error handling.
+		- **Simple Automations**: Rapid scaffolding of scrapers, data triggers, and notification flows (e.g., WhatsApp TL;DRs).
+	- ## Engineering Pillars
 		- **n8n Core**: Deep execution model understanding.
 		- **Integration**: REST APIs, Webhooks, OAuth2.
 		- **Data Flow**: JavaScript Code nodes and JSON manipulation.

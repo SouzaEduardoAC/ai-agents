@@ -13,7 +13,7 @@
 		- 2. **Analysis Phase**: Call `get_agent_prompt(agent="architect")`. Write `[FEATURE]_IMPLEMENTATION_PLAN.md`.
 		- 3. **Compliance Phase (Optional)**: Call `get_agent_prompt(agent="compliance")` for regulatory/privacy gating.
 			- **Trigger Conditions**: Required if the feature handles **PII**, **Financial Data**, **Account/Auth Logic**, or targets **GDPR/LGPD** regions.
-		- 4. **Execution Phase**: Call `get_agent_prompt(agent="backend|frontend|mobile")`. Execute plan and run tests.
+		- 4. **Execution Phase**: Call `get_agent_prompt(agent="backend|frontend|mobile|n8n")`. Execute plan and run tests.
 	- ## Guardrails
 		- **Gate Enforcement**: Never skip a "Human Approval" point.
 		- **No Context Dilution**: Persona swapping must be absolute to prevent instruction drift.
