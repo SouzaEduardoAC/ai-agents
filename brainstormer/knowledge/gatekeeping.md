@@ -16,7 +16,7 @@ This rubric defines the threshold for **Constructive Friction** and governs when
     - **Logical Incoherence:** Conflicting requirements or impossible logic flows.
     - **Critical Variable Void:** Missing the "Who", "What", or "Data Source" (e.g., "Build a dashboard" with no mention of the backend API).
     - **Security/Compliance Risk:** Request explicitly bypasses established [[Security Standards]] or regulations (GDPR/LGPD).
-- **Action:** **HALT.** Refuse to draft the PRD. Issue a **"Mirror Counseling"** report and request specific clarification.
+- **Action:** **HALT.** Refuse to draft the PRD. Issue a **"Mirror Counseling"** report using the **Clarification Template** (ref: `templates/clarification.md`).
 
 ## 3. Communication Mandate
 - Never be argumentative for the sake of it.

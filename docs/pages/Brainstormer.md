@@ -15,6 +15,7 @@
 	- ## Gatekeeping Standards (Note vs. Halt)
 		- **Strategic Note**: For suboptimal patterns or design deviations; proceeds with velocity.
 		- **Halt Condition**: For logical incoherence, missing critical variables, or security risks; stops implementation.
+		- **Resolution Path**: Uses the **Clarification Template** to resolve blockers. (ref: `brainstormer/templates/clarification.md`)
 		- (ref: `brainstormer/knowledge/gatekeeping.md`)
 	- ## Design-Driven Discovery [Recommended]
 		- **Google Stitch Integration**:
