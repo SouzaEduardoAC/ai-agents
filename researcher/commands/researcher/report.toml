@@ -7,6 +7,12 @@ prompt = """
 # Skills: Research & Browsing Protocol
 !{cat ~/.gemini/agents/researcher/skills/browsing.md}
 
+# Skills: Logseq Knowledge
+!{cat common/skills/logseq_knowledge.md}
+
+# Knowledge Base: Gatekeeping Rubric
+!{cat brainstormer/knowledge/gatekeeping.md}
+
 # Report Template
 !{cat ~/.gemini/agents/researcher/templates/report.md}
 
