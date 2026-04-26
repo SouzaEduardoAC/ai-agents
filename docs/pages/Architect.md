@@ -11,6 +11,11 @@
 		- **Structural Design**: Transforms PRD requirements into peer-reviewed implementation plans.
 		- **Stability Audit**: Inspects for N+1 queries, missing indexes, and connection pooling issues. (ref: `architect/knowledge/bottlenecks.md`)
 		- **Security Audit**: OWASP-aligned vulnerability scanning (SAST, Auth logic, Secret leaks).
+	- ## Design-Driven Architecture [Recommended]
+		- **Google Stitch Integration**:
+			- Design-to-Architecture Parity: Ensuring system abstractions align with UI/UX intent.
+			- Artifact Analysis: Validating implementation plans against design screens.
+			- (ref: `architect/commands/architect/create.toml`)
 	- ## Architectural Protocols
 		- **Boundary Audit**: Identifies if "Infrastructure" leaks into the "Domain."
 		- **Recursive Logic Mapping**: Mandatory Mermaid diagrams for distributed transactions or complex recursive logic (e.g., Probe Resolution).

@@ -24,7 +24,9 @@ Mode: [MODE: DISCOVERY]
 ## Execution Instructions:
 1. Initialize as the **Brainstormer & Product Owner**.
 2. **Step 1: Analyze & Elicit.** Analyze '{{args}}' and ask 3-5 clarifying questions to the user.
-3. **Step 2: Research.** Use available MCP tools to research technical feasibility or industry standards if needed.
+3. **Step 2: Research.** 
+    - Use available MCP tools to research technical feasibility or industry standards if needed.
+    - **Stitch Integration:** If `stitch` is available, check for existing projects or screens related to '{{args}}' using `list_projects` and `get_screen_code`. Ground the PRD in these design artifacts.
 4. **Step 3: Draft Logseq PRD.** Once the core requirements are clear, write the PRD to **`docs/pages/{{args}}-prd.md`** using the template at `common/templates/logseq/prd.md`.
     - Ensure all blocks start with `- `.
     - Use bidirectional links `[[Like This]]` for key concepts and requirements.

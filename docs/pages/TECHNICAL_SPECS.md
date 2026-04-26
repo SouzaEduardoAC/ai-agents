@@ -1,6 +1,6 @@
 - type:: [[Technical Specification]]
 - status:: [SYNC]
-- version:: 1.1.0
+- version:: 1.1.1
 - project:: [[ai-agents]]
 
 - # Core Infrastructure: Universal Agent Hub (Deep Specification)
@@ -13,7 +13,7 @@
 			- Function:: One-time local environment setup for Gemini and AntiGravity.
 			- **Step 0: MCP Configuration**:
 				- Path:: `~/.gemini/settings.json`
-				- Logic:: Dynamically injects the `filesystem` MCP server configuration if missing, targeting the project's `/docs` folder.
+				- Logic:: Dynamically injects `filesystem` and `playwright` MCP server configurations if missing.
 			- **Step 1: Gemini Slash Commands**:
 				- Source:: `[agent]/commands/[agent]/*.toml`
 				- Target:: `~/.gemini/commands/[agent]/`
@@ -48,3 +48,32 @@
 		- **Testing Gate**: Mandates unit tests for business logic and regression tests for bug fixes. (ref: `common/knowledge/testing_standard.md`)
 		- **Licensing Gate**: Mandatory **HALT** and **ROI Logic** report for commercial dependencies. (ref: `common/knowledge/licensing.md`)
 		- **Git Gate**: Strictly follows Conventional Commits 1.0.0. (ref: `common/knowledge/git_standard.md`)
+	- ## MCP Ecosystem (The Probe Layer)
+		- ### Shipped with Agentic Hub
+			- The following MCPs are automatically configured during the `bootstrap` phase.
+			- **Agent Hub (Internal)**:
+				- Description:: The core orchestration server developed in this repository.
+				- Interaction:: Provides the `call_agent_command` tool, mapping high-level goals to specialized agent personas and skillsets.
+				- Link:: [[Internal]] (ref: `index.js`)
+			- **Filesystem MCP**:
+				- Description:: Secure access to the project's `/docs` directory for Logseq graph manipulation.
+				- Interaction:: Used by ALL agents to read/write documentation, ADRs, and PRDs.
+				- Server:: `@modelcontextprotocol/server-filesystem`
+				- Link:: [GitHub](https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem)
+			- **Playwright MCP**:
+				- Description:: Browser automation for verification, accessibility audits, and performance testing.
+				- Interaction:: Essential for `:auditor` commands and `frontend`/`mobile` verification phases.
+				- Server:: `@playwright/mcp`
+				- Link:: [GitHub](https://github.com/microsoft/playwright-mcp)
+		- ### Recommended (External)
+			- These MCPs are recommended for high-precision engineering but require manual environment configuration (e.g., API Tokens).
+			- **Google Stitch MCP**:
+				- Description:: Design-to-code bridge for fetching UI/UX artifacts and Design DNA.
+				- Interaction:: Used by `frontend`, `mobile`, and `brainstormer` for design-grounded discovery and creation.
+				- Server:: `@_davideast/stitch-mcp`
+				- Link:: [GitHub](https://github.com/davideast/stitch-mcp)
+			- **SonarQube MCP**:
+				- Description:: Real-time code quality and security analysis.
+				- Interaction:: Integrated into `:auditor` commands for technical debt and security hotspot scanning.
+				- Server:: `sonarqube-mcp-server`
+				- Link:: [GitHub](https://github.com/SonarSource/sonarqube-mcp-server)

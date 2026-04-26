@@ -1,5 +1,5 @@
 - type:: [[Knowledge]]
-- status:: [ADOPT]
+- status:: [SYNC]
 - project:: [[ai-agents]]
 - tags:: #resilience #stability
 
@@ -9,3 +9,7 @@
 		- **Bulkheads**: Resource isolation. (ref: `architect/knowledge/bottlenecks.md`)
 		- **Retry Patterns**: Exponential backoff with jitter. (ref: `architect/knowledge/bottlenecks.md`)
 		- **Timeouts**: Enforced on all I/O operations. (ref: `architect/knowledge/bottlenecks.md`)
+	- ## Implementation Safeguards
+		- **Fail-safe Path Resolution**: Robust handling of relative and absolute paths in prompt probes. (ref: `index.js -> resolveProbes`)
+		- **Atomic File Access**: Leveraging `fs-extra` for predictable filesystem operations. (ref: `index.js`)
+		- **Graceful Degradation**: Failed documentation reads are caught and injected as error markers rather than crashing the orchestration. (ref: `index.js -> resolveProbes`)

@@ -29,6 +29,7 @@ Mode: [MODE: MASTER-FLOW]
 3. **Phase 0: Pre-Sync.** Verify current Logseq documentation in `docs/pages/`.
 4. **Phase 1: Technical Analysis.** 
     - **Read the Logseq PRD:** Locate and read `docs/pages/{{args}}-prd.md`.
+    - **Design Extraction:** If `stitch` is available, use `extract_design_dna` and `get_screen_code` to fetch the visual specification for this feature.
     - **Codebase Mapping:** Map components, state flows, and UI dependencies.
     - **Write findings to `docs/pages/{{args}}-analysis.md`** in Logseq format.
 5. **Phase 2: Architectural Intent.**

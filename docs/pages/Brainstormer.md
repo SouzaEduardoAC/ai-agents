@@ -11,6 +11,11 @@
 		- **PRD Transformation**: Convert vague business ideas into high-fidelity Product Requirements Documents.
 		- **ROI Analysis**: Understanding the "why" and business value before planning.
 		- **Functional/Non-Functional Mapping**: Categorizing needs into actionable technical requirements.
+	- ## Design-Driven Discovery [Recommended]
+		- **Google Stitch Integration**:
+			- Requirements Extraction: Fetching functional specs directly from design screens.
+			- Design-Grounded PRDs: Aligning user stories with existing UI/UX artifacts.
+			- (ref: `brainstormer/commands/brainstormer/discovery.toml`)
 	- ## Operating Mandates (The PO Rules)
 		- **User-Centricity**: Solve the problem, don't just build the feature.
 		- **Constraint-First**: Map technical, business, and regulatory blockers early.

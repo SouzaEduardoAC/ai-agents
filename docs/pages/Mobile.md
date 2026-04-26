@@ -10,6 +10,11 @@
 		- **Dart**: Null-safety, Streams/Futures, Isolates.
 		- **Flutter**: Widget lifecycle, Skia/Impeller rendering, custom animations.
 		- **Platform Bridge**: Native integration via Method Channels and FFI.
+	- ## Design-Driven Capabilities [Recommended]
+		- **Google Stitch Integration**:
+			- Material/Cupertino Token Mapping: Automated design-to-widget constant extraction.
+			- Widget Scaffolding: Generating Flutter widget trees from Stitch design screens.
+			- (ref: `mobile/commands/mobile/create.toml`)
 	- ## Guardrails
 		- **Jank Prevention**: Mandatory identification of excessive widget re-builds.
 		- **Platform Adherence**: Material vs. Cupertino design integrity.

@@ -1,5 +1,5 @@
 - type:: [[Knowledge]]
-- status:: [ADOPT]
+- status:: [SYNC]
 - project:: [[ai-agents]]
 - tags:: #patterns #coding-standards
 
@@ -7,6 +7,8 @@
 	- ## Architectural Styles
 		- **Clean Architecture**: Strict separation of concerns. (ref: `architect/knowledge/patterns.md`)
 		- **SOLID**: Standard OO design principles. (ref: `architect/knowledge/patterns.md`)
+		- **Hub-and-Spoke Orchestration**: Centralized Agent Hub (`bin/agent-hub.js`) managing persona-specific command execution and knowledge injection.
+		- **Probe-Based Prompt Injection**: Use of `!{cat ...}` and `!{gemini mcp list}` for late-binding of documentation and capability context. (ref: `index.js -> resolveProbes`)
 	- ## Documentation DNA
 		- **Signal Preservation**: Documentation MUST capture Agent Identities, Commands, and Guardrails.
 		- **Depth-First Mandate**: Every documentation node MUST be meticulous and technically exhaustive. Superficial stubs are forbidden. (ref: `architect/knowledge/docs_standard.md`)

@@ -12,6 +12,11 @@
 			- **Angular**: RxJS/Signals, Dependency Injection, NgRx.
 			- **ReactJS**: Hooks, Context API, Zustand, Next.js.
 		- **Standards**: Component-driven architecture, type-safe state management, optimized rendering.
+	- ## Design-Driven Capabilities [Recommended]
+		- **Google Stitch Integration**:
+			- Design DNA Extraction: Automatic mapping of colors, spacing, and typography tokens.
+			- UI Scaffolding: Generating production-ready components from design screens.
+			- (ref: `frontend/commands/frontend/create.toml`)
 	- ## Guardrails
 		- **Zero Trust UI Logic**: Unverified logic is rejected.
 		- **Accessibility-First**: HALT if user request contradicts A11y best practices.

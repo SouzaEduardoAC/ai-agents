@@ -30,6 +30,7 @@ Mode: [MODE: MASTER-FLOW]
 3. **Phase 0: Pre-Sync.** Verify current Logseq documentation in `docs/pages/`.
 4. **Phase 1: Technical Analysis.** 
     - **Read the Logseq PRD:** Locate and read `docs/pages/{{args}}-prd.md`.
+    - **Design Alignment:** If `stitch` is available, analyze design artifacts via `get_screen_code` to ensure architectural abstractions match UI/UX intent.
     - **Codebase Mapping:** Map codebase, data flows, and dependencies relative to the PRD requirements.
     - **Conflict Detection:** Identify any technical conflicts.
     - **Write findings to `docs/pages/{{args}}-analysis.md`** using Logseq outliner format.

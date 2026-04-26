@@ -81,13 +81,13 @@ program
           console.log("   ✅ [MCP] Configured filesystem server for /docs");
         }
 
-        // Add Playwright CLI if missing
+        // Add Playwright MCP if missing
         if (!settings.mcpServers.playwright) {
           settings.mcpServers.playwright = {
             command: "npx",
-            args: ["-y", "@playwright/cli", "serve"]
+            args: ["-y", "@playwright/mcp@latest", "--browser", "chrome"]
           };
-          console.log("   ✅ [MCP] Configured playwright-cli server");
+          console.log("   ✅ [MCP] Configured playwright-mcp server");
         }
 
         await fs.writeJson(SETTINGS_PATH, settings, { spaces: 2 });
