@@ -7,9 +7,10 @@ import {
 import fs from "fs-extra";
 import path from "path";
 import { glob } from "glob";
+import { fileURLToPath } from "url";
 import toml from "toml";
 
-const AGENTS_ROOT = process.cwd();
+const AGENTS_ROOT = path.dirname(fileURLToPath(import.meta.url));
 
 const server = new Server(
   {
