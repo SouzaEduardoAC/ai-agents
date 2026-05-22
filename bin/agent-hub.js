@@ -152,7 +152,7 @@ program
             const content = await fs.readFile(path.join(cmdSource, file), "utf-8");
             const updatedContent = content.replace(/~\/\.gemini\/agents/g, ROOT).replace(/\.\.\/\.\.\/\.\./g, ROOT);
             await fs.writeFile(path.join(cmdTarget, file), updatedContent);
-            console.log(`   ✅ [Gemini] Installed /${agent}:${path.basename(file, ".toml")}`);
+            console.log(`   ✅ [AntiGravity] Installed /${agent}:${path.basename(file, ".toml")}`);
           }
         }
       }
@@ -168,7 +168,7 @@ program
 
     console.log("\n✨ Bootstrap Complete!");
     console.log("--------------------------------------------------");
-    console.log("1. Gemini CLI: Restart terminal to use slash commands.");
+    console.log("1. AntiGravity CLI: Restart terminal to use slash commands.");
     console.log("2. AntiGravity: Personas are now in your Manager View.");
     console.log("3. Claude Code: Use 'call_agent_command' via the MCP server.");
     console.log("--------------------------------------------------");

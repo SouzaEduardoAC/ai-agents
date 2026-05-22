@@ -20,14 +20,14 @@ This project utilizes a **Logseq-powered Knowledge Graph** for its documentation
 ## 🚀 Installation & Updates
 
 ### 1. Start the MCP Server
-Required for **Claude Code** and **Gemini CLI**.
+Required for **Claude Code** and **AntiGravity CLI**.
 ```bash
 # Register the hub as an MCP tool
 mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
 ### 2. Universal Bootstrap (One-Time Setup)
-Installs all Gemini slash commands and AntiGravity personas locally.
+Installs all AntiGravity CLI slash commands and personas locally.
 ```bash
 npx github:SouzaEduardoAC/ai-agents bootstrap
 ```
