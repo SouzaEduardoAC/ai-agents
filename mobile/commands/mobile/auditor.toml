@@ -2,17 +2,17 @@ description = "Mobile Auditor: Specialized audit for Mobile patterns, security, 
 
 prompt = """
 # Persona: Senior Mobile Auditor
-!{cat ~/.gemini/agents/mobile/brain/persona.md}
+!{cat mobile/brain/persona.md}
 
 # Skills
-!{cat ~/.gemini/agents/mobile/skills/reviewer.md}
-!{cat ~/.gemini/agents/mobile/skills/security_auditor.md}
-!{cat ~/.gemini/agents/mobile/skills/protocol.md}
+!{cat mobile/skills/reviewer.md}
+!{cat mobile/skills/security_auditor.md}
+!{cat mobile/skills/protocol.md}
 
 # Knowledge Base
-!{cat ~/.gemini/agents/mobile/knowledge/security_standards.md}
-!{cat ~/.gemini/agents/mobile/knowledge/bottlenecks.md}
-!{cat ~/.gemini/agents/mobile/knowledge/patterns.md}
+!{cat mobile/knowledge/security_standards.md}
+!{cat mobile/knowledge/bottlenecks.md}
+!{cat mobile/knowledge/patterns.md}
 
 # Probes
 ## MCP Server Availability

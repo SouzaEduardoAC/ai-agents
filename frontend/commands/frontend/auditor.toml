@@ -2,17 +2,17 @@ description = "Frontend Auditor: Specialized audit for UI patterns, security, an
 
 prompt = """
 # Persona: Senior Frontend Auditor
-!{cat ~/.gemini/agents/frontend/brain/persona.md}
+!{cat frontend/brain/persona.md}
 
 # Skills
-!{cat ~/.gemini/agents/frontend/skills/reviewer.md}
-!{cat ~/.gemini/agents/frontend/skills/security_auditor.md}
-!{cat ~/.gemini/agents/frontend/skills/protocol.md}
+!{cat frontend/skills/reviewer.md}
+!{cat frontend/skills/security_auditor.md}
+!{cat frontend/skills/protocol.md}
 
 # Knowledge Base
-!{cat ~/.gemini/agents/frontend/knowledge/security_standards.md}
-!{cat ~/.gemini/agents/frontend/knowledge/bottlenecks.md}
-!{cat ~/.gemini/agents/frontend/knowledge/patterns.md}
+!{cat frontend/knowledge/security_standards.md}
+!{cat frontend/knowledge/bottlenecks.md}
+!{cat frontend/knowledge/patterns.md}
 
 # Probes
 ## MCP Server Availability

@@ -2,18 +2,18 @@ description = "Backend Auditor: Specialized audit for patterns, security, and pe
 
 prompt = """
 # Persona: Senior Quality Auditor
-!{cat ~/.gemini/agents/backend/brain/persona.md}
+!{cat backend/brain/persona.md}
 
 # Skills
-!{cat ~/.gemini/agents/backend/skills/reviewer.md}
-!{cat ~/.gemini/agents/backend/skills/security_auditor.md}
-!{cat ~/.gemini/agents/backend/skills/protocol.md}
+!{cat backend/skills/reviewer.md}
+!{cat backend/skills/security_auditor.md}
+!{cat backend/skills/protocol.md}
 
 # Knowledge Base
-!{cat ~/.gemini/agents/backend/knowledge/auth_standard.md}
-!{cat ~/.gemini/agents/backend/knowledge/security_standards.md}
-!{cat ~/.gemini/agents/backend/knowledge/bottlenecks.md}
-!{cat ~/.gemini/agents/backend/knowledge/patterns.md}
+!{cat backend/knowledge/auth_standard.md}
+!{cat backend/knowledge/security_standards.md}
+!{cat backend/knowledge/bottlenecks.md}
+!{cat backend/knowledge/patterns.md}
 
 # Probes
 ## MCP Server Availability

@@ -2,18 +2,18 @@ description = "Architect Auditor: Specialized audit for patterns, security, and 
 
 prompt = """
 # Persona: Senior Systems Architect
-!{cat ~/.gemini/agents/architect/brain/persona.md}
+!{cat architect/brain/persona.md}
 
 # Skills
-!{cat ~/.gemini/agents/architect/skills/reviewer.md}
-!{cat ~/.gemini/agents/architect/skills/security_auditor.md}
-!{cat ~/.gemini/agents/architect/skills/protocol.md}
+!{cat architect/skills/reviewer.md}
+!{cat architect/skills/security_auditor.md}
+!{cat architect/skills/protocol.md}
 
 # Knowledge Base
-!{cat ~/.gemini/agents/architect/knowledge/auth_standard.md}
-!{cat ~/.gemini/agents/architect/knowledge/security_standards.md}
-!{cat ~/.gemini/agents/architect/knowledge/bottlenecks.md}
-!{cat ~/.gemini/agents/architect/knowledge/patterns.md}
+!{cat architect/knowledge/auth_standard.md}
+!{cat architect/knowledge/security_standards.md}
+!{cat architect/knowledge/bottlenecks.md}
+!{cat architect/knowledge/patterns.md}
 
 # Probes
 ## MCP Server Availability

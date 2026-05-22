@@ -5,6 +5,7 @@
 Before any file modification, the agent **MUST** perform a diagnostic crawl to classify the environment.
 
 1. **Inventory Check:** Verify existence of:
+* `GEMINI.md` (Root - Cognitive Anchor)
 * `README.md` (Root)
 * `docs/BUSINESS_FLOW.md`
 * `docs/use_cases/` (Directory for individual use cases)
@@ -92,3 +93,15 @@ Every technical deep-dive must conclude with this structured critique:
 2. **Negative Scope:** Ignore standard libraries, linter configs, and trivial boilerplate.
 3. **Role Mapping:** Identify the `Primary Role` by tracing decorators like `@authorized` or middleware checks.
 4. **Format Adherence:** Strictly use the Markdown templates provided in the `templates/` folder.
+
+---
+
+## 6. AI Context & Graph Protocol (The Cognitive Anchor)
+
+1. **Mandatory Entry Point:** The agent **MUST** create or update a root-level `GEMINI.md` file. This serves as the "Cognitive Anchor" for all AI interactions.
+2. **Graph Integration:** `GEMINI.md` must link to the Logseq graph pages located in `docs/pages/` (e.g., `[[ai-agents-graph]]`, `[[TECHNICAL_SPECS]]`).
+3. **Syntax Mandate:** 
+    - Use Logseq-style `[[links]]` for all internal page references.
+    - Use `#tags` for categorizing technical domains (e.g., `#security`, `#backend`).
+    - Use `TODO`/`DONE` markers for tracking documentation tasks or technical debt within the markdown.
+4. **Sync-to-Graph:** Every update to the codebase logic must be reflected in the corresponding Logseq node in `docs/pages/`.

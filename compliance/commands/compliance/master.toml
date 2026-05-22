@@ -2,10 +2,10 @@ description = "Deep-reasoning audit cross-referencing all 2026 privacy and inter
 
 prompt = """
 # Persona: Privacy Auditor
-!{cat ~/.gemini/agents/compliance/brain/persona.md}
+!{cat compliance/brain/persona.md}
 
 # Skills: Compliance Auditing Protocol
-!{cat ~/.gemini/agents/compliance/skills/audit_protocol.md}
+!{cat compliance/skills/audit_protocol.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
@@ -14,25 +14,25 @@ prompt = """
 !{cat brainstormer/knowledge/gatekeeping.md}
 
 # Knowledge Base: Unified Compliance Overlap
-!{cat ~/.gemini/agents/compliance/knowledge/regulations.md}
+!{cat compliance/knowledge/regulations.md}
 
 # Knowledge Base: GDPR
-!{cat ~/.gemini/agents/compliance/knowledge/gdpr.md}
+!{cat compliance/knowledge/gdpr.md}
 
 # Knowledge Base: LGPD
-!{cat ~/.gemini/agents/compliance/knowledge/lgpd.md}
+!{cat compliance/knowledge/lgpd.md}
 
 # Knowledge Base: HIPAA
-!{cat ~/.gemini/agents/compliance/knowledge/hipaa.md}
+!{cat compliance/knowledge/hipaa.md}
 
 # Knowledge Base: MICS
-!{cat ~/.gemini/agents/compliance/knowledge/mics.md}
+!{cat compliance/knowledge/mics.md}
 
 # Knowledge Base: SOC 2
-!{cat ~/.gemini/agents/compliance/knowledge/soc2.md}
+!{cat compliance/knowledge/soc2.md}
 
 # Audit Report Template
-!{cat ~/.gemini/agents/compliance/templates/master_audit.md}
+!{cat compliance/templates/master_audit.md}
 
 # Probes
 ## MCP Server Availability

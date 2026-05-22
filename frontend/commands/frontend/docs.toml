@@ -36,9 +36,14 @@ Target: {{args}}
     - **Linking:** Ensure all new pages are linked back to `[[TECHNICAL_SPECS]]` and `[[BUSINESS_FLOW]]`.
     - **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for complex UI flows in `docs/pages/visuals.md`.
 
-6. **Phase 3: Verification.** 
+6. **Phase 2.5: AI Context & Graph Synchronization.**
+    - **GEMINI.md Update:** Create or update the root-level `GEMINI.md`.
+    - **Cognitive Anchor:** Ensure `GEMINI.md` links to all relevant specialized agents and the `docs/pages/` graph nodes using `[[links]]`.
+    - **Logseq Style:** Rigorously use `[[links]]`, `#tags`, and `TODO/DONE` markers throughout `GEMINI.md` and `docs/pages/`.
+
+7. **Phase 3: Verification.** 
     - Apply UI/UX Yellow/Black Hat analysis. 
     - Every technical claim MUST include an AST citation: `(ref: ComponentName)`.
 
-7. **Closure.** Summarize the frontend-specific updates made to the Logseq graph.
+8. **Closure.** Summarize the frontend-specific updates made to the Logseq graph.
 """
