@@ -1,4 +1,4 @@
-# [WORKFLOW] n8n Deep Brainstorm & Discovery
+# [WORKFLOW] Automata Deep Brainstorm & Discovery
 
 ## 1. Initial Request Analysis
 * **User Input:** (The raw input provided by the user)

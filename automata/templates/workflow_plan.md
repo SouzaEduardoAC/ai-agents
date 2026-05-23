@@ -1,4 +1,4 @@
-# [WORKFLOW] n8n Design Plan
+# [WORKFLOW] Automata Design Plan
 
 ## 1. Overview
 * **Purpose:** What is this workflow solving?

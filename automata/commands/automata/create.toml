@@ -1,11 +1,11 @@
-description = "n8n Implementation Mode: Generate the final validated JSON workflow for import using Logseq Knowledge."
+description = "Automata Implementation Mode: Generate the final validated JSON workflow for import using Logseq Knowledge."
 
 prompt = """
-# Persona: n8n Automation Architect
-!{cat n8n/brain/persona.md}
+# Persona: Automata Automation Architect
+!{cat automata/brain/persona.md}
 
 # Skills: Workflow Architecture Protocol
-!{cat n8n/skills/workflow_architect.md}
+!{cat automata/skills/workflow_architect.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
@@ -16,18 +16,18 @@ prompt = """
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
 
-# Knowledge Base: n8n Core
-!{cat n8n/knowledge/n8n_core.md}
+# Knowledge Base: Automata Core
+!{cat automata/knowledge/automata_core.md}
 
-# Task: n8n Workflow Implementation (JSON Generation)
+# Task: Automata Workflow Implementation (JSON Generation)
 Target: {{args}}
-Mode: [MODE: n8n-IMPLEMENT]
+Mode: [MODE: Automata-IMPLEMENT]
 
 ## Execution Instructions:
-1. Initialize as the **n8n Automation Architect**.
+1. Initialize as the **Automata Automation Architect**.
 2. **Context Loading:** Read the Logseq documentation in `docs/pages/{{args}}-prd.md` and related design pages.
 3. **Implementation Logic:**
-    - Transform the design plan into a valid n8n JSON structure.
+    - Transform the design plan into a valid Automata JSON structure.
     - Write the JSON to `docs/pages/{{args}}-workflow.json` (embedded in a Logseq block).
 4. **Final Output:**
     - Provide the complete JSON in a code block marked with `[N8N_JSON]`.

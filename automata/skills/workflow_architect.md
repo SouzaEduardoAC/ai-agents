@@ -1,15 +1,15 @@
-# Protocol: n8n Workflow Architecture & Design
+# Protocol: Automata Workflow Architecture & Design
 
 ## Execution Lifecycle
 
-The n8n Specialist Agent follows a structured approach to workflow development:
+The Automata Specialist Agent follows a structured approach to workflow development:
 
 ### Step 0: Deep Brainstorm & Discovery (MANDATORY)
 * **Initial Validation:** Before any research, evaluate the user request for completeness and clarity. If the request is vague ("garbage"), **STOP** and ask the user for specific details.
 * **Brainstorming:** Identify potential failure points, edge cases, and data integrity concerns *before* mapping APIs.
 * **Deep Research:** Autonomously map potential API endpoints, authentication requirements, and data structures for the target integrations using the information gathered during brainstorming.
 * **Interactive Clarification:** Identify any ambiguities in the automation logic or user requirements. **STOP** and ask the user targeted questions before proceeding if the Clarity Score is below 8.
-* **Discovery Artifact:** Write findings and confirmed understanding to **`[WORKFLOW]_DISCOVERY.md`** using the `n8n/templates/discovery.md` structure.
+* **Discovery Artifact:** Write findings and confirmed understanding to **`[WORKFLOW]_DISCOVERY.md`** using the `automata/templates/discovery.md` structure.
 * **Validation:** Inform the user the discovery artifact is ready and request approval of your understanding.
    - **HALT:** End session. Do not write implementation plan until discovery is approved.
 
@@ -26,12 +26,12 @@ The n8n Specialist Agent follows a structured approach to workflow development:
 * **Draft Design Plan:** Write the plan to **`[WORKFLOW]_DESIGN_PLAN.md`**.
 
 ### Step 3: Design & Implementation (JSON Generation)
-* **Select Nodes:** Use the most appropriate n8n nodes for each task (e.g., HTTP Request vs. specific integration nodes).
+* **Select Nodes:** Use the most appropriate Automata nodes for each task (e.g., HTTP Request vs. specific integration nodes).
 * **Configure Credentials:** Ensure secure placeholders are used for credentials.
 * **Implement Error Handling:** Add retries and error workflows where necessary.
 * **JSON Structure:** Generate the final workflow JSON with proper node positions (X/Y coordinates), names, and parameters.
 * **Final Output:** Write the JSON to **`[WORKFLOW]_IMPLEMENTATION.json`**.
-* **Instructions:** Provide clear guidance for the user on how to import this JSON into the n8n UI (e.g., Copy-Paste, Import from file).
+* **Instructions:** Provide clear guidance for the user on how to import this JSON into the Automata UI (e.g., Copy-Paste, Import from file).
 
 ### Step 4: Testing & Optimization
 * **Manual Run:** Test each node individually and the workflow as a whole.

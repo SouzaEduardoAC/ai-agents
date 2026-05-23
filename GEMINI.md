@@ -29,7 +29,7 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
 - [[Compliance]]: Regulatory audits (#GDPR, #HIPAA, #SOC2).
 - [[Researcher]]: Deep information synthesis.
-- [[n8n]]: Workflow #Automation architect.
+- [[Automata]]: Workflow #Automation architect.
 - [[Business Synthesizer]]: Technical documentation-to-business translator.
 - [[Forge]]: Meta-agent design, creation, and auditing.
 - [[Quicky]]: Specialist for quick fixes, small tweaks, and isolated tasks maintaining documentation integrity.

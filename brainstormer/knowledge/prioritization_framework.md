@@ -81,5 +81,5 @@ Before finalizing a PRD, the PO must score project risks from `1` (Negligible) t
 | Risk Category | Key Assessment Check | Action Trigger |
 | :--- | :--- | :--- |
 | **Technical Risk** | Unproven tech stack, complex data migrations, or third-party API dependencies. | Score $\ge 4$ requires an Architect architectural spike. |
-| **Operational Risk** | High support staff overhead, training costs, or manual monitoring dependencies. | Score $\ge 4$ requires an n8n automation check. |
+| **Operational Risk** | High support staff overhead, training costs, or manual monitoring dependencies. | Score $\ge 4$ requires an Automata automation check. |
 | **Compliance Risk** | Regulatory vulnerability (GDPR, LGPD, HIPAA breaches). | Score $\ge 4$ triggers a mandatory Compliance audit block. |

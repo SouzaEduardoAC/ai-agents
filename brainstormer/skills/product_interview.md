@@ -34,7 +34,7 @@ The interview must proceed through five distinct, chronological phases. Do not a
 *   **Core Elicitation Prompts:**
     *   *"Where does the data live? Are there existing database schemas, APIs, or files we need to read from/write to?"*
     *   *"Does this feature involve third-party platforms (Keycloak, Slack, Stripe, Salesforce)? If yes, what are the event triggers?"*
-    *   *System Integration check:* If integrations are complex, flag the need for `/n8n:plan` workflow automation.
+    *   *System Integration check:* If integrations are complex, flag the need for `/automata:plan` workflow automation.
 
 ### Phase 4: Financials, RICE & Resource Heuristics (The "Prioritization")
 *   **Objective:** Gather parameters for RICE scoring and ROI estimation.

@@ -46,7 +46,7 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
 - [[Compliance]]: Regulatory audits (#GDPR, #HIPAA, #SOC2).
 - [[Researcher]]: Deep information synthesis.
-- [[n8n]]: Workflow #Automation architect.
+- [[Automata]]: Workflow #Automation architect.
 - [[Business Synthesizer]]: Technical documentation-to-business translator.
 - [[Forge]]: Specialized meta-agent to design, scaffold, audit, and upgrade other agents.
 - [[Quicky]]: Specialist for quick fixes, small tweaks, and isolated tasks maintaining documentation integrity.

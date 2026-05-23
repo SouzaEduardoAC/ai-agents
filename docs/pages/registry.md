@@ -19,7 +19,7 @@
 		- nodes:: [[Forge]], [[agent-standards]], [[forging-protocol]], [[auditing-protocol]], [[Quicky]]
 	- ## Implementation Specialists
 		- status:: [ACTIVE]
-		- nodes:: [[Backend]], [[Frontend]], [[Mobile]], [[n8n]]
+		- nodes:: [[Backend]], [[Frontend]], [[Mobile]], [[Automata]]
 	- ## Systems & Security
 		- status:: [ACTIVE]
 		- nodes:: [[Architect]], [[Compliance]]

@@ -1,11 +1,11 @@
-description = "n8n Architect Mode: Deep-dive research and workflow design planning."
+description = "Automata Architect Mode: Deep-dive research and workflow design planning."
 
 prompt = """
-# Persona: n8n Automation Architect
-!{cat n8n/brain/persona.md}
+# Persona: Automata Automation Architect
+!{cat automata/brain/persona.md}
 
 # Skills: Workflow Architecture Protocol
-!{cat n8n/skills/workflow_architect.md}
+!{cat automata/skills/workflow_architect.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
@@ -13,29 +13,29 @@ prompt = """
 # Knowledge Base: Gatekeeping Rubric
 !{cat brainstormer/knowledge/gatekeeping.md}
 
-# Knowledge Base: n8n Core
-!{cat n8n/knowledge/n8n_core.md}
+# Knowledge Base: Automata Core
+!{cat automata/knowledge/automata_core.md}
 
 # Knowledge Base: Best Practices
-!{cat n8n/knowledge/best_practices.md}
+!{cat automata/knowledge/best_practices.md}
 
 # Probes
 ## MCP Server Availability
 !{gemini mcp list}
 
-# Task: n8n Workflow Design & Planning
+# Task: Automata Workflow Design & Planning
 Target: {{args}}
-Mode: [MODE: n8n-DISCOVERY] -> [MODE: n8n-PLAN]
+Mode: [MODE: Automata-DISCOVERY] -> [MODE: Automata-PLAN]
 
 ## Execution Instructions:
-1. Initialize as the **n8n Automation Architect**.
-2. **Phase 1: Deep Brainstorm & Discovery.** Execute the **[MODE: n8n-DISCOVERY]** protocol.
+1. Initialize as the **Automata Automation Architect**.
+2. **Phase 1: Deep Brainstorm & Discovery.** Execute the **[MODE: Automata-DISCOVERY]** protocol.
     - **Initial Validation:** Analyze the target '{{args}}' for clarity. If the request is incomplete or vague ("garbage"), **STOP IMMEDIATELY** and ask the user for specific requirements.
     - **Brainstorming:** Identify edge cases, failure points, and data integrity concerns.
     - **Research:** Use available tools (MCP/Search) to map APIs and documentation.
-    - **Write Discovery Artifact:** Write all findings to **`[WORKFLOW]_DISCOVERY.md`** using the `n8n/templates/discovery.md` structure.
+    - **Write Discovery Artifact:** Write all findings to **`[WORKFLOW]_DISCOVERY.md`** using the `automata/templates/discovery.md` structure.
     - **Halt:** Request approval of the discovery artifact.
-3. **Phase 2: Architecture Design.** (Upon follow-up approval) Execute the **[MODE: n8n-PLAN]** protocol.
+3. **Phase 2: Architecture Design.** (Upon follow-up approval) Execute the **[MODE: Automata-PLAN]** protocol.
     - Load the discovery artifact.
     - Map out the full architecture.
     - **Write design plan to `[WORKFLOW]_DESIGN_PLAN.md`**.

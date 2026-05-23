@@ -74,7 +74,7 @@ We maintain a "Zero Trust" model for code and documentation integrity.
 - **[[Backend]]**, **[[Frontend]]**, **[[Mobile]]**: Implementation specialists.
 - **[[Compliance]]**: Regulatory & Risk Auditor.
 - **[[Researcher]]**: Strategic Analyst.
-- **[[n8n]]**: Automation Architect.
+- **[[Automata]]**: Automation Architect.
 - **[[Business Synthesizer]]**: Technical specification-to-business translator.
 - **[[Forge]]**: Specialized meta-agent to design, scaffold, audit, and upgrade other agents (#MetaAgent).
 - **[[Quicky]]**: Specialist for quick fixes, small tweaks, and isolated tasks maintaining documentation integrity.

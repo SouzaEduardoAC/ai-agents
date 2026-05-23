@@ -20,7 +20,7 @@
 	- [[Backend]] / [[Frontend]] / [[Mobile]] - Implementation.
 	- [[Compliance]] - Privacy Auditor.
 	- [[Researcher]] - Strategic Analyst.
-	- [[n8n]] - Automation Architect.
+	- [[Automata]] - Automation Architect.
 	- [[Business Synthesizer]] - Technical specification-to-business translator.
 	- [[Forge]] - Meta-Architect (scaffolds, audits, and upgrades other agents).
 - # Use Cases
