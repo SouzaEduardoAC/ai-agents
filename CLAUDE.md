@@ -25,6 +25,7 @@ The following tools are available via the `agent-hub` MCP server:
 ```
 call_agent_command(agent="architect", command="create", args="Your goal here")
 call_agent_command(agent="brainstormer", command="discovery", args="Feature name")
+call_agent_command(agent="forge", command="create", args="New Agent Spec")
 call_agent_command(agent="master", command="run", args="High-level project goal")
 ```
 
@@ -44,6 +45,7 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 - [[Researcher]]: Deep information synthesis.
 - [[n8n]]: Workflow #Automation architect.
 - [[Business Synthesizer]]: Technical documentation-to-business translator.
+- [[Forge]]: Specialized meta-agent to design, scaffold, audit, and upgrade other agents.
 
 ## 🛠 Active Work & Tasks
 - DONE: Verify path normalization across all agents. (ref: [[code-dna]])

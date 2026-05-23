@@ -16,6 +16,7 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - `/backend:*`, `/frontend:*`, `/mobile:*`: Core implementation.
 - `/compliance:*`: Audit and regulation.
 - `/synthesizer:*`: Technical specification-to-business translator.
+- `/forge:*`: Meta-agent design, creation, and auditing.
 
 ## 🤖 Specialized Agents
 - [[Master Orchestrator]]: Multi-agent pipeline management.
@@ -26,6 +27,7 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - [[Researcher]]: Deep information synthesis.
 - [[n8n]]: Workflow #Automation architect.
 - [[Business Synthesizer]]: Technical documentation-to-business translator.
+- [[Forge]]: Meta-agent design, creation, and auditing.
 ## 🛠 Active Work & Tasks
 - DONE: Verify path normalization across all agents. (ref: [[code-dna]])
 - DONE: Implement prompt late-binding deduplication and heuristic relevance filtering (#AMD compiler optimization). (ref: [[TECHNICAL_SPECS]])

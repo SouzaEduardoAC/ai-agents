@@ -14,3 +14,6 @@
 	- ## Product Elicitation & PO Framework
 		- status:: [ACTIVE]
 		- nodes:: [[Brainstormer]], [[prioritization-framework]], [[product-interview]]
+	- ## Meta-Orchestration & Self-Evolution
+		- status:: [ACTIVE]
+		- nodes:: [[Forge]], [[agent-standards]], [[forging-protocol]], [[auditing-protocol]]
