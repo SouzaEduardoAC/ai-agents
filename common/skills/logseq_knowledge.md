@@ -21,7 +21,7 @@ Before modification, the agent **MUST** classify the environment:
 2.  **Tab Indentation:** Use hierarchy to denote relationships.
 3.  **Properties:** Use `key:: value` for metadata. (Mandatory: `type::`, `status::`).
 4.  **Task Management:** Use `TODO`/`DONE` markers for implementation tracking.
-5.  **Graph Integrity (The No-Ghost-Page Rule):** Any agent creating a link `[[PageName]]` is MANDATED to initialize that file. If the content is not yet available, it must contain a `status:: [[STUB]]` and a `TODO` for the responsible persona.
+5.  **Graph Integrity (The No-Ghost-Page Rule):** Any agent creating a link `[[PageName]]` is MANDATED to initialize that file. If the content belongs to a physical file (e.g., a skill or knowledge file), the Logseq page MUST act as a **Vector Pointer** containing `(ref: path/to/file.md)` and an LLM DIRECTIVE to read the physical file, preventing hallucinations. If the content is simply not yet available, it must contain a `status:: [[STUB]]` and a `TODO` for the responsible persona.
 6.  **Persona-Driven Accountability:** Documentation is not "secondary." 
     *   **Architects** are responsible for structural blocks (ADRs, Pipelines).
     *   **Developers** are responsible for implementation blocks (Logic flows, AST citations).

@@ -5,6 +5,7 @@
 
 - # Project Genome
 	- This registry is the central nervous system for all feature documentation. It provides a token-efficient map for cross-agent synchronization and stakeholder reporting.
+	- **LLM DIRECTIVE:** Do not hallucinate capabilities or content. When traversing this graph to a node, use the exact `(ref: path)` pointer found within the node to read the physical file using your tools.
 	- **Mandate:** Any agent creating a new PRD, Architecture document, or functional spec MUST register the node under its corresponding feature block here.
 
 - # Active Features
