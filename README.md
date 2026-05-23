@@ -2,7 +2,7 @@
 **Standardized orchestration for specialized AI Agents across Gemini, Claude, AntiGravity, and Codex.**
 
 ## 🧠 Cognitive Anchors (AI Optimized)
-The primary entry points for AI agents are the **[[AGENTS.md]]** (Universal) and **[[GEMINI.md]]** (Tool-Specific) files.
+The primary entry points for AI agents are the **[[AGENTS.md]]** (Universal), **[[GEMINI.md]]** (Gemini CLI), and **[[CLAUDE.md]]** (Claude Code) files.
 - **Efficiency**: Optimized for AI consumption to minimize token overhead.
 - **Standardization**: `AGENTS.md` follows the open standard for cross-tool compatibility (AntiGravity, Cursor, Claude).
 - **Graph-First**: Direct links to the Logseq-powered knowledge graph in `docs/pages/`.
