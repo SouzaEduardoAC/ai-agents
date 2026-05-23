@@ -138,6 +138,44 @@ program
       }
     }
 
+    // 1. Configure Claude Code MCP
+    console.log("\n🤖 Configuring Claude Code...");
+    const CLAUDE_CONFIG_PATHS = [
+      path.join(os.homedir(), ".claude", "claude_desktop_config.json"),       // Claude Desktop (all platforms)
+      path.join(os.homedir(), "AppData", "Roaming", "Claude", "claude_desktop_config.json"), // Claude Desktop (Windows alt)
+      path.join(os.homedir(), "Library", "Application Support", "Claude", "claude_desktop_config.json"), // Claude Desktop (macOS)
+    ];
+
+    const HUB_MCP_ENTRY = {
+      command: "npx",
+      args: ["github:SouzaEduardoAC/ai-agents", "serve"],
+    };
+
+    let claudeConfigured = false;
+    for (const claudePath of CLAUDE_CONFIG_PATHS) {
+      if (await fs.pathExists(claudePath)) {
+        try {
+          const claudeConfig = await fs.readJson(claudePath);
+          if (!claudeConfig.mcpServers) claudeConfig.mcpServers = {};
+          if (!claudeConfig.mcpServers["agent-hub"]) {
+            claudeConfig.mcpServers["agent-hub"] = HUB_MCP_ENTRY;
+            await fs.writeJson(claudePath, claudeConfig, { spaces: 2 });
+            console.log(`   ✅ [Claude] Configured agent-hub MCP server in ${claudePath}`);
+          } else {
+            console.log(`   ✅ [Claude] agent-hub MCP already registered in ${claudePath}`);
+          }
+          claudeConfigured = true;
+          break;
+        } catch (e) {
+          console.warn(`   ⚠️ [Claude] Could not update ${claudePath}: ${e.message}`);
+        }
+      }
+    }
+
+    if (!claudeConfigured) {
+      console.log("   ℹ️ [Claude] No Claude config file detected — register manually (see instructions below).");
+    }
+
     for (const agent of agents) {
       console.log(`\n📦 Processing Agent: [${agent.toUpperCase()}]`);
 
@@ -167,11 +205,23 @@ program
     }
 
     console.log("\n✨ Bootstrap Complete!");
-    console.log("--------------------------------------------------");
-    console.log("1. AntiGravity CLI: Restart terminal to use slash commands.");
-    console.log("2. AntiGravity: Personas are now in your Manager View.");
-    console.log("3. Claude Code: Use 'call_agent_command' via the MCP server.");
-    console.log("--------------------------------------------------");
+    console.log("==================================================");
+    console.log("\n1️⃣  AntiGravity CLI");
+    console.log("    → Restart your terminal to activate slash commands.");
+    console.log("    → Personas are available in the Manager View.");
+    console.log("\n2️⃣  Gemini CLI");
+    console.log("    → Slash commands installed in ~/.gemini/commands/");
+    console.log("    → MCP servers registered in ~/.gemini/settings.json");
+    console.log("\n3️⃣  Claude Code");
+    console.log("    → If auto-config succeeded, restart Claude Code.");
+    console.log("    → If not detected, run this command manually:");
+    console.log("       mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve");
+    console.log("    → Then use: call_agent_command(agent, command, args)");
+    console.log("\n4️⃣  Codex / Cursor");
+    console.log("    → Link an agent persona to your project:");
+    console.log("       agent-hub link master .cursorrules");
+    console.log("==================================================");
   });
+
 
 program.parse();

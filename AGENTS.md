@@ -26,7 +26,7 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 - DONE: Implement prompt late-binding deduplication and heuristic relevance filtering (#AMD compiler optimization). (ref: [[TECHNICAL_SPECS]])
 - DONE: Formulate resilient cross-client execution fallbacks and degraded tools protocols. (ref: [[code-dna]])
 - DONE: Implement [[Business Synthesizer]] to translate tech docs for BAs/POs. (ref: [[common/skills/business_synthesis.md]])
-- TODO: Mature [[compliance/skills/audit_protocol.md|Compliance Audit Protocol]].
+- DONE: Mature [[compliance/skills/audit_protocol.md|Compliance Audit Protocol]] (mapped detailed GDPR, LGPD, and HIPAA reference guidelines in compliance/knowledge/).
 - TODO: Implement automated AST-sync for [[Mobile]] widget trees.
 
 #AMD #UniversalHub #AgenticFramework #Logseq

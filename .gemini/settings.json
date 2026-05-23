@@ -6,14 +6,6 @@
         "github:SouzaEduardoAC/ai-agents",
         "serve"
       ]
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/home/ecoza/Projects/ai-agents/docs"
-      ]
     }
   }
 }

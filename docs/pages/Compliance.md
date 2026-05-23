@@ -15,6 +15,17 @@
 		- **GDPR (EU)**: Privacy by Design and cross-border transfers.
 		- **HIPAA (US)**: PHI protection and encryption.
 		- **SOC 2 / MICS**: Controls, segregation of duties, and audit trails.
+	- ## Auditing Protocol (v2026) (ref: [[compliance-audit-protocol]])
+		- Scope:: Standardized 8-phase auditing workflow (ref: `compliance/skills/audit_protocol.md`).
+		- **Phases**:
+			- Phase 0:: Scope Declaration (PII/ePHI classification, Role mapping).
+			- Phase 1:: Data Flow Mapping (Data entry, Residency, EU-US DPF, Brazil-EU adequacy).
+			- Phase 2:: Legal Basis Check (GDPR Art 6/9, LGPD Art 7/11, HIPAA TPO/Minimum Necessary).
+			- Phase 3:: Technical & Organizational Measures (AES-256, TLS 1.3, MFA, RBAC, 6-month logs, 2025 HIPAA NPRM readiness).
+			- Phase 4:: Data Subject Rights Verification (15-day LGPD SLA default, Deletion overrides, Law 15.211/2025 minors' data).
+			- Phase 5:: Breach Notification Readiness (72h GDPR Supervisory, 3 business days ANPD Res. 15/2024, 60 calendar days HIPAA).
+			- Phase 6:: Evidence Artifact Checklist (RIPD/DPIA, RoPA, SRA, BAA, Incident Log 5-year retention).
+			- Phase 7:: Audit Output (Cross-framework risk matrix, penalty calculations).
 	- ## Guardrails
 		- **Clinical Accuracy**: Use exact law text, no analogies or metaphors.
 		- **Risk-First Reporting**: Always lead with the most critical legal exposure.

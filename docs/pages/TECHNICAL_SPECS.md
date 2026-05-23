@@ -6,12 +6,13 @@
 - # Core Infrastructure: Universal Agent Hub (Deep Specification)
 	- ## Entry Point Logic (Binary Execution)
 		- Binary:: `bin/agent-hub.js` (ref: `package.json -> bin`)
+		- Entry Point:: `index.js` at the root, acting as the MCP Server (ref: `package.json -> main`)
 		- **Command: `serve`**: 
 			- Function:: Spawns the Hub server (ref: `index.js`).
 			- Transport:: Uses `StdioServerTransport` for direct CLI-to-Hub communication.
 		- **Command: `bootstrap` (Environment Initialization)**: 
-			- Function:: One-time local environment setup for Gemini and AntiGravity.
-			- **Step 0: MCP Configuration**:
+			- Function:: One-time local environment setup for Gemini CLI, AntiGravity, and Claude Code.
+			- **Step 0: Gemini MCP Configuration**:
 				- Path:: `~/.gemini/settings.json`
 				- Logic:: Dynamically injects `filesystem` and `playwright` MCP server configurations if missing.
 			- **Step 1: Gemini Slash Commands**:
@@ -22,6 +23,10 @@
 				- Source:: `[agent]/brain/persona.md`
 				- Target:: `~/.gemini/antigravity/brain/[agent].md`
 				- Logic:: Physical copy of persona files for native AntiGravity orchestration.
+			- **Step 3: Claude Code & Claude Desktop Integration (v2026 Upgrades)**:
+				- Path:: Auto-detects Claude Desktop configurations dynamically across all platforms (Windows, macOS, Linux).
+				- Logic:: Automatically writes the MCP entry for `agent-hub` to `claude_desktop_config.json` if the config directory is found.
+				- Fallback:: Always outputs the exact, copy-pasteable `mcp add` command as a fallback for Claude CLI users.
 		- **Command: `link <agent> <target>`**: 
 			- Function:: Creates a hard filesystem symlink between the agent's core `persona.md` and a project-specific instruction file (e.g., `.cursorrules`).
 	- ## The Orchestration Engine (The Bridge)

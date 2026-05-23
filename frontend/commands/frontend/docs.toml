@@ -37,10 +37,10 @@ Target: {{args}}
     - **Technical Visualization:** Generate Mermaid Sequence or Flowcharts for complex UI flows in `docs/pages/visuals.md`.
 
 6. **Phase 2.5: AI Context & Graph Synchronization.**
-    - **Dual-Anchor Update:** Create or update BOTH the root-level `AGENTS.md` (Universal) and `GEMINI.md` (Tool-Specific).
-    - **Cognitive Anchors:** `AGENTS.md` is the primary universal anchor, while `GEMINI.md` is the override for Gemini/AntiGravity CLI.
-    - **Graph Linking:** Ensure both files link to all relevant specialized agents and the `docs/pages/` graph nodes using `[[links]]`.
-    - **Logseq Style:** Rigorously use `[[links]]`, `#tags`, and `TODO/DONE` markers throughout `AGENTS.md`, `GEMINI.md`, and `docs/pages/`.
+    - **Triple-Anchor Update:** Create or update ALL THREE root-level cognitive anchors: `AGENTS.md` (Universal), `GEMINI.md` (Gemini/AntiGravity CLI), and `CLAUDE.md` (Claude Code).
+    - **Cognitive Anchors:** `AGENTS.md` is the primary universal anchor; `GEMINI.md` is the override for Gemini/AntiGravity CLI; `CLAUDE.md` is the override for Claude Code (MCP tool instructions, no slash commands).
+    - **Graph Linking:** Ensure all three files link to all relevant specialized agents and the `docs/pages/` graph nodes using `[[links]]`.
+    - **Logseq Style:** Rigorously use `[[links]]`, `#tags`, and `TODO/DONE` markers throughout `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, and `docs/pages/`.
 
 7. **Phase 3: Verification.** 
     - Apply UI/UX Yellow/Black Hat analysis. 
@@ -48,7 +48,8 @@ Target: {{args}}
 
 8. **Output:**
     - `AGENTS.md` (Universal AI Context)
-    - `GEMINI.md` (Tool-Specific AI Context)
+    - `GEMINI.md` (Gemini/AntiGravity CLI Context)
+    - `CLAUDE.md` (Claude Code MCP Context)
 
 9. **Closure.** Summarize the frontend-specific updates made to the Logseq graph.
 """
