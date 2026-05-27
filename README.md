@@ -46,6 +46,38 @@ npx --prefer-online github:SouzaEduardoAC/ai-agents bootstrap
 
 ---
 
+## 🎮 How to Call Agents (Usage per LLM Environment)
+
+Depending on your active LLM interface, calling and orchestrating the agents is standardized across three primary execution modes:
+
+### 1. AntiGravity CLI & Gemini CLI (Slash Commands)
+After running the `bootstrap` command, all agents register custom **slash commands** and **personas** directly in your CLI environment.
+*   **Format**: `/[agent]:[command] [your goal]`
+*   **Key Examples**:
+    *   **Master Orchestrator**: `/master:run "Implement JWT authentication flow"`
+    *   **Quicky (Quick Fixes)**: `/quicky:fix "Fix the type mismatch on line 42 in api.ts"`
+    *   **Architect (Design/Docs)**: `/architect:create "Design a resilient connection pool"` or `/architect:docs "Sync the Logseq graph with recent migrations"`
+    *   **Brainstormer (Discovery/PO Interview)**: `/brainstormer:interview "A new service to parse PDFs"`
+
+### 2. Claude Code (Model Context Protocol / MCP)
+Claude Code communicates with the Hub exclusively using **MCP tool calls**. There are no slash commands; instead, Claude invokes the Hub's built-in orchestration tools dynamically.
+*   **Format**: `call_agent_command(agent="[agent-name]", command="[command]", args="[your goal]")`
+*   **Key Examples**:
+    *   **Master Orchestrator**: `call_agent_command(agent="master", command="run", args="Build the user dashboard page")`
+    *   **Quicky (Quick Fixes)**: `call_agent_command(agent="quicky", command="fix", args="Fix syntax error on index.js line 20")`
+    *   **Architect (Planning)**: `call_agent_command(agent="architect", command="create", args="Design a CQRS pattern for payments")`
+
+### 3. Cursor & Codex IDEs (System Rules & Persona Linking)
+For Cursor, VS Code, or other IDEs using context files (like `.cursorrules` or custom system instructions), you link the agent's core identity file directly into your workspace.
+*   **Link Command**: 
+    ```bash
+    npx github:SouzaEduardoAC/ai-agents link [agent-name] [target-file]
+    ```
+    *(e.g., `npx github:SouzaEduardoAC/ai-agents link master .cursorrules` or `link quicky .cursorrules`)*
+*   **Usage**: The IDE model immediately inherits that agent's complete persona, skills, and guardrails. Simply reference `@.cursorrules` in your Composer or sidebar chat to execute the flow.
+
+---
+
 ## 🛠 Contribution & Engineering Standards
 We maintain a "Zero Trust" model for code and documentation integrity.
 - **Engineering DNA**: Foundational patterns and standards are codified in **[[code-dna]]**.
