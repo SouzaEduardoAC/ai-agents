@@ -60,12 +60,14 @@ After running the `bootstrap` command, all agents register custom **slash comman
     *   **Brainstormer (Discovery/PO Interview)**: `/brainstormer:interview "A new service to parse PDFs"`
 
 ### 2. Claude Code (Model Context Protocol / MCP)
-Claude Code communicates with the Hub exclusively using **MCP tool calls**. There are no slash commands; instead, Claude invokes the Hub's built-in orchestration tools dynamically.
-*   **Format**: `call_agent_command(agent="[agent-name]", command="[command]", args="[your goal]")`
-*   **Key Examples**:
-    *   **Master Orchestrator**: `call_agent_command(agent="master", command="run", args="Build the user dashboard page")`
-    *   **Quicky (Quick Fixes)**: `call_agent_command(agent="quicky", command="fix", args="Fix syntax error on index.js line 20")`
-    *   **Architect (Planning)**: `call_agent_command(agent="architect", command="create", args="Design a CQRS pattern for payments")`
+Claude Code communicates with the Hub using **MCP tool calls**. Since Claude is an agentic assistant, you do **not** need to write raw code or command syntax in the chat. You simply speak to Claude in natural language, and Claude will autonomously invoke the correct Hub tool.
+*   **Natural Conversational Prompts (Recommended)**:
+    *   *"Hey Claude, call master to build the user dashboard page."*
+    *   *"Claude, ask quicky to fix the label on the summary page."*
+    *   *"Ask the architect to design a CQRS pattern for payments."*
+*   **Under-the-Hood Tool Contract** (How Claude executes it behind the scenes):
+    *   Format: `call_agent_command(agent="[agent-name]", command="[command]", args="[your goal]")`
+    *   Example: `call_agent_command(agent="quicky", command="fix", args="Fix the summary label mismatch")`
 
 ### 3. Cursor & Codex IDEs (System Rules & Persona Linking)
 For Cursor, VS Code, or other IDEs using context files (like `.cursorrules` or custom system instructions), you link the agent's core identity file directly into your workspace.
