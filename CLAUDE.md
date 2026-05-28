@@ -26,7 +26,7 @@ The following tools are available via the `agent-hub` MCP server:
 call_agent_command(agent="architect", command="create", args="Your goal here")
 call_agent_command(agent="brainstormer", command="discovery", args="Feature name")
 call_agent_command(agent="forge", command="create", args="New Agent Spec")
-call_agent_command(agent="master", command="run", args="High-level project goal")
+call_agent_command(agent="squad", command="run", args="High-level project goal")
 ```
 
 ## 🗺 Documentation Map (Logseq Graph)
@@ -40,7 +40,7 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 **CRITICAL MANDATE:** You MUST always respect and update the entire documentation protocol of all agents (such as journals, registry, and graphs) when modifying the repository, EVEN if you are not currently operating as the specific agent responsible for that domain. Code changes without corresponding protocol updates are strictly prohibited.
 
 ## 🤖 Specialized Agents
-- [[Master Orchestrator]]: Multi-agent pipeline management.
+- [[Squad Orchestrator]]: Multi-agent pipeline management.
 - [[Brainstormer]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.

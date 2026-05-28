@@ -14,7 +14,7 @@
 	- [[resilience-policies]] - Stability and error handling. (ref: `architect/knowledge/bottlenecks.md`)
 	- [[visuals]] - Mermaid diagrams.
 - # Specialized Agents
-	- [[Master Orchestrator]] - Senior Project Manager.
+	- [[Squad Orchestrator]] - Squad Leader.
 	- [[Brainstormer]] - Product Owner.
 	- [[Architect]] - Systems Architect.
 	- [[Backend]] / [[Frontend]] / [[Mobile]] - Implementation.

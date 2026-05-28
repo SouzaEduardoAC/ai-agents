@@ -26,4 +26,4 @@
 		- nodes:: [[Architect]], [[Compliance]]
 	- ## Pipeline & Research
 		- status:: [ACTIVE]
-		- nodes:: [[Master Orchestrator]], [[Researcher]]
+		- nodes:: [[Squad Orchestrator]], [[Researcher]]

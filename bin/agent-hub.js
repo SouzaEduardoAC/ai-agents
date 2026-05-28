@@ -222,7 +222,7 @@ program
     console.log("    → Then use: call_agent_command(agent, command, args)");
     console.log("\n4️⃣  Codex / Cursor");
     console.log("    → Link an agent persona to your project:");
-    console.log("       agent-hub link master .cursorrules");
+    console.log("       agent-hub link squad .cursorrules");
     console.log("==================================================");
   });
 

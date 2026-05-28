@@ -23,7 +23,7 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - `/quicky:*`: Quick fixes, minor tweaks, and isolated code changes.
 
 ## 🤖 Specialized Agents
-- [[Master Orchestrator]]: Multi-agent pipeline management.
+- [[Squad Orchestrator]]: Multi-agent pipeline management.
 - [[Brainstormer]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.

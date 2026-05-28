@@ -54,7 +54,7 @@ Depending on your active LLM interface, calling and orchestrating the agents is 
 After running the `bootstrap` command, all agents register custom **slash commands** and **personas** directly in your CLI environment.
 *   **Format**: `/[agent]:[command] [your goal]`
 *   **Key Examples**:
-    *   **Master Orchestrator**: `/master:run "Implement JWT authentication flow"`
+    *   **Squad Orchestrator**: `/squad:run "Implement JWT authentication flow"`
     *   **Quicky (Quick Fixes)**: `/quicky:fix "Fix the type mismatch on line 42 in api.ts"`
     *   **Architect (Design/Docs)**: `/architect:create "Design a resilient connection pool"` or `/architect:docs "Sync the Logseq graph with recent migrations"`
     *   **Brainstormer (Discovery/PO Interview)**: `/brainstormer:interview "A new service to parse PDFs"`
@@ -62,7 +62,7 @@ After running the `bootstrap` command, all agents register custom **slash comman
 ### 2. Claude Code (Model Context Protocol / MCP)
 Claude Code communicates with the Hub using **MCP tool calls**. Since Claude is an agentic assistant, you do **not** need to write raw code or command syntax in the chat. You simply speak to Claude in natural language, and Claude will autonomously invoke the correct Hub tool.
 *   **Natural Conversational Prompts (Recommended)**:
-    *   *"Hey Claude, call master to build the user dashboard page."*
+    *   *"Hey Claude, call squad to build the user dashboard page."*
     *   *"Claude, ask quicky to fix the label on the summary page."*
     *   *"Ask the architect to design a CQRS pattern for payments."*
 *   **Under-the-Hood Tool Contract** (How Claude executes it behind the scenes):
@@ -75,7 +75,7 @@ For Cursor, VS Code, or other IDEs using context files (like `.cursorrules` or c
     ```bash
     npx github:SouzaEduardoAC/ai-agents link [agent-name] [target-file]
     ```
-    *(e.g., `npx github:SouzaEduardoAC/ai-agents link master .cursorrules` or `link quicky .cursorrules`)*
+    *(e.g., `npx github:SouzaEduardoAC/ai-agents link squad .cursorrules` or `link quicky .cursorrules`)*
 *   **Usage**: The IDE model immediately inherits that agent's complete persona, skills, and guardrails. Simply reference `@.cursorrules` in your Composer or sidebar chat to execute the flow.
 
 ---
@@ -102,7 +102,7 @@ We maintain a "Zero Trust" model for code and documentation integrity.
 ---
 
 ## 🤖 Core Agents
-- **[[Master Orchestrator]]**: PM / Chief Orchestrator.
+- **[[Squad Orchestrator]]**: PM / Chief Orchestrator.
 - **[[Brainstormer]]**: PO / Requirements Gateway.
 - **[[Architect]]**: Systems Lead / Security Auditor.
 - **[[Backend]]**, **[[Frontend]]**, **[[Mobile]]**: Implementation specialists.

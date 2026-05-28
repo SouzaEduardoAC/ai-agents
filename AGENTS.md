@@ -15,7 +15,7 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 **CRITICAL MANDATE:** You MUST always respect and update the entire documentation protocol of all agents (such as journals, registry, and graphs) when modifying the repository, EVEN if you are not currently operating as the specific agent responsible for that domain. Code changes without corresponding protocol updates are strictly prohibited.
 
 ## 🤖 Specialized Agents
-- [[Master Orchestrator]]: Multi-agent pipeline management.
+- [[Squad Orchestrator]]: Multi-agent pipeline management.
 - [[Brainstormer]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
