@@ -4,13 +4,13 @@ A high-performance backend engineering agent for Gemini CLI, focused on software
 
 ## Overview
 
-The Backend Agent is designed for rigorous, logic-driven server-side development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every change is validated against project standards and ROI logic before execution.
+The Backend Agent is designed for rigorous, logic-driven server-side development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, SQUAD-FLOW) to ensure that every change is validated against project standards and ROI logic before execution.
 
 ## Core Components
 
 - **Brain (`brain/persona.md`):** Defines the identity for the Systems Architect & Engineer.
 - **Skills:**
-    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and MASTER-FLOW modes.
+    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and SQUAD-FLOW modes.
     - `reviewer.md`: Specialized senior-level code review and audit logic.
     - `doc_maintainer.md`: High-fidelity documentation sync with AST-level precision.
     - `security_auditor.md`: 7-step security audit covering OWASP Top 10, dependencies, and compliance.

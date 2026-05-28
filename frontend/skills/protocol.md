@@ -44,7 +44,7 @@
 
    ---
 
-   ## [MODE: MASTER-FLOW]
+   ## [MODE: SQUAD-FLOW]
    0. **Pre-Sync:** Execute `/document` logic (Phase 0) to verify current documentation vs. code reality.
    1. **Deep Dive:** Execute `/investigate` logic. Write findings to `[FEATURE]_DISCOVERY.md`.
    2. **Gate 0 (Discovery Approval):** Inform the user the discovery artifact is ready at `[FEATURE]_DISCOVERY.md`. **STOP** and wait for explicit approval.

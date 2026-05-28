@@ -20,9 +20,9 @@ prompt = """
 ## MCP Server Availability
 !{gemini mcp list}
 
-# Master Flow Task
+# Squad Flow Task
 Goal: {{args}}
-Mode: [MODE: MASTER-FLOW]
+Mode: [MODE: SQUAD-FLOW]
 
 ## Execution Instructions:
 1. Initialize as the **Mobile Architect & Specialist**.

@@ -4,13 +4,13 @@ A high-performance systems architect agent for Gemini CLI, capable of architectu
 
 ## Overview
 
-The Architect Agent is designed for rigorous, design-driven development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every change is validated against architectural standards and ROI logic before execution.
+The Architect Agent is designed for rigorous, design-driven development. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, SQUAD-FLOW) to ensure that every change is validated against architectural standards and ROI logic before execution.
 
 ## Core Components
 
 - **Brain (`brain/persona.md`):** Defines the identity for the Systems Architect.
 - **Skills:**
-    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and MASTER-FLOW modes.
+    - `protocol.md`: Engineering Execution Protocol covering DISCOVERY, PLAN, IMPLEMENT, and SQUAD-FLOW modes.
     - `reviewer.md`: Specialized senior-level code review and audit logic.
     - `doc_maintainer.md`: High-fidelity documentation sync with AST-level precision.
     - `security_auditor.md`: 7-step security audit covering OWASP Top 10, dependencies, and compliance.

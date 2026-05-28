@@ -4,7 +4,7 @@ A high-performance frontend engineering agent for Gemini CLI, specialized in Vue
 
 ## Overview
 
-The Frontend Agent is designed for building accessible, high-performance user interfaces. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every UI component is validated against best practices, performance metrics (Web Vitals), and ROI logic.
+The Frontend Agent is designed for building accessible, high-performance user interfaces. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, SQUAD-FLOW) to ensure that every UI component is validated against best practices, performance metrics (Web Vitals), and ROI logic.
 
 ## Core Components
 

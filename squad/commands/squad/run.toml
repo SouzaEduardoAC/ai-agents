@@ -3,7 +3,7 @@ description = "Squad Orchestrator: Unified command to run the full pipeline via 
 prompt = """
 # Task: Orchestrate High-Level Project
 Goal: {{args}}
-Mode: [MODE: MASTER-ORCHESTRATOR]
+Mode: [MODE: SQUAD-ORCHESTRATOR]
 
 # Context Preparation
 1. Check the availability of the `agent-hub` MCP server.

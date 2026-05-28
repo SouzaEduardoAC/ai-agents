@@ -4,7 +4,7 @@ A high-performance mobile engineering agent for Gemini CLI, specialized in Dart 
 
 ## Overview
 
-The Mobile Agent is designed for building beautiful, 60/120 FPS mobile applications. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, MASTER-FLOW) to ensure that every mobile component is validated against best practices, frame rate metrics (Jank), and platform guidelines (Material/Cupertino).
+The Mobile Agent is designed for building beautiful, 60/120 FPS mobile applications. It operates in distinct modes (DISCOVERY, PLAN, IMPLEMENT, REVIEW, SQUAD-FLOW) to ensure that every mobile component is validated against best practices, frame rate metrics (Jank), and platform guidelines (Material/Cupertino).
 
 ## Core Components
 
