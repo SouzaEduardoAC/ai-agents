@@ -21,7 +21,7 @@ Mode: [MODE: AUDIT]
 ## Execution Instructions:
 1. Initialize as the **Agentic Forge** in **Audit Mode**.
 2. **Phase 1: Structural Scan:**
-    - Scan the target agent directory structure under `c:\\Users\\Eduardo\\Projects\\ai-agents/{{args}}`.
+    - Scan the target agent directory structure for the agent named `{{args}}` within the active repository root (do not hardcode paths; resolve the repo root from the current working directory).
     - Apply the 6-file structural checks and calculate the **Structural Integrity Score**.
 3. **Phase 2: Alignment Checks:**
     - Audit all command TOMLs for `!{cat ...}` late-binding probes.

@@ -99,10 +99,31 @@ async function compileCommonSection(dirPath, searchTarget, cattedBasenames, cate
         isRelevant = true;
       }
     } else if (category === "skills") {
-      if (basename === "logseq_knowledge.md" || basename === "doc_maintainer.md") {
-        isRelevant = /docs|document|logseq|prd|adr|registry|create|discovery|plan|report|investigate/.test(searchTarget);
-      } else if (basename === "base_reviewer.md" || basename === "base_security_auditor.md") {
-        isRelevant = /audit|review|create|implement|security|test|bottleneck|perf|fix|refactor/.test(searchTarget);
+      // Pre-compute what the command already explicitly provides
+      const hasLogseq = cattedBasenames.has("logseq_knowledge.md");
+      const hasAgentReviewer = [...cattedBasenames].some(n => n.endsWith("reviewer.md"));
+      const hasAgentSecurityAuditor = [...cattedBasenames].some(n => n.endsWith("security_auditor.md"));
+
+      if (basename === "logseq_knowledge.md") {
+        // Skip — already explicitly catted by the command; dedup above handles this,
+        // but guard here too for clarity.
+        isRelevant = false;
+      } else if (basename === "doc_maintainer.md") {
+        // doc_maintainer and logseq_knowledge are mutually exclusive protocols.
+        // Only inject doc_maintainer when the command has NOT opted into Logseq.
+        isRelevant = !hasLogseq &&
+          /docs|document/.test(searchTarget) &&
+          !/logseq/.test(searchTarget);
+      } else if (basename === "base_reviewer.md") {
+        // Only inject the generic base reviewer when the command has no agent-specific
+        // reviewer already — prevents two competing review protocols in one prompt.
+        isRelevant = !hasAgentReviewer &&
+          /audit|review|create|implement|security|test|bottleneck|perf|fix|refactor/.test(searchTarget);
+      } else if (basename === "base_security_auditor.md") {
+        // Same guard for the security auditor base — skip when an agent-specific
+        // security_auditor is already present.
+        isRelevant = !hasAgentSecurityAuditor &&
+          /audit|review|create|implement|security|test|bottleneck|perf|fix|refactor/.test(searchTarget);
       } else {
         // Fallback: default to true for other skills
         isRelevant = true;
@@ -122,7 +143,7 @@ async function compileCommonSection(dirPath, searchTarget, cattedBasenames, cate
  * Detects if a specific stack knowledge should be loaded based on the environment or task arguments.
  */
 async function getDynamicKnowledge(taskArgs = "", agent = "") {
-  let dynamicKnowledge = "";
+  const detectedStacks = [];
   const files = await fs.readdir(process.cwd()).catch(() => []);
   const taskArgsLower = taskArgs.toLowerCase();
 
@@ -139,8 +160,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasDotnetFiles || hasDotnetMention) {
       const dotnetPath = path.join(AGENTS_ROOT, "common", "stacks", "dotnet.md");
       if (await fs.pathExists(dotnetPath)) {
-        const content = await fs.readFile(dotnetPath, "utf-8");
-        dynamicKnowledge += `\n### File: dotnet.md (Dynamic Stack: .NET Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: ".NET",
+          file: "dotnet.md",
+          path: dotnetPath
+        });
       }
     }
 
@@ -150,8 +174,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasJavaFiles || hasJavaMention) {
       const javaPath = path.join(AGENTS_ROOT, "common", "stacks", "java.md");
       if (await fs.pathExists(javaPath)) {
-        const content = await fs.readFile(javaPath, "utf-8");
-        dynamicKnowledge += `\n### File: java.md (Dynamic Stack: Java Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "Java / Spring Boot",
+          file: "java.md",
+          path: javaPath
+        });
       }
     }
 
@@ -161,8 +188,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasGoFiles || hasGoMention) {
       const goPath = path.join(AGENTS_ROOT, "common", "stacks", "go.md");
       if (await fs.pathExists(goPath)) {
-        const content = await fs.readFile(goPath, "utf-8");
-        dynamicKnowledge += `\n### File: go.md (Dynamic Stack: Go Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "Go (Golang)",
+          file: "go.md",
+          path: goPath
+        });
       }
     }
   }
@@ -175,8 +205,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasReactMention || (hasReactFiles && (await fs.readFile(path.join(process.cwd(), 'package.json'), 'utf8').catch(() => "")).includes('"react"'))) {
       const reactPath = path.join(AGENTS_ROOT, "common", "stacks", "react.md");
       if (await fs.pathExists(reactPath)) {
-        const content = await fs.readFile(reactPath, "utf-8");
-        dynamicKnowledge += `\n### File: react.md (Dynamic Stack: React Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "React",
+          file: "react.md",
+          path: reactPath
+        });
       }
     }
 
@@ -186,8 +219,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasAngularFiles || hasAngularMention) {
       const angularPath = path.join(AGENTS_ROOT, "common", "stacks", "angular.md");
       if (await fs.pathExists(angularPath)) {
-        const content = await fs.readFile(angularPath, "utf-8");
-        dynamicKnowledge += `\n### File: angular.md (Dynamic Stack: Angular Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "Angular",
+          file: "angular.md",
+          path: angularPath
+        });
       }
     }
 
@@ -197,8 +233,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasVueFiles || hasVueMention) {
       const vuePath = path.join(AGENTS_ROOT, "common", "stacks", "vue.md");
       if (await fs.pathExists(vuePath)) {
-        const content = await fs.readFile(vuePath, "utf-8");
-        dynamicKnowledge += `\n### File: vue.md (Dynamic Stack: Vue Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "Vue",
+          file: "vue.md",
+          path: vuePath
+        });
       }
     }
 
@@ -208,8 +247,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasTsFiles || hasTsMention) {
       const tsPath = path.join(AGENTS_ROOT, "common", "stacks", "typescript.md");
       if (await fs.pathExists(tsPath)) {
-        const content = await fs.readFile(tsPath, "utf-8");
-        dynamicKnowledge += `\n### File: typescript.md (Dynamic Stack: TypeScript Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "TypeScript",
+          file: "typescript.md",
+          path: tsPath
+        });
       }
     }
 
@@ -219,8 +261,11 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasJsFiles || hasJsMention) {
       const jsPath = path.join(AGENTS_ROOT, "common", "stacks", "javascript.md");
       if (await fs.pathExists(jsPath)) {
-        const content = await fs.readFile(jsPath, "utf-8");
-        dynamicKnowledge += `\n### File: javascript.md (Dynamic Stack: JavaScript Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "JavaScript",
+          file: "javascript.md",
+          path: jsPath
+        });
       }
     }
   }
@@ -233,13 +278,39 @@ async function getDynamicKnowledge(taskArgs = "", agent = "") {
     if (hasFlutterFiles || hasFlutterMention) {
       const flutterPath = path.join(AGENTS_ROOT, "common", "stacks", "flutter.md");
       if (await fs.pathExists(flutterPath)) {
-        const content = await fs.readFile(flutterPath, "utf-8");
-        dynamicKnowledge += `\n### File: flutter.md (Dynamic Stack: Flutter/Dart Detected)\n${content}\n`;
+        detectedStacks.push({
+          name: "Flutter / Dart",
+          file: "flutter.md",
+          path: flutterPath
+        });
       }
     }
   }
-  
-  return dynamicKnowledge;
+
+  // Primary Stacks are key framework/languages (excluding TS/JS helpers to allow e.g. React + TS single-stack auto-load)
+  const primaryStacks = ["dotnet.md", "java.md", "go.md", "react.md", "angular.md", "vue.md", "flutter.md"];
+  const primaryDetected = detectedStacks.filter(s => primaryStacks.includes(s.file));
+
+  // If multiple primary stacks are detected, use Option B (On-Demand Manifest)
+  if (primaryDetected.length > 1) {
+    let manifest = `\n### MULTIPLE STACKS DETECTED (On-Demand Mode Active)\n`;
+    manifest += `The workspace contains multiple active technology stacks. To prevent prompt collision and token bloat, the reference guidelines have NOT been pre-injected.\n`;
+    manifest += `You MUST dynamically inspect and read the relevant reference files using your 'view_file' tool before planning or executing tasks in those subdirectories:\n\n`;
+    for (const stack of detectedStacks) {
+      manifest += `- **Stack:** ${stack.name}\n  **Reference Path:** common/stacks/${stack.file}\n`;
+    }
+    manifest += `\nExample: If you are editing a Java file, call view_file on 'common/stacks/java.md' first to align with the project standard.\n`;
+    return manifest;
+  }
+
+  // Otherwise, fallback to pre-loading all detected stacks (single-stack optimization)
+  let content = "";
+  for (const stack of detectedStacks) {
+    const fileContent = await fs.readFile(stack.path, "utf-8");
+    content += `\n### File: ${stack.file} (Dynamic Stack: ${stack.name} Detected)\n${fileContent}\n`;
+  }
+
+  return content;
 }
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {

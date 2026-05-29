@@ -74,7 +74,7 @@ Every agent must be mapped as a first-class node inside the Logseq graph:
     - Maintain a clear hierarchy: `- # [Agent Name] (Deep Persona) -> - ## Identity -> - ## Commands -> - ## Success Criteria`.
     - Cross-link key concepts using bidirectional `[[Links]]`.
 3.  **Registry Sync:**
-    - Add the new agent and its core specs to [`docs/pages/registry.md`](file:///c:/Users/Eduardo/Projects/ai-agents/docs/pages/registry.md) under the corresponding active feature block.
+    - Add the new agent and its core specs to [`docs/pages/registry.md`](../../docs/pages/registry.md) under the corresponding active feature block.
 4.  **Rule 4.1: Active Workspace Isolation & Scoping:**
     - All created or modified files must reside strictly within the active workspace root of the repository being worked on.
     - **NEVER** write or leak files into the global Agent Hub directory. Always resolve path locations dynamically relative to the active workspace's root `.git` or `package.json` file.

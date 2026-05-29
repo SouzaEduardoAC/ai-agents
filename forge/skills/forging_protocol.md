@@ -75,4 +75,4 @@ Represent the new agent as a first-class node in the Logseq documentation graph:
       - **Yellow Hat** (resilience and testing assertions).
       - **Black Hat** (architecture risks and token cost profile).
       - **Blind Spots** (logical edge cases or dependencies ignored).
-2.  **Update Registry:** Open [`docs/pages/registry.md`](file:///c:/Users/Eduardo/Projects/ai-agents/docs/pages/registry.md) and append the new agent's node in the Active Features list under the corresponding feature block, preserving indentation integrity.
+2.  **Update Registry:** Open [`docs/pages/registry.md`](../../docs/pages/registry.md) and append the new agent's node in the Active Features list under the corresponding feature block, preserving indentation integrity.
