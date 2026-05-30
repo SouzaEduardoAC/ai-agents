@@ -1,6 +1,6 @@
 # Requirement Clarification Required [HALT]
 
-The Guru has identified a **Halt Condition** in the current proposal. To proceed to the PRD phase, the following critical variables must be resolved.
+The Product Owner has identified a **Halt Condition** in the current proposal. To proceed to the PRD phase, the following critical variables must be resolved.
 
 ## 1. The Blocker
 - **Halt Reason:** [e.g., Logical Incoherence / Critical Variable Void / Security Risk]
@@ -16,4 +16,4 @@ Please provide information for the following missing variables:
 - [Question 2: To establish ROI or success metrics]
 
 ---
-*Once these points are addressed, the Guru will re-evaluate the proposal via the Gatekeeping Rubric.*
+*Once these points are addressed, the Product Owner will re-evaluate the proposal via the Gatekeeping Rubric.*

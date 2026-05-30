@@ -1,20 +1,20 @@
-description = "Guru Discovery: Transform ideas into a validated PRD (Product Requirements Document) using Logseq-flavored Markdown."
+description = "Product Owner Discovery: Transform ideas into a validated PRD (Product Requirements Document) using Logseq-flavored Markdown."
 
 prompt = """
-# Persona: Guru & Product Owner
-!{cat guru/brain/persona.md}
+# Persona: Product Owner & Product Owner
+!{cat po/brain/persona.md}
 
 # Skills: Brainstorming Protocol
-!{cat guru/skills/brainstorming_protocol.md}
+!{cat po/skills/brainstorming_protocol.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
 
 # Skills: Logseq Brainstorming
-!{cat guru/skills/logseq_brainstorming.md}
+!{cat po/skills/logseq_brainstorming.md}
 
 # Knowledge Base: Gatekeeping Rubric
-!{cat guru/knowledge/gatekeeping.md}
+!{cat po/knowledge/gatekeeping.md}
 
 # Probes
 ## MCP Server Availability
@@ -25,7 +25,7 @@ Target: {{args}}
 Mode: [MODE: DISCOVERY]
 
 ## Execution Instructions:
-1. Initialize as the **Guru & Product Owner**.
+1. Initialize as the **Product Owner & Product Owner**.
 2. **Step 1: Analyze & Elicit.** Analyze '{{args}}' and ask 3-5 clarifying questions to the user.
 3. **Step 2: Research.** 
     - Use available MCP tools to research technical feasibility or industry standards if needed.

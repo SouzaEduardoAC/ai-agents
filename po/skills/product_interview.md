@@ -54,7 +54,7 @@ The interview must proceed through five distinct, chronological phases. Do not a
 
 ## 2. Conversational Heuristics for the PO
 
-When conducting the interview, the guru must adhere to these communication rules:
+When conducting the interview, the po must adhere to these communication rules:
 
 1.  **Refuse Vagueness (The Elicitation Drill):**
     *   If the user says: *"I want a fast dashboard,"* respond with: *"To design for performance, let's define 'fast'. Are we aiming for under 200ms API response time? Also, what specific data panels should the dashboard render?"*

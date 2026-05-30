@@ -5,9 +5,9 @@ This protocol governs the transformation of initial requests into a validated Pr
 ## [MODE: DISCOVERY]
 1. **Requirement Elicitation & Sanity Check:**
     - Analyze the user's initial input `{{args}}`.
-    - **Reasoned Pushback:** Apply the **Gatekeeping Rubric** (ref: `guru/knowledge/gatekeeping.md`).
+    - **Reasoned Pushback:** Apply the **Gatekeeping Rubric** (ref: `po/knowledge/gatekeeping.md`).
     - **Identify Action:** Determine if this is a **Strategic Note** (proceed with PRD) or a **Halt Condition** (stop and clarify).
-    - **Resolution Path:** If a **Halt** is issued, immediately present the **Clarification Template** (ref: `guru/templates/clarification.md`) to the user.
+    - **Resolution Path:** If a **Halt** is issued, immediately present the **Clarification Template** (ref: `po/templates/clarification.md`) to the user.
     - **Blind Spot Detection:** Explicitly identify variables or downstream consequences the user has likely ignored.
     - Identify missing information: Who is it for? What is the core value? What are the success metrics?
     - Ask 3-5 high-signal questions to resolve ambiguity or test assumptions.

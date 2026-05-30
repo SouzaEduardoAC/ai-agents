@@ -15,11 +15,11 @@
 	- [[visuals]] - Mermaid diagrams.
 - # Specialized Agents
 	- [[Squad Orchestrator]] - Squad Leader.
-	- [[Guru]] - Product Owner.
+	- [[Product Owner]] - Product Owner.
 	- [[Architect]] - Systems Architect.
 	- [[Backend]] / [[Frontend]] / [[Mobile]] - Implementation.
 	- [[Compliance]] - Privacy Auditor.
-	- [[Oracle]] - Strategic Analyst.
+	- [[Researcher]] - Strategic Analyst.
 	- [[Automata]] - Automation Architect.
 	- [[Decoder]] - Technical specification-to-business translator.
 	- [[Forge]] - Meta-Architect (scaffolds, audits, and upgrades other agents).

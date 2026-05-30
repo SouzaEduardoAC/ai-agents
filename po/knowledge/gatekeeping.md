@@ -1,6 +1,6 @@
 # Knowledge: Requirement Gatekeeping Rubric
 
-This rubric defines the threshold for **Constructive Friction** and governs when the Guru must proceed with a note versus when it must issue a hard **HALT**.
+This rubric defines the threshold for **Constructive Friction** and governs when the Product Owner must proceed with a note versus when it must issue a hard **HALT**.
 
 ## 1. The "Strategic Note" (Soft Friction)
 **Threshold:** The request is logically sound but suboptimal or lacks design parity.

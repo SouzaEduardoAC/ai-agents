@@ -16,11 +16,11 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 
 ## 🤖 Specialized Agents
 - [[Squad Orchestrator]]: Multi-agent pipeline management.
-- [[Guru]]: Requirements gathering and #PRD generation.
+- [[Product Owner]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
 - [[Compliance]]: Regulatory audits (#GDPR, #HIPAA, #SOC2).
-- [[Oracle]]: Deep information synthesis.
+- [[Researcher]]: Deep information synthesis.
 - [[Automata]]: Workflow #Automation architect.
 - [[Decoder]]: Technical documentation-to-business translator.
 - [[Forge]]: Specialized meta-agent to design, scaffold, audit, and upgrade other agents (#MetaAgent).

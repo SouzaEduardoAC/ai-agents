@@ -7,7 +7,7 @@
 
 ## 🎭 The Dialectical Transcript
 
-### 💡 The Pitch: Guru (ENTP)
+### 💡 The Pitch: Product Owner (ENTP)
 > *The business justification, innovation appeal, and UX/ROI vision.*
 
 ### 🛠 The Critique: Systems Architect (INTJ)
@@ -30,7 +30,7 @@
 *Strict compliance controls (GDPR consent vectors, data minimization, TLS scopes, short TTLs).*
 
 ### 📊 Business Impact & ROI
-*How the refined design still captures the core business value proposed by the Guru.*
+*How the refined design still captures the core business value proposed by the Product Owner.*
 
 ### 📋 Technical Matrix
 | Component | original Proposal | Council Compromise | Reason |
