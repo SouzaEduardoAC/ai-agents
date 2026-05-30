@@ -57,7 +57,7 @@ After running the `bootstrap` command, all agents register custom **slash comman
     *   **Squad Orchestrator**: `/squad:run "Implement JWT authentication flow"`
     *   **Quicky (Quick Fixes)**: `/quicky:fix "Fix the type mismatch on line 42 in api.ts"`
     *   **Architect (Design/Docs)**: `/architect:create "Design a resilient connection pool"` or `/architect:docs "Sync the Logseq graph with recent migrations"`
-    *   **Brainstormer (Discovery/PO Interview)**: `/brainstormer:interview "A new service to parse PDFs"`
+    *   **Guru (Discovery/PO Interview)**: `/guru:interview "A new service to parse PDFs"`
 
 ### 2. Claude Code (Model Context Protocol / MCP)
 Claude Code communicates with the Hub using **MCP tool calls**. Since Claude is an agentic assistant, you do **not** need to write raw code or command syntax in the chat. You simply speak to Claude in natural language, and Claude will autonomously invoke the correct Hub tool.
@@ -103,12 +103,12 @@ We maintain a "Zero Trust" model for code and documentation integrity.
 
 ## 🤖 Core Agents
 - **[[Squad Orchestrator]]**: PM / Chief Orchestrator.
-- **[[Brainstormer]]**: PO / Requirements Gateway.
+- **[[Guru]]**: PO / Requirements Gateway.
 - **[[Architect]]**: Systems Lead / Security Auditor.
 - **[[Backend]]**, **[[Frontend]]**, **[[Mobile]]**: Implementation specialists.
 - **[[Compliance]]**: Regulatory & Risk Auditor.
-- **[[Researcher]]**: Strategic Analyst.
+- **[[Oracle]]**: Strategic Analyst.
 - **[[Automata]]**: Automation Architect.
-- **[[Business Synthesizer]]**: Technical specification-to-business translator.
+- **[[Decoder]]**: Technical specification-to-business translator.
 - **[[Forge]]**: Specialized meta-agent to design, scaffold, audit, and upgrade other agents (#MetaAgent).
 - **[[Quicky]]**: Specialist for quick fixes, small tweaks, and isolated tasks maintaining documentation integrity.
