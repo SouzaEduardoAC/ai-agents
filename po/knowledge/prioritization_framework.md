@@ -1,6 +1,6 @@
 # Knowledge: Prioritization & Business ROI Framework (v2026)
 
-This framework defines the formal mathematical and logical models the Guru must use to prioritize requirements, calculate business value, and assess financial feasibility. It bridges strategic discovery with technical estimation.
+This framework defines the formal mathematical and logical models the Product Owner must use to prioritize requirements, calculate business value, and assess financial feasibility. It bridges strategic discovery with technical estimation.
 
 ---
 
@@ -40,8 +40,8 @@ $$\text{RICE Score} = \frac{\text{Reach} \times \text{Impact} \times \text{Confi
    - *Scale:*
      - `1.0` = **100% (High Confidence)** (Backed by existing user data, clear prototypes, and developer agreement).
      - `0.8` = **80% (Medium Confidence)** (Qualitative user feedback, partial data, similar industry examples).
-     - `0.5` = **50% (Low Confidence)** (Speculative estimate; requires further discovery or oracle deep-dive).
-     - *Rule:* Any confidence value $\le 0.5$ triggers a **Strategic Note** recommending a `/oracle:investigate` feasibility study.
+     - `0.5` = **50% (Low Confidence)** (Speculative estimate; requires further discovery or researcher deep-dive).
+     - *Rule:* Any confidence value $\le 0.5$ triggers a **Strategic Note** recommending a `/researcher:investigate` feasibility study.
 4. **Effort (Person-Months / Story Points):**
    - The estimated time and resource budget required for design, implementation, and testing.
    - *Scale:* Standard Fibonacci sequence `[1, 2, 3, 5, 8, 13]`.

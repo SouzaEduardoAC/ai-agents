@@ -15,7 +15,7 @@ This repository is optimized for **Gemini CLI**. It uses a specialized `bootstra
 ## 🛠 Gemini Commands
 The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - `/architect:*`: Systems design and auditing.
-- `/guru:*`: Discovery and PRD generation.
+- `/po:*`: Discovery and PRD generation.
 - `/backend:*`, `/frontend:*`, `/mobile:*`: Core implementation.
 - `/compliance:*`: Audit and regulation.
 - `/decoder:*`: Technical specification-to-business translator.
@@ -25,11 +25,11 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 
 ## 🤖 Specialized Agents
 - [[Squad Orchestrator]]: Multi-agent pipeline management.
-- [[Guru]]: Requirements gathering and #PRD generation.
+- [[Product Owner]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
 - [[Compliance]]: Regulatory audits (#GDPR, #HIPAA, #SOC2).
-- [[Oracle]]: Deep information synthesis.
+- [[Researcher]]: Deep information synthesis.
 - [[Automata]]: Workflow #Automation architect.
 - [[Decoder]]: Technical documentation-to-business translator.
 - [[Forge]]: Meta-agent design, creation, and auditing.

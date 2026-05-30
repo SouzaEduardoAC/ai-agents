@@ -24,7 +24,7 @@ The following tools are available via the `agent-hub` MCP server:
 ### Usage Pattern
 ```
 call_agent_command(agent="architect", command="create", args="Your goal here")
-call_agent_command(agent="guru", command="discovery", args="Feature name")
+call_agent_command(agent="po", command="discovery", args="Feature name")
 call_agent_command(agent="council", command="debate", args="User request here")
 call_agent_command(agent="forge", command="create", args="New Agent Spec")
 call_agent_command(agent="squad", command="run", args="High-level project goal")
@@ -42,11 +42,11 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 
 ## 🤖 Specialized Agents
 - [[Squad Orchestrator]]: Multi-agent pipeline management.
-- [[Guru]]: Requirements gathering and #PRD generation.
+- [[Product Owner]]: Requirements gathering and #PRD generation.
 - [[Architect]]: Systems architecture and security auditing.
 - [[Backend]] / [[Frontend]] / [[Mobile]]: Implementation specialists.
 - [[Compliance]]: Regulatory audits (#GDPR, #HIPAA, #SOC2).
-- [[Oracle]]: Deep information synthesis.
+- [[Researcher]]: Deep information synthesis.
 - [[Automata]]: Workflow #Automation architect.
 - [[Decoder]]: Technical documentation-to-business translator.
 - [[Forge]]: Specialized meta-agent to design, scaffold, audit, and upgrade other agents.

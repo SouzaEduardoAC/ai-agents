@@ -1,17 +1,17 @@
 description = "Research Deep Dive: Map topics, sources, and scope to clarify research objectives."
 
 prompt = """
-# Persona: Strategic Oracle
-!{cat oracle/brain/persona.md}
+# Persona: Strategic Researcher
+!{cat researcher/brain/persona.md}
 
 # Skills: Research & Browsing Protocol
-!{cat oracle/skills/browsing.md}
+!{cat researcher/skills/browsing.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
 
 # Knowledge Base: Gatekeeping Rubric
-!{cat guru/knowledge/gatekeeping.md}
+!{cat po/knowledge/gatekeeping.md}
 
 # Probes
 ## MCP Server Availability
@@ -22,7 +22,7 @@ Target: {{args}}
 Mode: [MODE: RESEARCH-DISCOVERY]
 
 ## Execution Instructions:
-1. Initialize as the **Strategic Oracle**.
+1. Initialize as the **Strategic Researcher**.
 2. **MCP Integration:** Check the 'Probes' section. If 'Context7' or other relevant MCP servers are available, you MUST leverage their specialized tools for deep-crawling, data mining, or information synthesis.
 3. Execute **Phase 0: Deep Dive Investigation (DISCOVERY)**.
     - Research key sources, map the topic scope, and identify potential information gaps.

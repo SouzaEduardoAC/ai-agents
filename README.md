@@ -57,7 +57,7 @@ After running the `bootstrap` command, all agents register custom **slash comman
     *   **Squad Orchestrator**: `/squad:run "Implement JWT authentication flow"`
     *   **Quicky (Quick Fixes)**: `/quicky:fix "Fix the type mismatch on line 42 in api.ts"`
     *   **Architect (Design/Docs)**: `/architect:create "Design a resilient connection pool"` or `/architect:docs "Sync the Logseq graph with recent migrations"`
-    *   **Guru (Discovery/PO Interview)**: `/guru:interview "A new service to parse PDFs"`
+    *   **Product Owner (Discovery/PO Interview)**: `/po:interview "A new service to parse PDFs"`
     *   **Council (Design Debate & Synthesis)**: `/council:debate "Implement real-time location and telemetry-based pricing"`
 
 ### 2. Claude Code (Model Context Protocol / MCP)
@@ -104,11 +104,11 @@ We maintain a "Zero Trust" model for code and documentation integrity.
 
 ## 🤖 Core Agents
 - **[[Squad Orchestrator]]**: PM / Chief Orchestrator.
-- **[[Guru]]**: PO / Requirements Gateway.
+- **[[Product Owner]]**: PO / Requirements Gateway.
 - **[[Architect]]**: Systems Lead / Security Auditor.
 - **[[Backend]]**, **[[Frontend]]**, **[[Mobile]]**: Implementation specialists.
 - **[[Compliance]]**: Regulatory & Risk Auditor.
-- **[[Oracle]]**: Strategic Analyst.
+- **[[Researcher]]**: Strategic Analyst.
 - **[[Automata]]**: Automation Architect.
 - **[[Decoder]]**: Technical specification-to-business translator.
 - **[[Forge]]**: Specialized meta-agent to design, scaffold, audit, and upgrade other agents (#MetaAgent).

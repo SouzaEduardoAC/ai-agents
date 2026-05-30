@@ -1,9 +1,9 @@
-# Guru Agent (Product Owner)
+# Product Owner Agent (Product Owner)
 
-The Guru is the **gateway agent** for the entire agentic pipeline. Its primary mission is to transform high-level ideas or vague requests into structured, validated **Product Requirements Documents (PRD)**.
+The Product Owner is the **gateway agent** for the entire agentic pipeline. Its primary mission is to transform high-level ideas or vague requests into structured, validated **Product Requirements Documents (PRD)**.
 
 ## Overview
-Unlike technical agents, the Guru focuses on the **"What"** and the **"Why"**. It ensures that the engineering team (Architect and Developers) has clear, unambiguous instructions before a single line of code is planned.
+Unlike technical agents, the Product Owner focuses on the **"What"** and the **"Why"**. It ensures that the engineering team (Architect and Developers) has clear, unambiguous instructions before a single line of code is planned.
 
 ## Core Components
 - **Brain (`brain/persona.md`):** Defines the identity as a Senior Product Owner and Strategic Analyst.
@@ -16,7 +16,7 @@ Unlike technical agents, the Guru focuses on the **"What"** and the **"Why"**. I
 ### 1. Discovery & PRD Generation
 Start any new feature or project here:
 ```text
-/guru:discovery "I want to create a plugin for Figma that syncs design tokens to a GitHub repo."
+/po:discovery "I want to create a plugin for Figma that syncs design tokens to a GitHub repo."
 ```
 
 ## Pipeline Handoff

@@ -11,7 +11,7 @@ prompt = """
 !{cat common/skills/logseq_knowledge.md}
 
 # Knowledge Base: Gatekeeping Rubric
-!{cat guru/knowledge/gatekeeping.md}
+!{cat po/knowledge/gatekeeping.md}
 
 # Skills: Logseq Knowledge
 !{cat common/skills/logseq_knowledge.md}
