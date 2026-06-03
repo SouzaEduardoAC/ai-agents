@@ -320,17 +320,17 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "list_agents",
-        description: "List all available specialized agents.",
+        description: "List all available specialized agents and their supported commands.",
         inputSchema: { type: "object", properties: {} },
       },
       {
         name: "call_agent_command",
-        description: "Run a specific command (e.g., 'create', 'auditor') from an agent's library.",
+        description: "Run a specific command from an agent's library. Call 'list_agents' first to discover available commands.",
         inputSchema: {
           type: "object",
           properties: {
-            agent: { type: "string", description: "The agent name (e.g., architect, backend)." },
-            command: { type: "string", description: "The command name (e.g., create, docs, discovery)." },
+            agent: { type: "string", description: "The agent name (e.g., architect, backend, squad, po)." },
+            command: { type: "string", description: "The command name (e.g., 'run' for squad, 'create' for architect, 'discovery' for po)." },
             args: { type: "string", description: "The goal or arguments for the task." },
           },
           required: ["agent", "command", "args"],
