@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.3.0...v1.3.1) (2026-06-03)
+
+
+### Bug Fixes
+
+* dynamically read package version from package.json in index.js a… ([70b07fb](https://github.com/SouzaEduardoAC/ai-agents/commit/70b07fb46f440b959aa6f5c59b3ec5e5743b92fa))
+* dynamically read package version from package.json in index.js and CLI binary ([a7fad08](https://github.com/SouzaEduardoAC/ai-agents/commit/a7fad089e9101d2e1c319eded4c5c92c0c5a6ca1))
+
 ## [1.3.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.2.0...v1.3.0) (2026-05-30)
 
 
