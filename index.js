@@ -12,10 +12,12 @@ import toml from "toml";
 
 const AGENTS_ROOT = path.dirname(fileURLToPath(import.meta.url));
 
+const pkg = fs.readJsonSync(path.join(AGENTS_ROOT, "package.json"));
+
 const server = new Server(
   {
     name: "agent-hub",
-    version: "1.1.0",
+    version: pkg.version,
   },
   {
     capabilities: {
@@ -456,4 +458,4 @@ ${knowledge}
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
-console.error("Agent Hub MCP Server (v1.1.0) running on stdio");
+console.error(`Agent Hub MCP Server (v${pkg.version}) running on stdio`);

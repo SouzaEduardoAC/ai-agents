@@ -9,12 +9,14 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
+const pkg = fs.readJsonSync(path.join(ROOT, "package.json"));
+
 const program = new Command();
 
 program
   .name("agent-hub")
   .description("Universal bridge for AI Agents")
-  .version("1.1.0");
+  .version(pkg.version);
 
 program
   .command("serve")
