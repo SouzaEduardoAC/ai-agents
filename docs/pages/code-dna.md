@@ -24,6 +24,8 @@
 	- ## Prompt & Execution Optimization DNA
 		- **Late-Binding Deduplication**: Scanning TOML prompts for explicit `!{cat}` directives and dynamically filtering those files from prepended common sections to eliminate duplicate token injection.
 		- **Heuristic Relevance Filtering**: Dynamically prepending only the subset of common files matching the active command keywords and intent, reducing common block token bloat by up to 70%.
+		- **Agent Skills/Knowledge Auto-Injection**: Dynamically resolving and loading an agent's `skills/` and `knowledge/` directories during prompt assembly, skipping files already injected via `!{cat}` to ensure full identity context without duplication.
+		- **Monorepo Stack Detection**: Executing depth-1 directory scans to identify hidden marker files (e.g., `pom.xml`, `package.json`) in multi-module workspaces, emitting explicitly attributed On-Demand Manifests to prevent context collision across nested tech stacks.
 		- **Degraded/Shell-less Resilience**: All reviewer/auditor actions must define strict manual fallbacks (requesting user CLI input) and gracefully degrade to static manual equivalents if restrictive clients or offline specialized MCP servers are encountered.
 	- ## MCP Transport DNA
 		- **stdio Anti-Pattern — `inherit` vs `pipe`**: When a CLI wrapper spawns an MCP server as a child process, `stdio: "inherit"` attaches the child's file descriptors to the wrapper's already-open fds. The MCP client — which is bound to the wrapper process — never receives the child's JSON-RPC responses. **Always use `stdio: "pipe"` + explicit stream forwarding** for wrapper-spawned MCP servers.
