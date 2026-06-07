@@ -143,6 +143,40 @@ async function callTool(proc, name, args) {
   });
 }
 
+// ─── content fingerprints ────────────────────────────────────────────────
+// Key terms that MUST appear in the assembled prompt for each agent/command.
+// Proves the agent's persona, skills, and knowledge files were actually loaded.
+const CONTENT_FINGERPRINTS = {
+  "architect:create":    ["SOLID", "architecture"],
+  "architect:auditor":   ["security", "audit"],
+  "architect:docs":      ["documentation", "architecture"],
+  "automata:plan":       ["workflow", "automation"],
+  "automata:create":     ["workflow", "automation"],
+  "backend:create":      ["API", "backend"],
+  "backend:auditor":     ["bottleneck", "security"],
+  "backend:docs":        ["documentation"],
+  "compliance:master":   ["GDPR", "HIPAA"],
+  "compliance:audit":    ["GDPR", "compliance"],
+  "council:debate":      ["Dialectical", "Council Compromise"],
+  "decoder:export":      ["business", "export"],
+  "forge:create":        ["agent", "forge"],
+  "forge:discovery":     ["agent", "audit"],
+  "forge:auditor":       ["agent", "audit"],
+  "forge:upgrade":       ["agent", "upgrade"],
+  "frontend:create":     ["component", "frontend"],
+  "frontend:auditor":    ["performance", "accessibility"],
+  "frontend:docs":       ["documentation"],
+  "mobile:create":       ["Flutter", "mobile"],
+  "mobile:auditor":      ["performance", "mobile"],
+  "mobile:docs":         ["documentation"],
+  "po:discovery":        ["product", "discovery"],
+  "po:interview":        ["interview", "product"],
+  "quicky:fix":          ["fix", "task"],
+  "researcher:report":   ["research", "report"],
+  "researcher:investigate": ["investigation", "research"],
+  "squad:run":           ["squad", "orchestrat"],
+};
+
 // ─── assertions ───────────────────────────────────────────────────────────
 function assertToolsPresent(listResp) {
   const tools = listResp?.result?.tools ?? [];
@@ -167,6 +201,20 @@ function assertCallResult(resp, agent, command) {
   if (!text.includes(expectedTag)) {
     throw new Error(`Identity tag missing. Expected: "${expectedTag}"`);
   }
+
+  // Verify content fingerprints — proves persona/skills files actually loaded
+  const key = `${agent}:${command}`;
+  const fingerprints = CONTENT_FINGERPRINTS[key] ?? [];
+  const missing = fingerprints.filter(term => !text.toLowerCase().includes(term.toLowerCase()));
+  if (missing.length) {
+    throw new Error(`Content fingerprint(s) missing: [${missing.join(", ")}] — agent files may not have loaded`);
+  }
+
+  // Council-specific: business_synthesis.md must NOT appear (noise guard)
+  if (agent === "council" && text.includes("## Skill: Business Synthesis")) {
+    throw new Error("business_synthesis.md leaked into council:debate — heuristic filter failed");
+  }
+
   return text.length;
 }
 
@@ -270,6 +318,48 @@ async function runTests() {
       results.failed++;
       results.errors.push({ phase: "get_agent_prompt", agent, error: e.message });
     }
+  }
+
+  // ── Phase 6: auto-injection verification ────────────────────────────────
+  // backend:docs only explicitly !{cat}s 3 files: persona.md, logseq_knowledge.md,
+  // docs_standard.md. The remaining agent files — protocol.md, reviewer.md,
+  // security_auditor.md, bottlenecks.md, dependencies.md, patterns.md,
+  // roi_logic.md, security_standards.md, testing_tools.md — must come
+  // entirely from auto-injection (not from !{cat} in the TOML).
+  console.log(hdr("\n🔬  Phase 6: Auto-injection of agent skills/knowledge"));
+  try {
+    const resp = await callTool(proc, "call_agent_command", {
+      agent: "backend",
+      command: "docs",
+      args: "Document the authentication service",
+    });
+    const text = resp?.result?.content?.[0]?.text ?? "";
+
+    // protocol.md is NOT catted in backend/docs.toml — must come from auto-injection
+    // It contains SOLID principles and implementation protocol
+    const hasProtocol = text.includes("SOLID") || text.includes("bottleneck") || text.includes("Bottleneck") || text.includes("protocol");
+    if (!hasProtocol) {
+      throw new Error("Auto-injection failed: backend/skills/protocol.md not found — expected 'SOLID' or 'bottleneck'");
+    }
+
+    // security_standards.md is NOT catted in backend/docs.toml — must come from auto-injection
+    const hasSecurityKnowledge = text.includes("security") || text.includes("Security");
+    if (!hasSecurityKnowledge) {
+      throw new Error("Auto-injection failed: backend/knowledge/security_standards.md not found");
+    }
+
+    // docs_standard.md IS catted — confirm it's still there (dedup should NOT drop it)
+    const hasDocsStandard = text.includes("docs_standard") || text.includes("Documentation Standards") || text.includes("documentation");
+    if (!hasDocsStandard) {
+      throw new Error("Dedup regression: docs_standard.md was catted but is missing from prompt");
+    }
+
+    console.log(ok(`Auto-injection: backend:docs — protocol.md + security_standards.md auto-injected without !{cat} ✓`));
+    results.passed++;
+  } catch (e) {
+    console.log(fail(`Auto-injection — ${e.message}`));
+    results.failed++;
+    results.errors.push({ phase: "auto-injection", error: e.message });
   }
 
   proc.stdin.end();

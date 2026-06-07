@@ -126,6 +126,11 @@ async function compileCommonSection(dirPath, searchTarget, cattedBasenames, cate
         // security_auditor is already present.
         isRelevant = !hasAgentSecurityAuditor &&
           /audit|review|create|implement|security|test|bottleneck|perf|fix|refactor/.test(searchTarget);
+      } else if (basename === "business_synthesis.md") {
+        // Only inject business synthesis for commands that explicitly deal with
+        // translating tech specs to business language. Council's debate protocol
+        // supersedes this; injecting it there creates competing output formats.
+        isRelevant = /synthesize|translate|export|stakeholder|business|report|decoder/.test(searchTarget);
       } else {
         // Fallback: default to true for other skills
         isRelevant = true;
@@ -320,29 +325,45 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "list_agents",
-        description: "List all available specialized agents and their supported commands.",
+        description: [
+          "List all available specialized agents and their supported commands.",
+          "Agents available: architect (systems design, security), backend (APIs, databases),",
+          "frontend (UI, React/Angular/Vue), mobile (Flutter/iOS/Android), squad (full-stack orchestration),",
+          "po (product discovery, PRDs), compliance (GDPR/HIPAA/SOC2 audits), council (multi-perspective debate & synthesis),",
+          "researcher (deep investigation, reports), forge (meta-agent design), automata (workflow automation),",
+          "decoder (tech-to-business translation), quicky (quick fixes).",
+          "Call this first to discover exact agent names and their commands before calling call_agent_command.",
+        ].join(" "),
         inputSchema: { type: "object", properties: {} },
       },
       {
         name: "call_agent_command",
-        description: "Run a specific command from an agent's library. Call 'list_agents' first to discover available commands.",
+        description: [
+          "Activate a specialized agent and run one of its commands with a task description.",
+          "Use this whenever the user asks to: 'call the council', 'have the architect design X',",
+          "'run the backend agent', 'ask the squad to build X', 'get compliance to audit Y',",
+          "'let the researcher investigate Z', 'use the PO for discovery', 'have forge create an agent',",
+          "'get quicky to fix this', 'have the decoder translate this spec', or any similar delegation to a named agent.",
+          "The assembled prompt returned by this tool IS the agent — adopt its persona and execute its instructions directly.",
+          "Call list_agents first if you are unsure of the exact agent name or available commands.",
+        ].join(" "),
         inputSchema: {
           type: "object",
           properties: {
-            agent: { type: "string", description: "The agent name (e.g., architect, backend, squad, po)." },
-            command: { type: "string", description: "The command name (e.g., 'run' for squad, 'create' for architect, 'discovery' for po)." },
-            args: { type: "string", description: "The goal or arguments for the task." },
+            agent: { type: "string", description: "The agent name (e.g., architect, backend, squad, council, po, compliance, researcher, forge, automata, decoder, quicky, frontend, mobile)." },
+            command: { type: "string", description: "The command name. Common defaults: 'run' (squad), 'create' (architect/backend/frontend/mobile), 'debate' (council), 'discovery' (po), 'master' (compliance), 'report' (researcher), 'fix' (quicky), 'export' (decoder). Call list_agents to see all available commands." },
+            args: { type: "string", description: "The full task description, goal, or user request to pass to the agent. Be specific — this becomes the agent's primary objective." },
           },
           required: ["agent", "command", "args"],
         },
       },
       {
         name: "get_agent_prompt",
-        description: "Get the full persona and knowledge for a specific agent.",
+        description: "Retrieve the full identity, persona, and knowledge base for a specific agent without executing a command. Use this to understand an agent's capabilities before calling call_agent_command, or to load an agent's persona into the current context.",
         inputSchema: {
           type: "object",
           properties: {
-            agent: { type: "string" },
+            agent: { type: "string", description: "The agent name (e.g., architect, backend, council)." },
           },
           required: ["agent"],
         },
@@ -432,11 +453,30 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const commonKnowledge = await compileCommonSection(path.join(AGENTS_ROOT, "common", "knowledge"), searchTarget, cattedBasenames, "knowledge").catch(() => "");
       const commonSkills = await compileCommonSection(path.join(AGENTS_ROOT, "common", "skills"), searchTarget, cattedBasenames, "skills").catch(() => "");
       
-      // Inject Dynamic Knowledge for Architect/Backend/Frontend/Mobile
+      // Inject Dynamic Knowledge for Architect/Backend/Frontend/Mobile (language stack files, on-demand)
       let dynamicKnowledge = "";
       if (["architect", "backend", "frontend", "mobile"].includes(agent)) {
         dynamicKnowledge = await getDynamicKnowledge(taskArgs, agent);
       }
+
+      // Auto-inject agent-level skills/ and knowledge/ dirs.
+      // These are the agent's own identity files (protocols, reviewer skills, domain knowledge).
+      // Dedup guard: skip any file whose basename was already explicitly !{cat}'d in the TOML prompt.
+      const readAgentDirDeduped = async (dirPath) => {
+        if (!(await fs.pathExists(dirPath))) return "";
+        const globPattern = path.join(dirPath, "*.md").replace(/\\/g, "/");
+        const files = await glob(globPattern);
+        let content = "";
+        for (const file of files) {
+          const basename = path.basename(file);
+          if (cattedBasenames.has(basename)) continue; // already injected via !{cat}
+          const fileContent = await fs.readFile(file, "utf-8");
+          content += `\n### File: ${basename}\n${fileContent}\n`;
+        }
+        return content;
+      };
+      const agentSkills = await readAgentDirDeduped(path.join(AGENTS_ROOT, agent, "skills")).catch(() => "");
+      const agentKnowledge = await readAgentDirDeduped(path.join(AGENTS_ROOT, agent, "knowledge")).catch(() => "");
 
       const identityMeta = `### ACTIVE PERSONA CONTEXT
 You are currently executing the command '${commandName}' as the **${agent.toUpperCase()}** agent.
@@ -445,7 +485,7 @@ To maintain transparency and multi-agent coordination, you MUST prefix your very
 
 --------------------------------------------------------------------------------\n\n`;
 
-      prompt = `${identityMeta}# Common Standards\n${commonKnowledge}\n\n# Common Skills\n${commonSkills}\n\n# Dynamic Knowledge\n${dynamicKnowledge}\n\n${prompt}`;
+      prompt = `${identityMeta}# Common Standards\n${commonKnowledge}\n\n# Common Skills\n${commonSkills}\n\n# Dynamic Knowledge\n${dynamicKnowledge}\n\n# Agent Skills\n${agentSkills}\n\n# Agent Knowledge\n${agentKnowledge}\n\n${prompt}`;
       
       // Resolve {{args}}
       prompt = prompt.replace(/\{\{args\}\}/g, taskArgs);
