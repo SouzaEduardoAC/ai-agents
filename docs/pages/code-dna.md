@@ -15,6 +15,7 @@
 		- **Graph Integrity**: "No Ghost Pages." All linked nodes must be initialized. (ref: `common/skills/logseq_knowledge.md`)
 	- ## Testing DNA
 		- **"Unverified Code is Debt"**: 100% logic coverage requirement. (ref: `common/knowledge/testing_standard.md`)
+		- **MCP Integration Coverage**: Full end-to-end stdio transport validation via `test/mcp-integration.mjs`, verifying agent prompt completeness (Content Fingerprints), Auto-Injection, and Depth-1 Workspace Scans. (ref: `test/mcp-integration.mjs`)
 	- ## Cross-Platform Path DNA
 		- **Platform-Agnostic Separators**: Always construct dynamic file/directory paths using the native `path` module (`path.join()`, `path.resolve()`, `path.normalize()`).
 		- **Safe Home Resolving**: Never use `process.env.HOME` directly as it crashes on Windows. Use Node's built-in `os.homedir()` for robust cross-platform home directory discovery.
@@ -24,8 +25,8 @@
 	- ## Prompt & Execution Optimization DNA
 		- **Late-Binding Deduplication**: Scanning TOML prompts for explicit `!{cat}` directives and dynamically filtering those files from prepended common sections to eliminate duplicate token injection.
 		- **Heuristic Relevance Filtering**: Dynamically prepending only the subset of common files matching the active command keywords and intent, reducing common block token bloat by up to 70%.
-		- **Agent Skills/Knowledge Auto-Injection**: Dynamically resolving and loading an agent's `skills/` and `knowledge/` directories during prompt assembly, skipping files already injected via `!{cat}` to ensure full identity context without duplication.
-		- **Monorepo Stack Detection**: Executing depth-1 directory scans to identify hidden marker files (e.g., `pom.xml`, `package.json`) in multi-module workspaces, emitting explicitly attributed On-Demand Manifests to prevent context collision across nested tech stacks.
+		- **Agent Skills/Knowledge Auto-Injection**: Dynamically resolving and loading an agent's `skills/` and `knowledge/` directories during prompt assembly, skipping files already injected via `!{cat}` to ensure full identity context without duplication. (ref: `index.js -> call_agent_command`, `readAgentDirDeduped`)
+		- **Monorepo Stack Detection**: Executing depth-1 directory scans to identify hidden marker files (e.g., `pom.xml`, `package.json`) in multi-module workspaces, emitting explicitly attributed On-Demand Manifests to prevent context collision across nested tech stacks. (ref: `index.js -> getDynamicKnowledge`, `scanWorkspace`)
 		- **Degraded/Shell-less Resilience**: All reviewer/auditor actions must define strict manual fallbacks (requesting user CLI input) and gracefully degrade to static manual equivalents if restrictive clients or offline specialized MCP servers are encountered.
 	- ## MCP Transport DNA
 		- **stdio Anti-Pattern — `inherit` vs `pipe`**: When a CLI wrapper spawns an MCP server as a child process, `stdio: "inherit"` attaches the child's file descriptors to the wrapper's already-open fds. The MCP client — which is bound to the wrapper process — never receives the child's JSON-RPC responses. **Always use `stdio: "pipe"` + explicit stream forwarding** for wrapper-spawned MCP servers.

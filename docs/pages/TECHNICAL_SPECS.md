@@ -42,7 +42,7 @@
 			- Activated for: `architect`, `backend`, `frontend`, `mobile`.
 			- Sniffs the project directory (`process.cwd()`) and immediately nested subdirectories (Depth-1 monorepo scan) for marker files (e.g. `pom.xml`, `package.json`, `pubspec.yaml`, `go.mod`, `.csproj`) or keywords in `taskArgs`.
 			- Dynamically appends the relevant framework guides (e.g. `java.md`, `react.md`) to the context.
-			- **Multi-Stack Guard (On-Demand Mode)**: If multiple primary stacks are detected (e.g. Java in `module-auth/` + React in `module-frontend/`), the engine aborts pre-injection and outputs an `On-Demand Manifest` with module attribution. This forces the LLM to explicitly use `view_file` to read the correct stack context only when needed, avoiding cross-contamination and token bloat.
+			- **Multi-Stack Guard (On-Demand Mode)**: If multiple primary stacks are detected (e.g. Java in `module-auth/` + React in `module-frontend/`), the engine aborts pre-injection and outputs an `On-Demand Manifest` with module attribution. This forces the LLM to explicitly use `view_file` to read the correct stack context only when needed, avoiding cross-contamination and token bloat. (ref: `index.js -> getDynamicKnowledge`, `scanWorkspace`)
 		- **Probe Resolution Logic (The !{cat} Pattern)**:
 			- Pattern:: `/!\{cat\s+([^\}]+)\}/g`
 			- Behavior:: Resolves paths relative to `AGENTS_ROOT` or `~/.gemini/agents`.

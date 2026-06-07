@@ -15,7 +15,7 @@
 		- ## Bug Fix: MCP stdio Transport (2026-06-04)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
-			- summary:: Fixed `stdio: "inherit"` anti-pattern in `bin/agent-hub.js serve` that prevented MCP tools from surfacing in AI clients. `mcp_config.json` now points directly to `index.js`. `bootstrap` generates correct direct entries. `index.js` has startup diagnostics. (ref: `ISSUES.md`)
+			- summary:: Fixed `stdio: "inherit"` anti-pattern in `bin/agent-hub.js serve` that prevented MCP tools from surfacing in AI clients. `mcp_config.json` now points directly to `index.js`. `bootstrap` generates correct direct entries. `index.js` has startup diagnostics. (ref: `bin/agent-hub.js → serve`, `index.js → transport connect`)
 		- ## Bug Fix: Bootstrap Migration Guard (2026-06-07)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
