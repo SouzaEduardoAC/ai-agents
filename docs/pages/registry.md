@@ -16,6 +16,10 @@
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
 			- summary:: Fixed `stdio: "inherit"` anti-pattern in `bin/agent-hub.js serve` that prevented MCP tools from surfacing in AI clients. `mcp_config.json` now points directly to `index.js`. `bootstrap` generates correct direct entries. `index.js` has startup diagnostics. (ref: `ISSUES.md`)
+		- ## Bug Fix: Bootstrap Migration Guard (2026-06-07)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
+			- summary:: `bootstrap` previously skipped environments already configured with the old `bin/agent-hub.js serve` entry (guard was `if (!mcpServers["agent-hub"])`). Added stale-entry detection — if the existing args include `bin/agent-hub.js`, the entry is overwritten with the correct `index.js` direct path. Makes `bootstrap` idempotent and self-healing for pre-fix installs. (ref: `bin/agent-hub.js → updateMcpServers`)
 	- ## Product Elicitation & PO Framework
 		- status:: [ACTIVE]
 		- nodes:: [[Product Owner]], [[prioritization-framework]], [[product-interview]]
