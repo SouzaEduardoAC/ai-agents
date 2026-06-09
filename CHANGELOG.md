@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.6.0...v1.7.0) (2026-06-09)
+
+
+### Features
+
+* **docs:** standardize /agent:docs and add /squad:full-sync orchestr… ([b2744db](https://github.com/SouzaEduardoAC/ai-agents/commit/b2744db17327553bce3e137b4875371e77e86f78))
+* **docs:** standardize /agent:docs and add /squad:full-sync orchestration ([c3f3fea](https://github.com/SouzaEduardoAC/ai-agents/commit/c3f3fea847b9615fad6d7e9f52124a912878b9a5))
+
 ## [1.6.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.5.0...v1.6.0) (2026-06-09)
 
 
