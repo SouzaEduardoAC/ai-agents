@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.5.0...v1.6.0) (2026-06-09)
+
+
+### Features
+
+* **analyze:** add internal investigation protocol across five agents ([0a8ea77](https://github.com/SouzaEduardoAC/ai-agents/commit/0a8ea77f23a3466be15d2edddeb7ed8b83602316))
+* **analyze:** add internal investigation protocol across five agents ([df3c547](https://github.com/SouzaEduardoAC/ai-agents/commit/df3c547532bba89e890218813fc31ab42ce38882))
+
 ## [1.5.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.4.0...v1.5.0) (2026-06-07)
 
 
