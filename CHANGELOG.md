@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.1](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.9.0...v1.9.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* **manager:** check and respect custom report template in productivit… ([978399c](https://github.com/SouzaEduardoAC/ai-agents/commit/978399c66f8d90b521afc4115680b976c5c7c366))
+* **manager:** check and respect custom report template in productivity audit ([1debeb2](https://github.com/SouzaEduardoAC/ai-agents/commit/1debeb24fd1ea6325c6f6a41e26d22bcde8ef13b))
+
 ## [1.9.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.8.0...v1.9.0) (2026-06-11)
 
 
