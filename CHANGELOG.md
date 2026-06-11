@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.8.0...v1.9.0) (2026-06-11)
+
+
+### Features
+
+* **manager:** add manager agent with productivity audit capability ([dff1fc3](https://github.com/SouzaEduardoAC/ai-agents/commit/dff1fc352b957b142d62badb47b3ebfe4370ced0))
+* **manager:** add manager agent with productivity audit capability ([484d8ad](https://github.com/SouzaEduardoAC/ai-agents/commit/484d8ada008792c59c216bbe72aeef9769bdb05f))
+
 ## [1.8.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.7.0...v1.8.0) (2026-06-11)
 
 
