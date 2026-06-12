@@ -70,9 +70,14 @@ If active MCP servers or CLI environments are unavailable or lack permissions to
 
 ---
 
-## Phase 6: Reporting
-Formulate the audit output adhering to the report template:
-1.  **Select Template:** Use the custom report template if one was discovered in the workspace root in Phase 1. Otherwise, fall back to the default **Productivity Audit Report** template.
-2.  **Synthesize Metrics:** Organize findings into structured Markdown comparison tables matching the template layout.
-3.  **Outline Friction Areas:** Group detected friction by severity (Critical, High, Medium, Low) as defined in the template.
-4.  **Formulate Structural Solutions:** Ensure every finding has a constructive, process-focused recommendation (e.g., "break down user stories further" or "increase test coverage requirements") matching the template recommendations section.
+## Phase 6: Reporting & Writing
+Formulate the productivity report adhering to the templates and write it to the workspace root:
+1.  **Select Template:** Use the custom report template if one was discovered in the workspace root in Phase 1 (e.g., `.productivity_report_template.md` or `productivity_report_template.md`). Otherwise, fall back to the default `manager/templates/productivity_report.md` template.
+2.  **Report Header Format:** Ensure the header of the report has the following fields on separate, individual lines:
+    **Audit Target:** `[Board Name/URL & Git Repository]`
+    **Date of Audit:** `[YYYY-MM-DD]`
+    **Scope:** `[Target team members, date range]`
+3.  **Synthesize Metrics:** Organize findings into structured Markdown comparison tables matching the template layout.
+4.  **Outline Friction Areas:** Group detected friction by severity (Critical, High, Medium, Low) as defined in the template.
+5.  **Formulate Structural Solutions:** Ensure every finding has a constructive, process-focused recommendation matching the template recommendations section.
+6.  **Write Output File:** Write the synthesized markdown report to a file named `productivity_report.md` in the workspace root.

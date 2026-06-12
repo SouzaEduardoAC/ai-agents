@@ -67,4 +67,8 @@
 			- status:: [DONE]
 			- ref:: [[Manager]], [[Quicky]]
 			- summary:: Enabled custom report template override for the Manager agent's productivity audit command. Added search protocol in Phase 1 and template selection logic in Phase 6 to check for `.productivity_report_template.md` or `productivity_report_template.md` in the workspace root, allowing users to customize audit reports without altering agent files. Added a `.productivity_report_template.md` configuration in the workspace root. (ref: `manager/skills/productivity_audit.md`, `manager/commands/manager/productivity.toml`, `.productivity_report_template.md`)
+		- ## Bug Fix: Manager Productivity Report File Generation (2026-06-12)
+			- status:: [DONE]
+			- ref:: [[Manager]], [[Quicky]]
+			- summary:: Fixed productivity report generation for the Manager agent. The synthesized report is now written to `productivity_report.md` in the workspace root. The report header fields (Audit Target, Date of Audit, Scope) are formatted on separate, individual lines. (ref: `manager/skills/productivity_audit.md`, `manager/commands/manager/productivity.toml`)
 
