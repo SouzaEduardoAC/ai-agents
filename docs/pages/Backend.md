@@ -17,6 +17,7 @@
 		- **Unverified Code is Debt**: No delivery without business logic unit coverage.
 		- **Private Feed Guard**: Mandatory HALT if internal package registries are detected without config.
 		- **Regression-First Fixes**: Write a failing test before applying a bug fix.
+		- **Structural Gate Enforcement**: `backend:create` uses `check_gate`/`request_approval` MCP tools at Gate 1 (plan) to block autonomous transition to implementation. (ref: `index.js`, `backend/commands/backend/create.toml`)
 		- (ref: `backend/brain/persona.md`)
 	- ## Commands
 		- **`backend:create`**: Full lifecycle — Investigation → Plan → Implementation → Review. (ref: `backend/commands/backend/create.toml`)

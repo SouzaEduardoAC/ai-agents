@@ -35,6 +35,7 @@ Mode: [MODE: DISCOVERY]
     - Use bidirectional links `[[Like This]]` for key concepts and requirements.
 5. **Step 4: Graph Integration.** Create or update `docs/pages/index.md` to link to the new PRD.
 6. **Step 5: Validation.** Present the PRD and ask for approval.
+    - **Gate after Step 5 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="prd", artifact_path="docs/pages/{{args}}-prd.md", summary="PRD completed. Product requirements document ready for review and approval.")` THEN halt and await explicit human approval before any further action.
 
 **Constraint:** Do not plan technical implementation. Your goal is the "What" and "Why", not the "How".
 The PRD must be written to the `docs/pages/` directory before finalizing the turn.

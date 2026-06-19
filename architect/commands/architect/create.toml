@@ -34,15 +34,15 @@ Mode: [MODE: SQUAD-FLOW]
     - **Codebase Mapping:** Map codebase, data flows, and dependencies relative to the PRD requirements.
     - **Conflict Detection:** Identify any technical conflicts.
     - **Write findings to `docs/pages/{{args}}-analysis.md`** using Logseq outliner format.
-    - **Gate 0:** Halt for explicit user approval.
+    - **Gate 0 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-analysis.md", summary="Discovery/analysis phase complete. Architecture decision records are ready for review.")` THEN halt for explicit user approval.
 5. **Phase 2: Architectural Intent.**
     - **Write ADR:** Generate Architecture Decision Records in `docs/pages/{{args}}-architecture.md` using the template at `common/templates/logseq/architecture.md`.
     - **Linking:** Ensure each decision links back to `[[{{args}}-prd]]`.
-    - **Gate 1:** Halt for explicit user approval of the plan file.
+    - **Gate 1 — MCP Structural Enforcement:** Call `agent_hub:check_gate(gate="discovery")` FIRST — if blocked, stop. Then after presenting the plan: call `agent_hub:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-architecture.md", summary="Architecture plan complete. Ready for implementation approval.")` and halt.
 6. **Phase 3: Execution.** Execute **[MODE: IMPLEMENT]** protocol.
     - Implement changes, run tests (100% pass).
 7. **Phase 4: Audit.** Generate an audit report in `docs/pages/{{args}}-audit.md`.
-    - **Gate 2:** Halt for user approval.
+    - **Gate 2 — MCP Structural Enforcement:** Call `agent_hub:check_gate(gate="plan")` FIRST — if blocked, stop. Then after audit: call `agent_hub:request_approval(gate="audit", artifact_path="docs/pages/{{args}}-audit.md", summary="Post-implementation audit complete. Ready for final approval.")` and halt.
 8. **Phase 5: Post-Sync.** Update `docs/journals/` and `docs/pages/business-rules.md` to reflect the new state.
 9. **Closure.** Summarize results.
 

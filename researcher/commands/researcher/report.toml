@@ -31,8 +31,9 @@ Mode: [MODE: RESEARCH-DISCOVERY] -> [MODE: RESEARCH-FULL]
     - Research key sources, map the topic scope, and identify potential information gaps.
     - Ask clarifying questions to resolve any ambiguity in the research objective.
     - **Write findings and research plan to `docs/pages/{{args}}-discovery.md`**. Ensure the file starts with the standard Logseq properties and follows the outliner format.
-    - Halt and request approval of the discovery artifact.
+    - **Gate after Phase 1 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-discovery.md", summary="Research discovery complete. Topic scope, key sources, and research plan ready for review.")` THEN halt and request approval of the discovery artifact.
 3. **Phase 2: Comprehensive Research.** (Upon follow-up approval) Execute the full research task.
+    - **FIRST:** Call `agent_hub:check_gate(gate="discovery")` — if blocked, stop and inform the user to run `/squad:approve discovery`.
     - Load the discovery artifact from `docs/pages/{{args}}-discovery.md` for context.
     - Conduct exhaustive investigation and follow all formatting constraints.
     - Output the final report using the **Report Template**.

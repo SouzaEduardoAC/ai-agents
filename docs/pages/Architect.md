@@ -23,6 +23,7 @@
 	- ## Guardrails
 		- **Mirror Counseling**: Immediate halt if user request contradicts "AI Context" or engineering standards.
 		- **Strict Sequentiality**: Must announce and verify each step of the protocol before proceeding.
+		- **Structural Gate Enforcement**: `architect:create` uses `check_gate`/`request_approval` MCP tools at Gate 0 (discovery), Gate 1 (plan), and Gate 2 (audit) to block autonomous phase transitions. (ref: `index.js`, `architect/commands/architect/create.toml`)
 		- (ref: `architect/brain/persona.md`)
 	- ## Commands
 		- **`architect:create`**: Full lifecycle — Investigation → Plan → Implementation → Review. (ref: `architect/commands/architect/create.toml`)

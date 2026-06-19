@@ -99,3 +99,48 @@
 				- Interaction:: Integrated into `:auditor` commands for technical debt and security hotspot scanning.
 				- Server:: `sonarqube-mcp-server`
 				- Link:: [GitHub](https://github.com/SonarSource/sonarqube-mcp-server)
+	- ## MCP-Level Human Approval Gate System
+		- **Purpose:** Structural enforcement layer that makes it physically impossible at the API level for an LLM orchestrator to advance a pipeline phase without explicit human approval. Supplements (not replaces) the prompt-level `⚠️ MANDATORY HUMAN CHECKPOINT` prose guardrails in `run.toml`.
+		- **State File:** `.squad-state.json` at the repository root (relative to `AGENTS_ROOT`).
+		- **Session Schema:**
+			```json
+			{
+			  "session_id": "<timestamp>-<8-char-sha256-of-goal>",
+			  "initiated_at": "<ISO 8601 timestamp>",
+			  "goal": "<the pipeline goal string>",
+			  "gates": {
+			    "<gate_key>": {
+			      "status": "locked | pending | approved",
+			      "artifact": "<path to artifact file, optional>",
+			      "requested_at": "<ISO timestamp, set when status→pending>",
+			      "approved_at": "<ISO timestamp, set when status→approved>"
+			    }
+			  }
+			}
+			```
+		- **Gate Lifecycle:** `locked` → `pending` (via `request_approval`) → `approved` (via `/squad:approve <gate>` command).
+		- **New MCP Tools (ref: `index.js`):**
+			- **`pipeline_start`**: Initializes a new pipeline session. Accepts `{ goal: string, gates: string[] }`. Creates/overwrites `.squad-state.json` with all gates set to `locked` and a fresh `session_id`. Must be called before any other gate tool. Returns session confirmation.
+			- **`request_approval`**: Called by an LLM agent at the END of a phase. Accepts `{ gate: string, artifact_path?: string, summary: string }`. Sets the gate to `pending` and returns a hard STOP message instructing the LLM to cease all further tool calls until the human approves. In standalone mode (no `.squad-state.json`), emits a soft STOP message without writing state.
+			- **`check_gate`**: Called by an LLM agent at the START of the next phase. Accepts `{ gate: string }`. Returns `{ approved: true }` if gate is `approved`. Returns a **hard error** (`isError: true`) if gate is `pending` or `locked` — the MCP error response prevents the calling LLM from treating this as a success and continuing. In standalone mode (no `.squad-state.json`), returns `{ approved: true, message: "No active Squad session — proceeding with prompt-level guardrails only." }` to allow standalone agent runs to proceed unblocked.
+		- **Human Trust Anchor — `/squad:approve <gate>`:** The ONLY mechanism to advance a gate from `pending` → `approved`. Lives in `squad/commands/squad/approve.toml`. Writes the `approved_at` timestamp directly to `.squad-state.json`. Cannot be triggered by an LLM tool call — requires explicit human command execution.
+		- **Standalone Mode Grace:** When no `.squad-state.json` exists, `check_gate` returns a soft advisory (`approved: true`) so that individual agents (architect, backend, frontend, mobile, automata, researcher, po) can run as standalone without being blocked by the gate system. Only `pipeline_start` activates the structural enforcement.
+		- **Pipeline Gate Map:**
+			| Agent | Gate Key | Phase Entry (`check_gate`) | Phase Exit (`request_approval`) |
+			|-------|----------|---------------------------|--------------------------------|
+			| Squad `run.toml` | `prd` | Phase 2 start | Phase 1 end |
+			| Squad `run.toml` | `plan` | Phase 3/4 start | Phase 2 end |
+			| Squad `run.toml` | `compliance` | Phase 4 start | Phase 3 end |
+			| Architect `create.toml` | `discovery` | Phase 2 start | Phase 1 end |
+			| Architect `create.toml` | `plan` | Phase 4 start | Phase 2 end |
+			| Architect `create.toml` | `audit` | — | Phase 4 end |
+			| Backend `create.toml` | `plan` | Phase 3 start | Phase 2 end |
+			| Frontend `create.toml` | `plan` | Phase 3 start | Phase 2 end |
+			| Mobile `create.toml` | `discovery` | Phase 2 start | Phase 1 end |
+			| Mobile `create.toml` | `plan` | Phase 3 start | Phase 2 end |
+			| Automata `plan.toml` | `discovery` | Phase 2 start | Phase 1 end |
+			| Automata `plan.toml` | `plan` | — | Phase 2 end |
+			| Researcher `investigate.toml` | `discovery` | — | Phase 1 end |
+			| Researcher `report.toml` | `discovery` | Phase 2 start | Phase 1 end |
+			| PO `discovery.toml` | `prd` | — | Step 5 end |
+

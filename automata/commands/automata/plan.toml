@@ -34,12 +34,13 @@ Mode: [MODE: Automata-DISCOVERY] -> [MODE: Automata-PLAN]
     - **Brainstorming:** Identify edge cases, failure points, and data integrity concerns.
     - **Research:** Use available tools (MCP/Search) to map APIs and documentation.
     - **Write Discovery Artifact:** Write all findings to **`docs/pages/{{args}}-discovery.md`** using the `automata/templates/discovery.md` structure. Ensure the file starts with the standard Logseq properties and follows the outliner format.
-    - **Halt:** Request approval of the discovery artifact.
+    - **Gate after Phase 1 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-discovery.md", summary="Automata discovery phase complete. Workflow feasibility and edge case analysis ready for review.")` THEN halt and request approval of the discovery artifact.
 3. **Phase 2: Architecture Design.** (Upon follow-up approval) Execute the **[MODE: Automata-PLAN]** protocol.
+    - **FIRST:** Call `agent_hub:check_gate(gate="discovery")` — if blocked, stop and inform the user.
     - Load the discovery artifact from `docs/pages/{{args}}-discovery.md`.
     - Map out the full architecture.
     - **Write design plan to `docs/pages/{{args}}-plan.md`**. Ensure the file starts with the standard Logseq properties and follows the outliner format.
-    - Halt and request approval of the plan.
+    - **Gate after Phase 2 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-plan.md", summary="Automata architecture design plan complete. Ready for implementation approval.")` THEN halt and request approval of the plan.
 
 **Constraint:** Focus on validating the logic and feasibility before any design plan.
 Each artifact must be written to its respective file under docs/pages/ before requesting approval.
