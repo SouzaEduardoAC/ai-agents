@@ -8,15 +8,122 @@ Mode: [MODE: SQUAD-ORCHESTRATOR]
 # Context Preparation
 1. Check the availability of the `agent-hub` MCP server.
 2. Call `agent_hub:get_agent_prompt(agent="squad")` to initialize your squad manager persona.
-3. Follow the **Pipeline Protocol** defined in the squad persona:
-    - Call the Product Owner to discover and draft the PRD.
-    - Call the Architect to analyze the PRD and plan the implementation.
-    - Call the Compliance Auditor (optional) for regulatory/privacy verification.
-    - Call the appropriate Developer agent for the tech stack to write the code.
+3. Execute the **Pipeline Protocol** below, respecting every MANDATORY HUMAN CHECKPOINT without exception.
 
 ## Probes
 !{gemini mcp list}
 
+---
+
+## Pipeline Protocol
+
+### PIPELINE INIT — Register Session & Gates
+**BEFORE starting Phase 1**, call:
+```
+agent_hub:pipeline_start(
+  goal="{{args}}",
+  gates=["prd", "plan", "compliance", "execution"]
+)
+```
+This registers the session and locks all gates. You MUST do this before any other pipeline action.
+
+---
+
+### Phase 1 — Product Elicitation (PO)
+- Call `agent_hub:get_agent_prompt(agent="po")`.
+- Run the full discovery and draft the PRD, writing it to `docs/pages/[feature]-prd.md`.
+- Present the complete PRD to the user.
+- **AFTER presenting the PRD**, call:
+  ```
+  agent_hub:request_approval(
+    gate="prd",
+    artifact_path="docs/pages/[feature]-prd.md",
+    summary="PRD completed. Please review the product requirements document and approve to proceed to architecture."
+  )
+  ```
+
+---
+⚠️ MANDATORY HUMAN CHECKPOINT — PIPELINE PAUSED AFTER PHASE 1
+The MCP tool `request_approval` has set gate 'prd' to PENDING.
+Present the PRD above to the user and WAIT for their explicit written approval before calling any further agents.
+Do NOT auto-approve. Do NOT proceed autonomously. Do NOT call the Architect.
+The pipeline is BLOCKED until the human runs `/squad:approve prd`.
+---
+
+### Phase 2 — Architecture & Implementation Plan (Architect)
+**FIRST**, verify approval exists by calling:
+```
+agent_hub:check_gate(gate="prd")
+```
+If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:approve prd` must be run first.
+
+(Proceed ONLY after check_gate returns approved:true for 'prd'.)
+- Call `agent_hub:get_agent_prompt(agent="architect")`.
+- Analyze the approved PRD and produce the Implementation Plan, writing it to `docs/pages/[feature]-plan.md` (must follow Logseq outliner format).
+- Present the complete Implementation Plan to the user.
+- **AFTER presenting the plan**, call:
+  ```
+  agent_hub:request_approval(
+    gate="plan",
+    artifact_path="docs/pages/[feature]-plan.md",
+    summary="Implementation plan completed. Please review the architecture and approve to proceed to compliance/execution."
+  )
+  ```
+
+---
+⚠️ MANDATORY HUMAN CHECKPOINT — PIPELINE PAUSED AFTER PHASE 2
+The MCP tool `request_approval` has set gate 'plan' to PENDING.
+Present the Implementation Plan above to the user and WAIT for their explicit written approval before calling any further agents.
+Do NOT auto-approve. Do NOT proceed autonomously. Do NOT call any Developer agent or Compliance agent.
+The pipeline is BLOCKED until the human runs `/squad:approve plan`.
+---
+
+### Phase 3 — Compliance Audit (Optional)
+**FIRST**, verify approval exists by calling:
+```
+agent_hub:check_gate(gate="plan")
+```
+If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:approve plan` must be run first.
+
+(Proceed ONLY after check_gate returns approved:true for 'plan'.)
+Trigger this phase if the feature handles PII, Financial Data, Account/Auth Logic, or targets GDPR/LGPD/HIPAA regions. Otherwise, advance the 'compliance' gate and skip to Phase 4.
+- Call `agent_hub:get_agent_prompt(agent="compliance")`.
+- Run the full compliance audit and present the Audit Report to the user.
+- **AFTER presenting the audit**, call:
+  ```
+  agent_hub:request_approval(
+    gate="compliance",
+    artifact_path="docs/pages/[feature]-audit.md",
+    summary="Compliance audit completed. Please review the audit report and approve to proceed to execution."
+  )
+  ```
+- If compliance was SKIPPED: call `agent_hub:request_approval(gate="compliance", summary="Compliance phase skipped — feature does not require regulatory audit.")` and immediately call `agent_hub:check_gate(gate="compliance")` after the human acknowledges.
+
+---
+⚠️ MANDATORY HUMAN CHECKPOINT — PIPELINE PAUSED AFTER PHASE 3 (if triggered)
+The MCP tool `request_approval` has set gate 'compliance' to PENDING.
+Present the Compliance Audit Report above to the user and WAIT for their explicit written approval before calling any further agents.
+Do NOT auto-approve. Do NOT proceed autonomously. Do NOT call any Developer agent.
+The pipeline is BLOCKED until the human runs `/squad:approve compliance`.
+---
+
+### Phase 4 — Execution (Developer Agent)
+**FIRST**, verify approval exists by calling:
+```
+agent_hub:check_gate(gate="plan")
+```
+If the gate is not approved, STOP IMMEDIATELY.
+
+(Proceed ONLY after the human has explicitly approved all prior applicable phases.)
+- Determine the target tech stack from the Implementation Plan.
+- Call `agent_hub:get_agent_prompt(agent="backend|frontend|mobile|automata")` as appropriate.
+- Execute the plan, write the code, and run tests.
+
+### Phase 5 — Synthesis & Export (Optional)
+- If requested by the human or stakeholders, call `agent_hub:get_agent_prompt(agent="decoder")` for stakeholder reporting.
+
+---
+
 ## Execution
-Begin the Brainstorming Phase now for the goal: {{args}}
+Begin with `pipeline_start`, then Phase 1 for the goal: {{args}}
 """

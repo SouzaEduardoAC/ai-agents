@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.7] (2026-06-19)
+
+### Features
+
+* **mcp-gates:** implement structural MCP-level human approval gate system — adds three new tools to `index.js` (`pipeline_start`, `request_approval`, `check_gate`) backed by a session state file (`.squad-state.json`). `pipeline_start` initializes a pipeline run and locks all gates. `request_approval` sets a gate to `pending` and emits a hard STOP message that instructs the LLM to cease tool calls until the human approves. `check_gate` verifies gate approval at phase entry and returns `isError: true` if the gate is pending or locked, making it structurally impossible for an LLM to continue autonomously. In standalone mode (no active session), `check_gate` returns a soft advisory so individual agents are not blocked. A new human-facing trust-anchor slash command `/squad:approve` (`squad/commands/squad/approve.toml`) is the only mechanism that can advance a gate to `approved`. `run.toml` updated with `pipeline_start` at start and `request_approval`/`check_gate` at all phase boundaries. All 8 individual agent command TOMLs (architect, backend, frontend, mobile, automata, researcher×2, po) updated with `check_gate`/`request_approval` calls. (ref: `index.js`, `.squad-state.json`, `squad/commands/squad/approve.toml`, `squad/commands/squad/run.toml`)
+
+## [1.9.6] (2026-06-19)
+
+
+### Bug Fixes
+
+* **squad:** add mandatory human approval checkpoints to `run.toml` pipeline — three `⚠️ MANDATORY HUMAN CHECKPOINT` blocks now gate the pipeline at Phase 1 (PRD approval), Phase 2 (Implementation Plan approval), and Phase 3 (Compliance Audit approval). The LLM is explicitly instructed not to auto-approve or call the next agent until the human responds with written approval. Enforces the gate policy already declared in `squad/brain/persona.md` and `docs/pages/Squad Orchestrator.md` at the instruction level so no orchestrator can bypass it autonomously. (ref: `squad/commands/squad/run.toml`)
+
 ## [1.9.5](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.9.4...v1.9.5) (2026-06-12)
 
 

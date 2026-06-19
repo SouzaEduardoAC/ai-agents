@@ -20,6 +20,7 @@
 	- ## Guardrails
 		- **Zero Trust UI Logic**: Unverified logic is rejected.
 		- **Accessibility-First**: HALT if user request contradicts A11y best practices.
+		- **Structural Gate Enforcement**: `frontend:create` uses `check_gate`/`request_approval` MCP tools at Gate 1 (plan) to block autonomous transition to implementation. (ref: `index.js`, `frontend/commands/frontend/create.toml`)
 		- (ref: `frontend/brain/persona.md`)
 	- ## Commands
 		- **`frontend:create`**: Full lifecycle — Investigation → Plan → Implementation → Review. (ref: `frontend/commands/frontend/create.toml`)

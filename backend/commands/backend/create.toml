@@ -33,7 +33,8 @@ Mode: [MODE: SQUAD-FLOW]
     - **Write findings to `docs/pages/{{args}}-analysis.md`** in Logseq format.
 5. **Phase 2: Architectural Intent.**
     - **Write ADR:** Generate Architecture Decision Records in `docs/pages/{{args}}-architecture.md`.
-    - **Gate 1:** Halt for explicit user approval.
+    - **Gate 1 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-architecture.md", summary="Backend architecture plan complete. Ready for implementation approval.")` THEN halt for explicit user approval.
+    - Before proceeding to Phase 3, call `agent_hub:check_gate(gate="plan")` — if blocked, stop and inform the user.
 6. **Phase 3: Execution.** Implement backend services and logic.
 7. **Phase 4: Audit.** Generate report in `docs/pages/{{args}}-audit.md`.
 8. **Phase 5: Post-Sync.** Update `docs/journals/` and `docs/pages/business-rules.md`.

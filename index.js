@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import toml from "toml";
 
 const AGENTS_ROOT = path.dirname(fileURLToPath(import.meta.url));
+const STATE_FILE = path.join(AGENTS_ROOT, ".squad-state.json");
 
 const pkg = fs.readJsonSync(path.join(AGENTS_ROOT, "package.json"));
 
@@ -412,6 +413,61 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["agent"],
         },
       },
+      {
+        name: "pipeline_start",
+        description: [
+          "Initialize a new pipeline session with a structured approval gate system.",
+          "Call this at the very beginning of any Squad pipeline run to set up the state file.",
+          "Creates .squad-state.json with all specified gates set to 'locked'.",
+          "Returns the new session_id and a confirmation. Must be called before request_approval or check_gate.",
+        ].join(" "),
+        inputSchema: {
+          type: "object",
+          properties: {
+            goal: { type: "string", description: "The pipeline goal string (the high-level task being orchestrated)." },
+            gates: {
+              type: "array",
+              items: { type: "string" },
+              description: "List of gate_key strings expected for this pipeline run (e.g., ['prd', 'plan', 'compliance', 'execution']).",
+            },
+          },
+          required: ["goal", "gates"],
+        },
+      },
+      {
+        name: "request_approval",
+        description: [
+          "Signal that the current pipeline phase is complete and requires human approval before proceeding.",
+          "Sets the specified gate to 'pending' and returns a hard STOP message.",
+          "The pipeline MUST halt after this tool returns. Do NOT call any further agent tools until the human runs /squad:approve <gate_key>.",
+          "Use check_gate at the start of the next phase to verify approval before continuing.",
+        ].join(" "),
+        inputSchema: {
+          type: "object",
+          properties: {
+            gate: { type: "string", description: "The gate_key that requires approval (e.g., 'prd', 'plan', 'discovery', 'audit')." },
+            artifact_path: { type: "string", description: "Optional path to the artifact file produced in this phase (e.g., 'docs/pages/feature-prd.md')." },
+            summary: { type: "string", description: "A brief summary of what was completed in this phase and what the human should review." },
+          },
+          required: ["gate", "summary"],
+        },
+      },
+      {
+        name: "check_gate",
+        description: [
+          "Check whether a specific pipeline gate has been approved by a human before starting the next phase.",
+          "Returns approved:true if the gate is approved. Returns an error if the gate is pending or locked.",
+          "If no active pipeline session exists (no .squad-state.json), returns a soft advisory and allows the agent to proceed with prompt-level guardrails (standalone mode).",
+          "ALWAYS call this at the start of each new pipeline phase to enforce the approval chain.",
+        ].join(" "),
+        inputSchema: {
+          type: "object",
+          properties: {
+            gate: { type: "string", description: "The gate_key to check (e.g., 'prd', 'plan', 'discovery', 'audit')." },
+          },
+          required: ["gate"],
+        },
+      },
     ],
   };
 });
@@ -578,6 +634,129 @@ ${dynamicKnowledge}
 ${knowledge}
       `;
       return { content: [{ type: "text", text: fullPrompt.trim() }] };
+    }
+
+    if (name === "pipeline_start") {
+      const { goal, gates } = args;
+      if (!goal || !Array.isArray(gates) || gates.length === 0) {
+        throw new Error("pipeline_start requires 'goal' (string) and 'gates' (non-empty array of strings).");
+      }
+      const crypto = await import("crypto");
+      const hash = crypto.createHash("sha256").update(goal).digest("hex").slice(0, 8);
+      const session_id = `${Date.now()}-${hash}`;
+      const initiated_at = new Date().toISOString();
+      const gatesObj = {};
+      for (const key of gates) {
+        gatesObj[key] = { status: "locked" };
+      }
+      const state = { session_id, initiated_at, goal, gates: gatesObj };
+      await fs.writeJson(STATE_FILE, state, { spaces: 2 });
+      return {
+        content: [{
+          type: "text",
+          text: [
+            `✅ Pipeline session initialized.`,
+            `Session ID: ${session_id}`,
+            `Goal: ${goal}`,
+            `Gates registered (all locked): ${gates.join(", ")}`,
+            `State file: ${STATE_FILE}`,
+            ``,
+            `Proceed with Phase 1. After each phase, call request_approval to pause for human sign-off.`,
+            `Call check_gate at the START of each subsequent phase before doing any work.`,
+          ].join("\n"),
+        }],
+      };
+    }
+
+    if (name === "request_approval") {
+      const { gate, artifact_path, summary } = args;
+      if (!(await fs.pathExists(STATE_FILE))) {
+        // Standalone mode — no active session, just emit a prompt-level STOP message
+        return {
+          content: [{
+            type: "text",
+            text: [
+              `⏸️ PIPELINE PAUSED — GATE: ${gate}`,
+              `Phase complete. Human approval required before the next phase can begin.`,
+              artifact_path ? `Artifact: ${artifact_path}` : ``,
+              `Summary: ${summary}`,
+              ``,
+              `No active Squad session detected. Running in standalone mode.`,
+              `Please review the artifact above and explicitly tell the agent to proceed when ready.`,
+              `DO NOT continue autonomously. PIPELINE STATUS: BLOCKED`,
+            ].filter(Boolean).join("\n"),
+          }],
+        };
+      }
+      const state = await fs.readJson(STATE_FILE);
+      if (!state.gates[gate]) {
+        state.gates[gate] = {};
+      }
+      state.gates[gate].status = "pending";
+      state.gates[gate].requested_at = new Date().toISOString();
+      if (artifact_path) state.gates[gate].artifact = artifact_path;
+      await fs.writeJson(STATE_FILE, state, { spaces: 2 });
+      return {
+        content: [{
+          type: "text",
+          text: [
+            `⏸️ PIPELINE PAUSED — GATE: ${gate}`,
+            `Phase complete. Human approval required before the next phase can begin.`,
+            artifact_path ? `Artifact: ${artifact_path}` : ``,
+            `Summary: ${summary}`,
+            ``,
+            `To proceed, the human must run: /squad:approve ${gate}`,
+            `DO NOT call any further agent tools until approval is registered.`,
+            `PIPELINE STATUS: BLOCKED`,
+          ].filter(Boolean).join("\n"),
+        }],
+      };
+    }
+
+    if (name === "check_gate") {
+      const { gate } = args;
+      if (!(await fs.pathExists(STATE_FILE))) {
+        // Soft advisory for standalone agent runs — do not block
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              approved: true,
+              message: `No active Squad session — proceeding with prompt-level guardrails only. (Standalone mode: ${gate})`,
+            }),
+          }],
+        };
+      }
+      const state = await fs.readJson(STATE_FILE);
+      const gateData = state.gates && state.gates[gate];
+      if (!gateData) {
+        return {
+          isError: true,
+          content: [{ type: "text", text: `🚫 GATE BLOCKED: '${gate}' is not registered in the active pipeline session (session: ${state.session_id}). Run phases in order.` }],
+        };
+      }
+      if (gateData.status === "approved") {
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              approved: true,
+              message: `Gate '${gate}' approved at ${gateData.approved_at}. Proceed.`,
+            }),
+          }],
+        };
+      }
+      if (gateData.status === "pending") {
+        return {
+          isError: true,
+          content: [{ type: "text", text: `🚫 GATE BLOCKED: '${gate}' is awaiting human approval. The human must run /squad:approve ${gate} to unlock. DO NOT PROCEED.` }],
+        };
+      }
+      // status === "locked"
+      return {
+        isError: true,
+        content: [{ type: "text", text: `🚫 GATE BLOCKED: '${gate}' has not been reached yet in the pipeline. Run phases in order and use request_approval to advance gates.` }],
+      };
     }
 
     throw new Error(`Tool not found: ${name}`);

@@ -18,6 +18,7 @@
 	- ## Guardrails
 		- **Jank Prevention**: Mandatory identification of excessive widget re-builds.
 		- **Platform Adherence**: Material vs. Cupertino design integrity.
+		- **Structural Gate Enforcement**: `mobile:create` uses `check_gate`/`request_approval` MCP tools at Gate 0 (discovery) and Gate 1 (plan) to block autonomous phase transitions. (ref: `index.js`, `mobile/commands/mobile/create.toml`)
 		- (ref: `mobile/brain/persona.md`)
 	- ## Commands
 		- **`mobile:create`**: Full lifecycle — Investigation → Plan → Implementation → Review. (ref: `mobile/commands/mobile/create.toml`)

@@ -32,10 +32,11 @@ Mode: [MODE: SQUAD-FLOW]
     - **Design Extraction:** If `stitch` is available, use `extract_design_dna` to fetch Material/Cupertino tokens and `get_screen_code` for widget structure.
     - **Codebase Mapping:** Map mobile structures, widget trees, and data flows relative to the PRD requirements.
     - **Write findings to `docs/pages/{{args}}-analysis.md`** in Logseq format.
-    - **Gate 0:** Halt for explicit user approval.
+    - **Gate 0 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-analysis.md", summary="Mobile discovery/analysis phase complete. Widget tree and platform architecture ready for review.")` THEN halt for explicit user approval.
 4. **Phase 2: Architectural Intent.**
     - **Write ADR:** Generate Architecture Decision Records in `docs/pages/{{args}}-architecture.md`.
-    - **Gate 1:** Halt for explicit user approval.
+    - **Gate 1 — MCP Structural Enforcement:** Call `agent_hub:check_gate(gate="discovery")` FIRST — if blocked, stop. Then after presenting the plan: call `agent_hub:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-architecture.md", summary="Mobile architecture plan complete. Ready for implementation approval.")` and halt.
+    - Before proceeding to Phase 3, call `agent_hub:check_gate(gate="plan")` — if blocked, stop and inform the user.
 5. **Phase 3: Execution.** Implement features and run tests.
 6. **Phase 4: Audit.** Generate report in `docs/pages/{{args}}-audit.md`.
 7. **Phase 5: Post-Sync.** Update `docs/journals/` and `docs/pages/business-rules.md`.
