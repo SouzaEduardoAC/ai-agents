@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.10.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.9.7...v1.10.0) (2026-06-20)
+
+
+### Features
+
+* **mcp:** implement pipeline_approve tool and dynamic external workspace adaptation ([d61b1d2](https://github.com/SouzaEduardoAC/ai-agents/commit/d61b1d2a817ebe42b918d51367acc1a54b03cc94))
+
+
+### Bug Fixes
+
+* **mcp:** implement pipeline_approve tool and dynamic external works… ([ba99ac1](https://github.com/SouzaEduardoAC/ai-agents/commit/ba99ac143b91232101b6ce3359bd60f82ffde500))
+
 ## [1.9.7](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.9.6...v1.9.7) (2026-06-20)
 
 
