@@ -30,17 +30,8 @@ This registers the session and locks all gates. You MUST do this before any othe
 ---
 
 ### Phase 1 — Product Elicitation (PO)
-- Call `agent_hub:get_agent_prompt(agent="po")`.
-- Run the full discovery and draft the PRD, writing it to `docs/pages/[feature]-prd.md`.
-- Present the complete PRD to the user.
-- **AFTER presenting the PRD**, call:
-  ```
-  agent_hub:request_approval(
-    gate="prd",
-    artifact_path="docs/pages/[feature]-prd.md",
-    summary="PRD completed. Please review the product requirements document and approve to proceed to architecture."
-  )
-  ```
+- Call `agent_hub:call_agent_command(agent="po", command="discovery", args="{{args}}")`.
+- Adopt the Product Owner persona, run the requirements discovery protocol to draft the PRD, write it to `docs/pages/[feature]-prd.md`, and request human sign-off on the 'prd' gate.
 
 ---
 ⚠️ MANDATORY HUMAN CHECKPOINT — PIPELINE PAUSED AFTER PHASE 1
@@ -58,17 +49,8 @@ agent_hub:check_gate(gate="prd")
 If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:approve prd` must be run first.
 
 (Proceed ONLY after check_gate returns approved:true for 'prd'.)
-- Call `agent_hub:get_agent_prompt(agent="architect")`.
-- Analyze the approved PRD and produce the Implementation Plan, writing it to `docs/pages/[feature]-plan.md` (must follow Logseq outliner format).
-- Present the complete Implementation Plan to the user.
-- **AFTER presenting the plan**, call:
-  ```
-  agent_hub:request_approval(
-    gate="plan",
-    artifact_path="docs/pages/[feature]-plan.md",
-    summary="Implementation plan completed. Please review the architecture and approve to proceed to compliance/execution."
-  )
-  ```
+- Call `agent_hub:call_agent_command(agent="architect", command="create", args="{{args}}")`.
+- Adopt the Architect persona, run the system design protocol to draft the implementation plan/ADR, write it to the docs directory, and request human sign-off on the 'plan' gate.
 
 ---
 ⚠️ MANDATORY HUMAN CHECKPOINT — PIPELINE PAUSED AFTER PHASE 2
@@ -87,8 +69,8 @@ If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:a
 
 (Proceed ONLY after check_gate returns approved:true for 'plan'.)
 Trigger this phase if the feature handles PII, Financial Data, Account/Auth Logic, or targets GDPR/LGPD/HIPAA regions. Otherwise, advance the 'compliance' gate and skip to Phase 4.
-- Call `agent_hub:get_agent_prompt(agent="compliance")`.
-- Run the full compliance audit and present the Audit Report to the user.
+- Call `agent_hub:call_agent_command(agent="compliance", command="master", args="{{args}}")`.
+- Adopt the Privacy Auditor persona, conduct the compliance audit, and present the Audit Report to the user.
 - **AFTER presenting the audit**, call:
   ```
   agent_hub:request_approval(
@@ -116,11 +98,11 @@ If the gate is not approved, STOP IMMEDIATELY.
 
 (Proceed ONLY after the human has explicitly approved all prior applicable phases.)
 - Determine the target tech stack from the Implementation Plan.
-- Call `agent_hub:get_agent_prompt(agent="backend|frontend|mobile|automata")` as appropriate.
-- Execute the plan, write the code, and run tests.
+- Call `agent_hub:call_agent_command(agent="backend|frontend|mobile", command="create", args="{{args}}")` as appropriate.
+- Adopt the selected developer persona, execute the plan, write the code, and run tests.
 
 ### Phase 5 — Synthesis & Export (Optional)
-- If requested by the human or stakeholders, call `agent_hub:get_agent_prompt(agent="decoder")` for stakeholder reporting.
+- If requested by the human or stakeholders, call `agent_hub:call_agent_command(agent="decoder", command="export", args="{{args}}")` for stakeholder reporting.
 
 ---
 

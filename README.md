@@ -115,7 +115,7 @@ Claude Code communicates with the Hub using **MCP tool calls**. Since Claude is 
     *   `list_agents`: Lists all available specialized agents and their commands.
     *   `call_agent_command`: Activates a specialized agent command with a task description.
     *   `get_agent_prompt`: Retrieves the persona, skills, and knowledge for a specific agent.
-    *   `pipeline_start`: Initializes a new pipeline session and locks all gates in `.squad-state.json`.
+    *   `pipeline_start`: Initializes a new pipeline session and locks all gates in `.squad-state-[branch].json`.
     *   `request_approval`: Sets a gate status to `pending` and pauses the pipeline for human sign-off.
     *   `check_gate`: Checks if a specific pipeline gate is approved before starting the next phase.
     *   `pipeline_approve`: Approves a specific pipeline gate to unblock the next phase.

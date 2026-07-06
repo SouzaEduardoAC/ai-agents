@@ -9,12 +9,12 @@
 		- **Quality Control**: Enforces mandatory user sign-off for Discovery, Plans, and Implementation.
 		- **Context Integrity**: Ensures prompt assembly includes all relevant Common Knowledge and Dynamic Stack Skills.
 	- ## Squad Protocol (The 4-Phase Squad Loop)
-		- 1. **Elicitation Phase**: Call `get_agent_prompt(agent="po")`. Write `docs/pages/[feature]-prd.md`.
-		- 2. **Analysis Phase**: Call `get_agent_prompt(agent="architect")`. Write `docs/pages/[feature]-plan.md` (which MUST start with standard Logseq properties and follow the outliner format).
-		- 3. **Compliance Phase (Optional)**: Call `get_agent_prompt(agent="compliance")` for regulatory/privacy gating.
+		- 1. **Elicitation Phase**: Call `call_agent_command(agent="po", command="discovery", args="{{args}}")`. Write `docs/pages/[feature]-prd.md`.
+		- 2. **Analysis Phase**: Call `call_agent_command(agent="architect", command="create", args="{{args}}")`. Write `docs/pages/[feature]-plan.md` (which MUST start with standard Logseq properties and follow the outliner format).
+		- 3. **Compliance Phase (Optional)**: Call `call_agent_command(agent="compliance", command="master", args="{{args}}")` for regulatory/privacy gating.
 			- **Trigger Conditions**: Required if the feature handles **PII**, **Financial Data**, **Account/Auth Logic**, or targets **GDPR/LGPD** regions.
-		- 4. **Execution Phase**: Call `get_agent_prompt(agent="backend|frontend|mobile|Automata")`. Execute plan and run tests.
-		- 5. **Synthesis & Export Phase (Optional)**: Call `get_agent_prompt(agent="decoder")` for stakeholder reporting.
+		- 4. **Execution Phase**: Call `call_agent_command(agent="backend|frontend|mobile", command="create", args="{{args}}")`. Execute plan and run tests.
+		- 5. **Synthesis & Export Phase (Optional)**: Call `call_agent_command(agent="decoder", command="export", args="{{args}}")` for stakeholder reporting.
 			- **Trigger Conditions**: Requested by Product Owners, BAs, or non-technical business stakeholders to translate technical Logseq graph nodes into high-fidelity business specification matrices.
 	- ## Guardrails
 		- **Gate Enforcement**: Never skip a "Human Approval" point. Enforced at three layers:
@@ -24,7 +24,7 @@
 		- **No Context Dilution**: Persona swapping must be absolute to prevent instruction drift.
 		- **Zero Context Decay**: Finalize each step by updating the Logseq graph. (ref: `squad/brain/persona.md`)
 	- ## MCP Gate Tools
-		- **`pipeline_start`**: Initializes a pipeline session. Dynamically traverses upward from `process.cwd()` to resolve the active project root, writes `.squad-state.json`, and auto-appends it to `.gitignore` if it exists. Must be called before Phase 1. (ref: `index.js → pipeline_start`)
+		- **`pipeline_start`**: Initializes a pipeline session. Dynamically resolves the active project root based on `cwd` or `process.cwd()`, writes `.squad-state-[branchSlug].json` scoped to the current Git branch, and auto-appends `.squad-state-*.json` to `.gitignore` if it exists. Must be called before Phase 1. (ref: `index.js → pipeline_start`)
 		- **`request_approval`**: Called at phase exit. Dynamically resolves the state file path, sets gate to `pending`, and emits a hard STOP message. LLM must cease tool calls until human approves. (ref: `index.js → request_approval`)
 		- **`check_gate`**: Called at phase entry. Dynamically resolves the state file path and returns `isError: true` if gate is `pending` or `locked`. Returns soft advisory if no active session (standalone mode). (ref: `index.js → check_gate`)
-		- **`/squad:approve <gate>`**: Human-only trust anchor. Reads and writes the `.squad-state.json` file relative to the active workspace root. The sole mechanism to write `approved` to the state file. (ref: `squad/commands/squad/approve.toml`)
+		- **`/squad:approve <gate>`**: Human-only trust anchor. Calls the `pipeline_approve` MCP tool under the hood, which dynamically resolves the branch-specific pipeline state file at the active workspace root and transitions the gate to `approved`. (ref: `squad/commands/squad/approve.toml`)

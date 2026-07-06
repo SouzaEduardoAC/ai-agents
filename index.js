@@ -9,37 +9,56 @@ import path from "path";
 import { glob } from "glob";
 import { fileURLToPath } from "url";
 import toml from "toml";
+import { execSync } from "child_process";
 
 const AGENTS_ROOT = path.dirname(fileURLToPath(import.meta.url));
-const STATE_FILE = path.join(AGENTS_ROOT, ".squad-state.json");
 
 /**
  * Dynamic state file resolver. Traverses upward from process.cwd() looking for
- * .squad-state.json or project root markers (.git, package.json) to locate
- * the active project root and state file.
+ * project root markers (.git, package.json) to locate the active project root,
+ * queries the current Git branch name, and scopes the state file to that branch.
  */
-async function resolveStateFilePath() {
-  let dir = process.cwd();
+async function resolveStateFilePath(customCwd) {
+  let dir = customCwd || process.cwd();
+  let projectRoot = null;
+  let currentDir = dir;
+  
   while (true) {
-    const candidateState = path.join(dir, ".squad-state.json");
-    if (await fs.pathExists(candidateState)) {
-      return { statePath: candidateState, projectRoot: dir };
-    }
-    const hasGit = await fs.pathExists(path.join(dir, ".git"));
-    const hasPkg = await fs.pathExists(path.join(dir, "package.json"));
+    const hasGit = await fs.pathExists(path.join(currentDir, ".git"));
+    const hasPkg = await fs.pathExists(path.join(currentDir, "package.json"));
     if (hasGit || hasPkg) {
-      return { statePath: candidateState, projectRoot: dir };
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) {
+      projectRoot = currentDir;
       break;
     }
-    dir = parent;
+    const parent = path.dirname(currentDir);
+    if (parent === currentDir) {
+      break;
+    }
+    currentDir = parent;
   }
-  // Fallback: default to process.cwd()
+  
+  if (!projectRoot) {
+    projectRoot = dir;
+  }
+
+  // Determine active branch name for scoping
+  let branch = "default";
+  try {
+    branch = execSync("git rev-parse --abbrev-ref HEAD", { 
+      cwd: projectRoot, 
+      encoding: "utf8", 
+      stdio: ["ignore", "pipe", "ignore"] 
+    }).trim();
+  } catch (e) {
+    // Fallback if git is not initialized or fails
+  }
+
+  const branchSlug = branch.replace(/[^a-zA-Z0-9-_]/g, "_");
+  const stateFileName = `.squad-state-${branchSlug}.json`;
+
   return {
-    statePath: path.join(process.cwd(), ".squad-state.json"),
-    projectRoot: process.cwd()
+    statePath: path.join(projectRoot, stateFileName),
+    projectRoot
   };
 }
 
@@ -497,6 +516,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               items: { type: "string" },
               description: "List of gate_key strings expected for this pipeline run (e.g., ['prd', 'plan', 'compliance', 'execution']).",
             },
+            cwd: { type: "string", description: "Optional. The current working directory of the active project. Enforces project-level isolation when running under a global MCP daemon." },
           },
           required: ["goal", "gates"],
         },
@@ -515,6 +535,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             gate: { type: "string", description: "The gate_key that requires approval (e.g., 'prd', 'plan', 'discovery', 'audit')." },
             artifact_path: { type: "string", description: "Optional path to the artifact file produced in this phase (e.g., 'docs/pages/feature-prd.md')." },
             summary: { type: "string", description: "A brief summary of what was completed in this phase and what the human should review." },
+            cwd: { type: "string", description: "Optional. The current working directory of the active project. Enforces project-level isolation when running under a global MCP daemon." },
           },
           required: ["gate", "summary"],
         },
@@ -531,6 +552,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           type: "object",
           properties: {
             gate: { type: "string", description: "The gate_key to check (e.g., 'prd', 'plan', 'discovery', 'audit')." },
+            cwd: { type: "string", description: "Optional. The current working directory of the active project. Enforces project-level isolation when running under a global MCP daemon." },
           },
           required: ["gate"],
         },
@@ -546,6 +568,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           type: "object",
           properties: {
             gate: { type: "string", description: "The gate_key to approve (e.g., 'prd', 'plan', 'discovery', 'audit')." },
+            cwd: { type: "string", description: "Optional. The current working directory of the active project. Enforces project-level isolation when running under a global MCP daemon." },
           },
           required: ["gate"],
         },
@@ -746,7 +769,7 @@ ${knowledge}
     }
 
     if (name === "pipeline_start") {
-      const { goal, gates } = args;
+      const { goal, gates, cwd } = args;
       if (!goal || !Array.isArray(gates) || gates.length === 0) {
         throw new Error("pipeline_start requires 'goal' (string) and 'gates' (non-empty array of strings).");
       }
@@ -759,18 +782,18 @@ ${knowledge}
         gatesObj[key] = { status: "locked" };
       }
       const state = { session_id, initiated_at, goal, gates: gatesObj };
-      const { statePath, projectRoot } = await resolveStateFilePath();
+      const { statePath, projectRoot } = await resolveStateFilePath(cwd);
       await fs.writeJson(statePath, state, { spaces: 2 });
 
-      // Automatically append .squad-state.json to the target project's .gitignore if it exists
+      // Automatically append .squad-state-*.json to the target project's .gitignore if it exists
       const gitignorePath = path.join(projectRoot, ".gitignore");
       if (await fs.pathExists(gitignorePath)) {
         const gitignoreContent = await fs.readFile(gitignorePath, "utf-8");
         const lines = gitignoreContent.split(/\r?\n/);
-        const hasStateFile = lines.some(line => line.trim() === ".squad-state.json");
+        const hasStateFile = lines.some(line => line.trim() === ".squad-state-*.json");
         if (!hasStateFile) {
           const endsWithNewline = gitignoreContent.endsWith("\n") || gitignoreContent.endsWith("\r");
-          const appendStr = (endsWithNewline ? "" : "\n") + ".squad-state.json\n";
+          const appendStr = (endsWithNewline ? "" : "\n") + ".squad-state-*.json\n";
           await fs.appendFile(gitignorePath, appendStr);
         }
       }
@@ -793,8 +816,8 @@ ${knowledge}
     }
 
     if (name === "request_approval") {
-      const { gate, artifact_path, summary } = args;
-      const { statePath } = await resolveStateFilePath();
+      const { gate, artifact_path, summary, cwd } = args;
+      const { statePath } = await resolveStateFilePath(cwd);
       if (!(await fs.pathExists(statePath))) {
         // Standalone mode — no active session, just emit a prompt-level STOP message
         return {
@@ -839,8 +862,8 @@ ${knowledge}
     }
 
     if (name === "check_gate") {
-      const { gate } = args;
-      const { statePath } = await resolveStateFilePath();
+      const { gate, cwd } = args;
+      const { statePath } = await resolveStateFilePath(cwd);
       if (!(await fs.pathExists(statePath))) {
         // Soft advisory for standalone agent runs — do not block
         return {
@@ -886,8 +909,8 @@ ${knowledge}
     }
 
     if (name === "pipeline_approve") {
-      const { gate } = args;
-      const { statePath } = await resolveStateFilePath();
+      const { gate, cwd } = args;
+      const { statePath } = await resolveStateFilePath(cwd);
       if (!(await fs.pathExists(statePath))) {
         return {
           isError: true,
