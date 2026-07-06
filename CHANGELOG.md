@@ -116,6 +116,10 @@
 
 ### Features
 
+* **mcp-gates:** implement branch-scoped state file resolution (`.squad-state-[branch].json`) and project-level containment via a new optional `cwd` parameter to isolate concurrent pipelines and support project-level branching without collisions under global MCP daemons (ref: `index.js`, `squad/commands/squad/approve.toml`)
+* **automata:** isolate Automata as a standalone specialist agent; remove delegation references from Product Owner and Systems Architect personas (ref: `po/brain/persona.md`, `architect/brain/persona.md`)
+* **squad:** remove Automata specialist agent from execution routing and protocols (ref: `squad/brain/persona.md`, `squad/commands/squad/run.toml`, `docs/pages/Squad Orchestrator.md`)
+* **squad:** upgrade unified run command to call specialized agent commands instead of retrieving raw prompts (get_agent_prompt -> call_agent_command) across all phases (ref: `squad/commands/squad/run.toml`)
 * **mcp:** serve mcp usage guide via list_agents tool
 * **mcp:** add MCP usage guide skill for improved tool accuracy (`common/skills/mcp_usage_guide.md`)
 * **cli:** support linking the MCP usage guide via the `link` command by passing `mcp` (case-insensitive) as the agent parameter

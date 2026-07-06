@@ -83,4 +83,16 @@
 			- status:: [DONE]
 			- ref:: [[Squad Orchestrator]], [[TECHNICAL_SPECS]], [[AGENTS.md]], [[GEMINI.md]], [[CLAUDE.md]]
 			- summary:: Upgraded the MCP server to support direct human approval tool calls, repository containment boundary rules, and non-Logseq workspace adaptivity. Added the `pipeline_approve` tool to allow direct approval registration via MCP clients. Updated `request_approval` and `check_gate` instructions to present both chat-based (`/squad:approve`) and tool-based (`pipeline_approve`) approval routes. Implemented `isInsideHub()` repository check. Instead of strictly blocking documentation sync commands (`full-sync`, `docs`) outside the Hub, the server dynamically injects an `EXTERNAL WORKSPACE NOTICE` to adapt the agent's behavior (preventing edits to Hub-specific anchors and focusing documentation on the active project files). Configured automatic injection of the compliance mandate from `AGENTS.md` into prompts only when executing inside the Hub. Added a workspace checker for `docs/pages/`; if missing, a warning is dynamically prepended to prompts advising the agent that the project is not a Logseq knowledge graph and to write standard markdown instead. (ref: `index.js → pipeline_approve, isInsideHub, getComplianceMandate`, `test/mcp-approve-test.js`, `README.md`, `CLAUDE.md`)
+		- ## Feature: Upgraded Squad Orchestrator delegation protocol (2026-07-06)
+			- status:: [DONE]
+			- ref:: [[Squad Orchestrator]], [[Product Owner]], [[Architect]], [[Compliance]], [[Backend]], [[Frontend]], [[Mobile]], [[Decoder]]
+			- summary:: Upgraded the Squad Orchestrator's run pipeline to delegate to specialized agent commands via `call_agent_command` instead of retrieving raw prompts (`get_agent_prompt`) across all phases. This ensures that the command-specific TOML configurations (such as design extraction via Stitch, visual verification via Playwright, and local gate checks) are fully loaded into the LLM context. (ref: `squad/commands/squad/run.toml`, `docs/pages/Squad Orchestrator.md`)
+		- ## Feature: Removed Automata from Squad Execution (2026-07-06)
+			- status:: [DONE]
+			- ref:: [[Squad Orchestrator]], [[Automata]]
+			- summary:: Removed the Automata specialist agent from the Squad Orchestrator's dynamic routing and execution protocol (Phase 4), aligning implementation routing strictly with primary code development agents (Backend, Frontend, Mobile). (ref: `squad/brain/persona.md`, `squad/commands/squad/run.toml`, `docs/pages/Squad Orchestrator.md`)
+		- ## Feature: Isolated Automata as Standalone Agent (2026-07-06)
+			- status:: [DONE]
+			- ref:: [[Product Owner]], [[Architect]], [[Automata]]
+			- summary:: Removed Automata from the core Extended Team lists of the Product Owner and Systems Architect personas, establishing it as a fully standalone automation specialist agent called explicitly by users. (ref: `po/brain/persona.md`, `architect/brain/persona.md`)
 

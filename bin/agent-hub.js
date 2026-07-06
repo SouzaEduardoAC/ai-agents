@@ -136,6 +136,57 @@ program
       path.join(os.homedir(), ".gemini", "antigravity-ide", "mcp_config.json")
     ];
 
+    // Scan all config files to extract the best environment variables and settings.
+    const allConfigPaths = [SETTINGS_PATH, ...ANTIGRAVITY_MCP_CONFIG_PATHS];
+    const extractedEnv = {
+      stitch: {},
+      context7: {},
+      sonarqube: {}
+    };
+
+    for (const p of allConfigPaths) {
+      try {
+        if (await fs.pathExists(p)) {
+          const cfg = await fs.readJson(p);
+          const servers = cfg.mcpServers || {};
+
+          // Extract Stitch API key
+          const stitchEnv = servers.stitch?.env || {};
+          if (stitchEnv.STITCH_API_KEY && !extractedEnv.stitch.STITCH_API_KEY) {
+            extractedEnv.stitch.STITCH_API_KEY = stitchEnv.STITCH_API_KEY;
+          }
+          // Also try legacy StitchMCP
+          const stitchMcpArgs = servers.StitchMCP?.args;
+          if (Array.isArray(stitchMcpArgs) && !extractedEnv.stitch.STITCH_API_KEY) {
+            const headerArg = stitchMcpArgs.find(arg => typeof arg === 'string' && arg.startsWith('X-Goog-Api-Key:'));
+            if (headerArg) {
+              extractedEnv.stitch.STITCH_API_KEY = headerArg.split('X-Goog-Api-Key:')[1].trim();
+            }
+          }
+
+          // Extract Context7 API key
+          const c7Env = servers.context7?.env || {};
+          if (c7Env.CONTEXT7_API_KEY && !extractedEnv.context7.CONTEXT7_API_KEY) {
+            extractedEnv.context7.CONTEXT7_API_KEY = c7Env.CONTEXT7_API_KEY;
+          }
+
+          // Extract SonarQube config
+          const sqEnv = servers.sonarqube?.env || {};
+          if (sqEnv.SONARQUBE_TOKEN && !extractedEnv.sonarqube.SONARQUBE_TOKEN) {
+            extractedEnv.sonarqube.SONARQUBE_TOKEN = sqEnv.SONARQUBE_TOKEN;
+          }
+          if (sqEnv.SONARQUBE_URL && sqEnv.SONARQUBE_URL !== "http://localhost:9000" && !extractedEnv.sonarqube.SONARQUBE_URL) {
+            extractedEnv.sonarqube.SONARQUBE_URL = sqEnv.SONARQUBE_URL;
+          }
+          if (sqEnv.SONARQUBE_ORGANIZATION && !extractedEnv.sonarqube.SONARQUBE_ORGANIZATION) {
+            extractedEnv.sonarqube.SONARQUBE_ORGANIZATION = sqEnv.SONARQUBE_ORGANIZATION;
+          }
+        }
+      } catch (e) {
+        // ignore read errors
+      }
+    }
+
     const updateMcpServers = (mcpServers) => {
       let updated = false;
       // Add Filesystem MCP if missing
@@ -147,16 +198,25 @@ program
         updated = true;
       }
 
-      // Add Context7 MCP if missing
+      // Add Context7 MCP if missing or update empty API Key
+      const context7Key = process.env.CONTEXT7_API_KEY || extractedEnv.context7.CONTEXT7_API_KEY || "";
       if (!mcpServers.context7) {
         mcpServers.context7 = {
           command: "npx",
           args: ["-y", "@upstash/context7-mcp"],
           env: {
-            CONTEXT7_API_KEY: ""
+            CONTEXT7_API_KEY: context7Key
           }
         };
         updated = true;
+      } else {
+        if (!mcpServers.context7.env) {
+          mcpServers.context7.env = {};
+        }
+        if (context7Key && mcpServers.context7.env.CONTEXT7_API_KEY !== context7Key) {
+          mcpServers.context7.env.CONTEXT7_API_KEY = context7Key;
+          updated = true;
+        }
       }
 
       // Add/fix Agent Hub MCP.
@@ -174,29 +234,65 @@ program
         updated = true;
       }
 
-      // Add Stitch MCP if missing
+      // Add Stitch MCP if missing or update empty API Key
+      const stitchKey = process.env.STITCH_API_KEY || extractedEnv.stitch.STITCH_API_KEY || "";
       if (!mcpServers.stitch) {
         mcpServers.stitch = {
           command: "npx",
           args: ["-y", "@_davideast/stitch-mcp", "proxy"],
           env: {
-            STITCH_API_KEY: ""
+            STITCH_API_KEY: stitchKey
           }
         };
         updated = true;
+      } else {
+        if (!mcpServers.stitch.env) {
+          mcpServers.stitch.env = {};
+        }
+        if (stitchKey && mcpServers.stitch.env.STITCH_API_KEY !== stitchKey) {
+          mcpServers.stitch.env.STITCH_API_KEY = stitchKey;
+          updated = true;
+        }
       }
 
-      // Add SonarQube MCP if missing
+      // Add SonarQube MCP if missing or update config
+      const sqUrl = process.env.SONARQUBE_URL || extractedEnv.sonarqube.SONARQUBE_URL || "http://localhost:9000";
+      const sqToken = process.env.SONARQUBE_TOKEN || extractedEnv.sonarqube.SONARQUBE_TOKEN || "";
+      const sqOrg = process.env.SONARQUBE_ORGANIZATION || extractedEnv.sonarqube.SONARQUBE_ORGANIZATION || "";
+
       if (!mcpServers.sonarqube) {
         mcpServers.sonarqube = {
           command: "npx",
           args: ["-y", "sonarqube-mcp-server"],
           env: {
-            SONARQUBE_URL: "http://localhost:9000",
-            SONARQUBE_TOKEN: ""
+            SONARQUBE_URL: sqUrl,
+            SONARQUBE_TOKEN: sqToken
           }
         };
+        if (sqOrg) {
+          mcpServers.sonarqube.env.SONARQUBE_ORGANIZATION = sqOrg;
+        }
         updated = true;
+      } else {
+        if (!mcpServers.sonarqube.env) {
+          mcpServers.sonarqube.env = {};
+        }
+        let envUpdated = false;
+        if (sqUrl && mcpServers.sonarqube.env.SONARQUBE_URL !== sqUrl) {
+          mcpServers.sonarqube.env.SONARQUBE_URL = sqUrl;
+          envUpdated = true;
+        }
+        if (sqToken && mcpServers.sonarqube.env.SONARQUBE_TOKEN !== sqToken) {
+          mcpServers.sonarqube.env.SONARQUBE_TOKEN = sqToken;
+          envUpdated = true;
+        }
+        if (sqOrg && mcpServers.sonarqube.env.SONARQUBE_ORGANIZATION !== sqOrg) {
+          mcpServers.sonarqube.env.SONARQUBE_ORGANIZATION = sqOrg;
+          envUpdated = true;
+        }
+        if (envUpdated) {
+          updated = true;
+        }
       }
       return updated;
     };

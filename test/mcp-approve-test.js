@@ -8,6 +8,16 @@ import os from "os";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const STATE_FILE = path.join(ROOT, ".squad-state.json");
 
+async function cleanStateFiles() {
+  const files = await fs.readdir(ROOT).catch(() => []);
+  for (const file of files) {
+    if (file.startsWith(".squad-state-") && file.endsWith(".json")) {
+      await fs.remove(path.join(ROOT, file)).catch(() => {});
+    }
+  }
+  await fs.remove(STATE_FILE).catch(() => {});
+}
+
 const C = {
   reset: "\x1b[0m",
   bold: "\x1b[1m",
@@ -70,7 +80,7 @@ async function runTests() {
   let failed = 0;
 
   // Clean state file before starting
-  await fs.remove(STATE_FILE);
+  await cleanStateFiles();
 
   // ────────────────────────────────────────────────────────────────────────
   // Test Scenario 1: Inside the Hub
@@ -339,7 +349,7 @@ async function runTests() {
   }
 
   // Clean state file after finishing
-  await fs.remove(STATE_FILE);
+  await cleanStateFiles();
 
   console.log(`\n${C.bold}───────────────────────────────────────────────────────${C.reset}`);
   if (failed === 0) {

@@ -4,19 +4,11 @@ prompt = """
 # Action: Register Human Approval for Pipeline Gate
 Gate to approve: {{args}}
 
-Read the file `.squad-state.json` at the root of the active workspace.
+You MUST call the MCP tool:
+```
+agent_hub:pipeline_approve(gate="{{args}}")
+```
 
-If the file does not exist, respond: "No active pipeline session found. Start a pipeline first with /squad:run."
-
-If the gate `{{args}}` exists and its status is `pending`:
-1. Set its status to `approved`
-2. Set `approved_at` to the current ISO timestamp
-3. Write the updated state back to `.squad-state.json` at the root of the active workspace.
-4. Respond: "✅ Gate '{{args}}' approved at <timestamp>. The pipeline is now unblocked. The agent may proceed to the next phase."
-
-If the gate `{{args}}` does not exist or is not `pending`:
-- Respond with the current status of that gate and explain what action is needed.
-- If status is `locked`: the pipeline has not reached this gate yet. Phases must run in order.
-- If status is `approved`: this gate was already approved. No action needed.
-- If the key doesn't exist: list available gates from the state file.
+This tool automatically resolves the branch-specific pipeline state file at the root of the active workspace and marks the gate as approved.
+Report the exact output returned by the tool directly to the user.
 """

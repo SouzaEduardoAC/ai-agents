@@ -54,11 +54,11 @@ The Agent Hub MCP server exposes **7 tools** for agent discovery, command execut
 
 | Property | Value |
 |---|---|
-| Parameters | `goal` (string), `gates` (array of strings) |
+| Parameters | `goal` (string), `gates` (array of strings), `cwd` (optional string) |
 | Returns | Session ID, confirmation, and registered gates |
 | When to use | Only at the beginning of a Squad `run` pipeline |
 
-Creates a `.squad-state.json` file with all gates set to `locked`. Must be called before `request_approval` or `check_gate`.
+Creates a branch-scoped `.squad-state-[branch].json` file with all gates set to `locked`. Automatically appends `.squad-state-*.json` to `.gitignore`. If `cwd` is supplied, resolves the project root relative to it (enabling project isolation under global daemons). Must be called before `request_approval` or `check_gate`.
 
 ---
 
@@ -66,11 +66,11 @@ Creates a `.squad-state.json` file with all gates set to `locked`. Must be calle
 
 | Property | Value |
 |---|---|
-| Parameters | `gate` (string), `artifact_path` (optional string), `summary` (string) |
+| Parameters | `gate` (string), `artifact_path` (optional string), `summary` (string), `cwd` (optional string) |
 | Returns | A hard STOP message |
 | When to use | After completing a pipeline phase. Only within Squad pipelines. |
 
-**⚠️ CRITICAL:** This is a **HARD STOP**. Do NOT call any further agent tools or continue pipeline work after this tool returns. Wait for human approval.
+⚠️ CRITICAL: This is a HARD STOP. Do NOT call any further agent tools or continue pipeline work after this tool returns. Wait for human approval. Uses `cwd` to find the project root and branch-scoped state file.
 
 ---
 
@@ -78,11 +78,11 @@ Creates a `.squad-state.json` file with all gates set to `locked`. Must be calle
 
 | Property | Value |
 |---|---|
-| Parameters | `gate` (string) |
+| Parameters | `gate` (string), `cwd` (optional string) |
 | Returns | Approval status (approved/pending/locked) |
 | When to use | At the **START** of each new pipeline phase, before doing any work |
 
-Returns `approved: true` if the gate has been approved. Returns an error if the gate is `pending` or `locked`. In standalone mode (no active session), returns a soft advisory.
+Returns `approved: true` if the gate has been approved in the active branch-scoped state file. Returns an error if the gate is `pending` or `locked`. In standalone mode (no active session), returns a soft advisory. Uses `cwd` to locate the project root.
 
 ---
 
@@ -90,11 +90,11 @@ Returns `approved: true` if the gate has been approved. Returns an error if the 
 
 | Property | Value |
 |---|---|
-| Parameters | `gate` (string) |
+| Parameters | `gate` (string), `cwd` (optional string) |
 | Returns | Confirmation of approval |
 | When to use | When the human approves via `/squad:approve <gate>` or directly through the MCP tool |
 
-Updates the gate status to `approved` in `.squad-state.json`.
+Updates the gate status to `approved` in the branch-scoped state file. Uses `cwd` to locate the project root.
 
 ---
 
