@@ -131,8 +131,9 @@ async function resolveProbes(content) {
     const rawPath = match[1].trim();
     // Normalize slashes to forward slashes for matching, but keep native for resolving
     const normalizedRaw = rawPath.replace(/\\/g, "/");
-    const absolutePath = normalizedRaw.startsWith("~/.gemini/agents") 
-      ? path.join(AGENTS_ROOT, normalizedRaw.replace("~/.gemini/agents/", ""))
+    const clientPrefixRegex = /^~\/\.(gemini|antigravity|antigravitycli|antigravity-cli|antigravity-ide|codex|codexcli|codex-cli|codex-ide)\/agents\//;
+    const absolutePath = clientPrefixRegex.test(normalizedRaw)
+      ? path.join(AGENTS_ROOT, normalizedRaw.replace(clientPrefixRegex, ""))
       : path.resolve(AGENTS_ROOT, rawPath);
 
     try {

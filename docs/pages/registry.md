@@ -44,6 +44,14 @@
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
 			- summary:: Added a comprehensive shared skill `common/skills/mcp_usage_guide.md` that teaches any LLM how to use the Agent Hub MCP server effectively. Covers all 7 MCP tools (list_agents, call_agent_command, get_agent_prompt, pipeline_start, request_approval, check_gate, pipeline_approve), the full 13-agent catalog with commands and trigger phrases, a decision flowchart for agent selection, command alias map, and common mistakes to avoid. `index.js` heuristic relevance filter updated to always inject this skill (foundational knowledge for all agents). (ref: `common/skills/mcp_usage_guide.md`, `index.js → compileCommonSection`)
+		- ## Feature: Remote Unversioned Agent Hub MCP Configuration (2026-07-06)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
+			- summary:: Updated all global and workspace-level settings and config files (`settings.json`, `antigravity/mcp_config.json`, etc.) to point `agent-hub` directly to the remote URL (`https://github.com/SouzaEduardoAC/ai-agents`) without version pinning, adding the `--prefer-online` and `-y` flags to ensure NPX executes the latest version from origin. Aligned the local `bin/agent-hub.js` bootstrap command to write and maintain this remote cache-busted configuration. (ref: `bin/agent-hub.js`, `.gemini/settings.json`)
+		- ## Feature: Support Multi-Client Paths for Gemini, AntiGravity, and Codex (2026-07-09)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
+			- summary:: Expanded bootstrap scaffolding and directory creation in `bin/agent-hub.js` to dynamically support Codex, AntiGravity, and Gemini CLI/IDE/App environments at both root-level and nested folders. Updated MCP settings detection/writing to target all configuration files across these environments. Upgraded path parsing in `index.js` to generic regex mapping to resolve agent personas from all active client root directories. (ref: `bin/agent-hub.js`, `index.js`)
 	- ## Product Elicitation & PO Framework
 		- status:: [ACTIVE]
 		- nodes:: [[Product Owner]], [[prioritization-framework]], [[product-interview]]
