@@ -80,25 +80,28 @@ program
   .command("bootstrap")
   .description("Install all agent personas and slash commands into local LLM environments")
   .action(async () => {
-    const ANTIGRAVITY_COMMANDS_ROOTS = [
-      path.join(os.homedir(), ".gemini", "commands"),
-      path.join(os.homedir(), ".gemini", "antigravity", "commands"),
-      path.join(os.homedir(), ".gemini", "antigravity-cli", "commands"),
-      path.join(os.homedir(), ".gemini", "antigravity-ide", "commands")
+    const CLIENT_SUBDIRS = [
+      ".gemini",
+      ".antigravity",
+      ".antigravitycli",
+      ".antigravity-cli",
+      ".antigravity-ide",
+      ".codex",
+      ".codexcli",
+      ".codex-cli",
+      ".codex-ide",
+      path.join(".gemini", "antigravity"),
+      path.join(".gemini", "antigravity-cli"),
+      path.join(".gemini", "antigravity-ide"),
+      path.join(".gemini", "codex"),
+      path.join(".gemini", "codexcli"),
+      path.join(".gemini", "codex-cli"),
+      path.join(".gemini", "codex-ide")
     ];
 
-    const ANTIGRAVITY_AGENTS_ROOTS = [
-      path.join(os.homedir(), ".gemini", "agents"),
-      path.join(os.homedir(), ".gemini", "antigravity", "agents"),
-      path.join(os.homedir(), ".gemini", "antigravity-cli", "agents"),
-      path.join(os.homedir(), ".gemini", "antigravity-ide", "agents")
-    ];
-
-    const ANTIGRAVITY_BRAIN_ROOTS = [
-      path.join(os.homedir(), ".gemini", "antigravity", "brain"),
-      path.join(os.homedir(), ".gemini", "antigravity-cli", "brain"),
-      path.join(os.homedir(), ".gemini", "antigravity-ide", "brain")
-    ];
+    const ANTIGRAVITY_COMMANDS_ROOTS = CLIENT_SUBDIRS.map(d => path.join(os.homedir(), d, "commands"));
+    const ANTIGRAVITY_AGENTS_ROOTS = CLIENT_SUBDIRS.map(d => path.join(os.homedir(), d, "agents"));
+    const ANTIGRAVITY_BRAIN_ROOTS = CLIENT_SUBDIRS.map(d => path.join(os.homedir(), d, "brain"));
 
     for (const root of ANTIGRAVITY_COMMANDS_ROOTS) {
       try {
@@ -130,11 +133,16 @@ program
 
     // 0. Configure MCP Settings
     const SETTINGS_PATH = path.join(os.homedir(), ".gemini", "settings.json");
-    const ANTIGRAVITY_MCP_CONFIG_PATHS = [
-      path.join(os.homedir(), ".gemini", "antigravity", "mcp_config.json"),
-      path.join(os.homedir(), ".gemini", "antigravity-cli", "mcp_config.json"),
-      path.join(os.homedir(), ".gemini", "antigravity-ide", "mcp_config.json")
-    ];
+    const ANTIGRAVITY_MCP_CONFIG_PATHS = [];
+    for (const subDir of CLIENT_SUBDIRS) {
+      const dirPath = path.join(os.homedir(), subDir);
+      if (subDir !== ".gemini") {
+        ANTIGRAVITY_MCP_CONFIG_PATHS.push(path.join(dirPath, "mcp_config.json"));
+        ANTIGRAVITY_MCP_CONFIG_PATHS.push(path.join(dirPath, "settings.json"));
+      } else {
+        ANTIGRAVITY_MCP_CONFIG_PATHS.push(path.join(dirPath, "mcp_config.json"));
+      }
+    }
 
     // Scan all config files to extract the best environment variables and settings.
     const allConfigPaths = [SETTINGS_PATH, ...ANTIGRAVITY_MCP_CONFIG_PATHS];
@@ -223,13 +231,21 @@ program
       // Point to bin/agent-hub.js with the 'serve' command. Stdio piping in
       // the serve command forwards framing correctly to index.js.
       const correctAgentHubEntry = {
-        command: "node",
-        args: [path.join(ROOT, "bin", "agent-hub.js"), "serve"]
+        command: "npx",
+        args: [
+          "-y",
+          "--prefer-online",
+          "https://github.com/SouzaEduardoAC/ai-agents",
+          "serve"
+        ]
       };
       const existingHub = mcpServers["agent-hub"];
-      const isDirectIndexPath = existingHub && Array.isArray(existingHub.args) &&
-        existingHub.args.some(a => a.includes("index.js"));
-      if (!existingHub || isDirectIndexPath) {
+      const needsUpdate = !existingHub ||
+        existingHub.command !== "npx" ||
+        !Array.isArray(existingHub.args) ||
+        existingHub.args.length < 4 ||
+        existingHub.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents";
+      if (needsUpdate) {
         mcpServers["agent-hub"] = correctAgentHubEntry;
         updated = true;
       }
@@ -338,7 +354,12 @@ program
 
     const HUB_MCP_ENTRY = {
       command: "npx",
-      args: ["github:SouzaEduardoAC/ai-agents", "serve"],
+      args: [
+        "-y",
+        "--prefer-online",
+        "https://github.com/SouzaEduardoAC/ai-agents",
+        "serve"
+      ],
     };
 
     let claudeConfigured = false;
@@ -376,7 +397,7 @@ program
         for (const file of tomlFiles) {
           if (file.endsWith(".toml")) {
             const content = await fs.readFile(path.join(cmdSource, file), "utf-8");
-            const updatedContent = content.replace(/~\/\.gemini\/agents/g, ROOT).replace(/\.\.\/\.\.\/\.\./g, ROOT);
+            const updatedContent = content.replace(/~\/\.(gemini|antigravity|antigravitycli|antigravity-cli|antigravity-ide|codex|codexcli|codex-cli|codex-ide)\/agents/g, ROOT).replace(/\.\.\/\.\.\/\.\./g, ROOT);
             
             for (const root of ANTIGRAVITY_COMMANDS_ROOTS) {
               const cmdTarget = path.join(root, agent);

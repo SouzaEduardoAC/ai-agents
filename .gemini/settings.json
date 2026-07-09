@@ -3,7 +3,9 @@
     "agent-hub": {
       "command": "npx",
       "args": [
-        "github:SouzaEduardoAC/ai-agents",
+        "-y",
+        "--prefer-online",
+        "https://github.com/SouzaEduardoAC/ai-agents",
         "serve"
       ]
     }

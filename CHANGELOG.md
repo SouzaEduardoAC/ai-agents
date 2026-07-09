@@ -131,6 +131,8 @@
 * **mcp:** serve mcp usage guide via list_agents tool
 * **mcp:** add MCP usage guide skill for improved tool accuracy (`common/skills/mcp_usage_guide.md`)
 * **cli:** support linking the MCP usage guide via the `link` command by passing `mcp` (case-insensitive) as the agent parameter
+* **mcp:** align all global and local MCP configurations to use the remote unversioned agent-hub URL (`https://github.com/SouzaEduardoAC/ai-agents`) and cache-busting `--prefer-online` flag to guarantee execution of latest updates (ref: `bin/agent-hub.js`, `.gemini/settings.json`)
+* **mcp:** add multi-client path support for Gemini, AntiGravity, and Codex CLI/IDE/App environments across bootstrap directory scaffolding, settings discovery, and path resolutions (ref: `bin/agent-hub.js`, `index.js`)
 
 ### Bug Fixes
 
