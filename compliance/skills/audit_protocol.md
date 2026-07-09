@@ -215,4 +215,4 @@ After completing all phases, produce the following:
    - **HIPAA Tier 4 (willful neglect, uncorrected):** ~**$71,162 per violation**, ~**$2.13M annual cap per provision** (OCR, inflation-adjusted 2026)
 5. **Gut Check Question:** Close with a single, pointed question that tests whether the most critical risk has been truly understood by the stakeholder
 
-> **Output format:** Use the Audit Report Template at `compliance/templates/audit_report.md`.
+> **Output format:** Use the Audit Report Template at `compliance/templates/master_audit.md`.
