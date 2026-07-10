@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.18.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.17.0...v1.18.0) (2026-07-10)
+
+
+### Features
+
+* **squad:** upgrade full-sync protocol to generate deep documentation ([3bb5f85](https://github.com/SouzaEduardoAC/ai-agents/commit/3bb5f859ba3b5d2b77e0634273596cb28a99b015))
+* **squad:** upgrade full-sync protocol to generate deep documentation ([80bebab](https://github.com/SouzaEduardoAC/ai-agents/commit/80bebabd9a4e80daf8b28f939841e1af530540df))
+
 ## [1.17.0](https://github.com/SouzaEduardoAC/ai-agents/compare/v1.16.0...v1.17.0) (2026-07-09)
 
 
