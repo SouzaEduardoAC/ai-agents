@@ -111,9 +111,16 @@ Claude Code communicates with the Hub using **MCP tool calls**. Since Claude is 
     *   Format: `call_agent_command(agent="[agent-name]", command="[command]", args="[your goal]")`
     *   Example: `call_agent_command(agent="quicky", command="fix", args="Fix the summary label mismatch")`
 
+*   **SSO/Token-based Loop Execution (MCP Sampling)**:
+    In enterprise or token-based SSO environments (like AntiGravity or Codex) where local API keys are unavailable, you can run agents inside a server-managed execution loop using the client's own LLM session:
+    *   *Natural Conversational Prompt*: *"Hey assistant, run the quicky loop to fix the label mismatch."*
+    *   *Under-the-Hood Tool Contract*: `run_agent_loop(agent="quicky", command="fix", args="Fix the label mismatch")`
+    *   *Behavior*: The server manages conversation history, pins the system prompt (preventing Codex persona drift), intercepts local tool actions (filesystem, terminal commands) formatted as XML tags (`<read_file>`, `<write_file>`, `<run_command>`, `<task_complete>`), executes them on the host, and feeds the outputs back into the loop.
+
 *   **Available MCP Tools**:
     *   `list_agents`: Lists all available specialized agents and their commands.
-    *   `call_agent_command`: Activates a specialized agent command with a task description.
+    *   `call_agent_command`: Activates a specialized agent command, returning the raw compiled prompt (prompt injection fallback).
+    *   `run_agent_loop`: Executes a server-side multi-turn agent loop via client LLM sampling (SSO-compatible).
     *   `get_agent_prompt`: Retrieves the persona, skills, and knowledge for a specific agent.
     *   `pipeline_start`: Initializes a new pipeline session and locks all gates in `.squad-state-[branch].json`.
     *   `request_approval`: Sets a gate status to `pending` and pauses the pipeline for human sign-off.
