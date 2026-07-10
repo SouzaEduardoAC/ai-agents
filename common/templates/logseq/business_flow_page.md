@@ -1,0 +1,50 @@
+- type:: [[Business Flow]]
+- status:: [[ACTIVE]]
+- project:: [[ai-agents]]
+
+- # Business Flow: [Flow Name]
+	- ## 1. Overview
+		- **Problem Statement:** [What user problem or inefficiency does this flow resolve?]
+		- **Goal:** [What is the ultimate business objective or outcome of this flow?]
+		- **Success Metrics (KPIs):**
+			- [KPI-01]: [Target baseline and metric metric, e.g. latency, conversion, error rate]
+	- ## 2. Actor Map
+		- **Primary Actor:** [[Actor Name]] - [Role, technical aptitude, and direct operational goal in this flow]
+		- **Secondary Actor(s):** [[Actor Name]] - [Role, system components, or external entities triggered]
+	- ## 3. Journey Outline (Happy Path)
+		- 1. **Trigger:** [What event or user action starts the flow?]
+		- 2. **Step 1:** [Actor action / API request]
+			- **System Response:** [Internal state change and user feedback]
+		- 3. **Step 2:** [Actor action / API request]
+			- **System Response:** [Internal state change and user feedback]
+		- 4. **Outcome:** [Final success state of the flow]
+	- ## 4. Alternative Paths & Exceptions
+		- **[[Flow-Slug-Alt01]] [Alternative Path Title]**
+			- **Condition:** [What condition triggers this path?]
+			- **Step-by-step:** [Alternate system/user steps]
+	- ## 5. Edge Cases & Error Handling
+		- **[[Flow-Slug-EC01]] [Edge Case Title]**
+			- **Trigger Scenario:** [What goes wrong?]
+			- **System Mitigation:** [System fallback, retry, or graceful failure behavior]
+			- **User Impact:** [What does the user see or experience?]
+	- ## 6. Domain Business Rules
+		- **[[Rule-Slug-01]] [Rule Title]**
+			- **Definition:** [Core business rule definition]
+			- **Validation Logic:** [How is this rule programmatically validated?]
+			- **Reference Symbol:** `(ref: symbol)`
+	- ## 7. Under-the-Hood Links
+		- **Related API Entry Points:**
+			- [[TechSpec-EndpointSlug]]
+		- **Related Data Models:**
+			- [[TechSpec-ModelSlug]]
+	- ## 8. Acceptance Criteria (Definition of Done)
+		- [ ] **Acceptance Criteria for [[Flow-Slug]]:**
+			- **Given** [Initial system state / preconditions]
+			- **When** [User performs the action]
+			- **Then** [Expected system outcome]
+	- ## 9. Technical Visualization
+		- [Embedded Mermaid Sequence Diagram illustrating actor, interface, controllers, and services]
+	- ## 10. Dialectical Critique
+		- **Yellow Hat (Resilience):** [Why this flow design is robust against failures]
+		- **Black Hat (Risks & Performance):** [Bottlenecks, security vectors, or structural debt in this flow]
+		- **Blind Spots:** [Logical gaps or unhandled downstream consequences]

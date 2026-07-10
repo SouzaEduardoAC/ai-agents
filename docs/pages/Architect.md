@@ -30,4 +30,5 @@
 		- **`architect:squad-plan`**: Squad Flow planning command. Runs in two sub-phases: (2a) produces `docs/pages/[feature]-analysis.md` and requests `discovery` gate approval; (2b) after human approval, produces `docs/pages/[feature]-architecture.md` and requests `plan` gate approval. Does not execute code. (ref: `architect/commands/architect/squad-plan.toml`)
 		- **`architect:auditor`**: Targeted audit for patterns, security, and performance. (ref: `architect/commands/architect/auditor.toml`)
 		- **`architect:docs`**: Sync codebase logic with Logseq documentation. (ref: `architect/commands/architect/docs.toml`)
+		- **`architect:squad-docs`**: Document architectural patterns, design decisions (ADRs), and resilience policies in the active workspace. (ref: `architect/commands/architect/squad-docs.toml`)
 		- **`architect:analyze`**: Read-only behavioral simulation. Traces system flows, infrastructure configs, and data contracts against real or hypothetical inputs. No artifacts, no implementation. (ref: `architect/commands/architect/analyze.toml`, `common/skills/investigation.md`)

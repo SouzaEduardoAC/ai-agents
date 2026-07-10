@@ -148,4 +148,9 @@
 			| Researcher `investigate.toml` | `discovery` | — | Phase 1 end |
 			| Researcher `report.toml` | `discovery` | Phase 2 start | Phase 1 end |
 			| PO `discovery.toml` | `prd` | — | Step 5 end |
-
+	- ## Full-Sync Deep Documentation Protocol (v2026)
+		- **Purpose:** Mandates that a project-wide documentation sync (`/squad:full-sync`) produces high-fidelity, use-case-by-use-case and component-by-component deep specifications, rather than shallow index pages.
+		- **Command Isolation:** Separate, dedicated `squad-docs` commands are created for each of the 8 participating agents (PO, Researcher, Architect, Backend, Frontend, Mobile, Forge, Decoder) to isolate full-sync documentation rules from normal development-time workflows.
+		- **Manifest-First Extraction Pattern:** Participating agents must scan the codebase and print a structured list (manifest) of all discovered entities before generating documentation, preventing omissions.
+		- **Per-Entity File Iteration:** For every entity in the manifest, the agent must generate a dedicated Logseq page in `docs/pages/` using the matching template from `common/templates/logseq/` (e.g., `business_flow_page.md`, `technical_endpoint.md`, `technical_data_model.md`).
+		- **Cross-Linking & Registry Integration:** General summary files (e.g. `BUSINESS_FLOW.md`, `TECHNICAL_SPECS.md`) are rewritten to act as indexed list nodes linking to these generated deep-dive pages. All new pages are recorded in the global registry `docs/pages/registry.md`.

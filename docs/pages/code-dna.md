@@ -11,7 +11,8 @@
 		- **Probe-Based Prompt Injection**: Use of `!{cat ...}` and `!{gemini mcp list}` for late-binding of documentation and capability context. (ref: `index.js -> resolveProbes`)
 	- ## Documentation DNA
 		- **Signal Preservation**: Documentation MUST capture Agent Identities, Commands, and Guardrails.
-		- **Depth-First Mandate**: Every documentation node MUST be meticulous and technically exhaustive. Superficial stubs are forbidden. (ref: `architect/knowledge/docs_standard.md`)
+		- **Depth-First Mandate**: Every documentation node MUST be meticulous and technically exhaustive. Superficial stubs are forbidden. (ref: `architect/knowledge/docs_standard.md`, `common/skills/squad_docs.md`)
+		- **Full-Sync Depth Protocol**: Project-wide full-syncs (`/squad:full-sync`) must isolate workflows using dedicated `squad-docs` commands, run a manifest-first scan, and generate detailed, template-compliant Logseq pages for every business flow, endpoint, and data model. (ref: `common/skills/squad_docs.md`, `squad/commands/squad/full-sync.toml`)
 		- **Graph Integrity**: "No Ghost Pages." All linked nodes must be initialized. (ref: `common/skills/logseq_knowledge.md`)
 	- ## Testing DNA
 		- **"Unverified Code is Debt"**: 100% logic coverage requirement. (ref: `common/knowledge/testing_standard.md`)

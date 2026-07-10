@@ -14,6 +14,7 @@
 		- **Agent Scaffolding**: `/forge:create` (executes deep domain research, structures directories, writes code/skills/knowledge, and registers multi-client anchors).
 		- **Zero-Trust Audit**: `/forge:auditor` (evaluates existing agents against repository guidelines, generating a formal score).
 		- **Capability Upgrades**: `/forge:upgrade` (overhauls skills, templates, or commands).
+		- **Meta-Registry Documentation**: `/forge:squad-docs` (maps out agent catalogs, registered command registries, and root-level anchors).
 		- (ref: `forge/commands/forge/`)
 	- ## Structural Standards (Symmetry Rules)
 		- Every specialized agent in this hub must contain:

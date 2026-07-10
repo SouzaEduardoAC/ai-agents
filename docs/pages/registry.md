@@ -11,7 +11,7 @@
 - # Active Features
 	- ## Core Infrastructure
 		- status:: [SYNC]
-		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]]
+		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]]
 		- ## Feature: Mandatory Commit Scope & Body standard (2026-07-09)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
@@ -56,6 +56,10 @@
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]
 			- summary:: Expanded bootstrap scaffolding and directory creation in `bin/agent-hub.js` to dynamically support Codex, AntiGravity, and Gemini CLI/IDE/App environments at both root-level and nested folders. Updated MCP settings detection/writing to target all configuration files across these environments. Upgraded path parsing in `index.js` to generic regex mapping to resolve agent personas from all active client root directories. (ref: `bin/agent-hub.js`, `index.js`)
+		- ## Feature: Deep Project Documentation & Squad Docs Command (2026-07-10)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]], [[squad-docs]]
+			- summary:: Upgraded the Squad full-sync protocol to produce PRD-level detailed, template-compliant documentation (for business flows, API endpoints, data models) in Logseq vectorial format. Introduced a new isolated command `squad-docs` for all 8 agents (PO, Researcher, Architect, Backend, Frontend, Mobile, Forge, Decoder) and a shared skill `common/skills/squad_docs.md` to map out the manifest-first scanning pattern and per-entity iteration rules, leaving regular development-time documentation workflows untouched. (ref: `common/skills/squad_docs.md`, `squad/commands/squad/full-sync.toml`, `po/commands/po/squad-docs.toml`, `architect/commands/architect/squad-docs.toml`, `backend/commands/backend/squad-docs.toml`, `frontend/commands/frontend/squad-docs.toml`, `mobile/commands/mobile/squad-docs.toml`, `researcher/commands/researcher/squad-docs.toml`, `forge/commands/forge/squad-docs.toml`, `decoder/commands/decoder/squad-docs.toml`)
 	- ## Product Elicitation & PO Framework
 		- status:: [ACTIVE]
 		- nodes:: [[Product Owner]], [[prioritization-framework]], [[product-interview]]

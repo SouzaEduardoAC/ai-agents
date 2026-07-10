@@ -1,0 +1,55 @@
+- type:: [[Technical Spec]]
+- category:: [[Endpoint]]
+- status:: [[ACTIVE]]
+- project:: [[ai-agents]]
+
+- # Technical Spec: API Endpoint / Controller Entry Point
+	- ## 1. Interface Signature
+		- **Controller / Method:** `(ref: ControllerSymbol#method)`
+		- **HTTP Method & Route:** `[METHOD] /route/path`
+		- **Request/Response Content-Types:**
+			- Request: `application/json`
+			- Response: `application/json`
+	- ## 2. Authentication & Authorization
+		- **Auth Scheme:** [OAuth2 Bearer / Session cookie / Api-Key]
+		- **Roles & Scopes Enforced:** [List roles/scopes and where they are declared/checked, ref: middleware/decorator symbol]
+	- ## 3. Request Schema (Payload Specifications)
+		- **Headers:** [Required headers, e.g. X-Correlation-ID]
+		- **Path / Query Parameters:**
+			- `param_name` (type, required/optional): [Description, validation limits]
+		- **Body Structure:**
+			- `field_name` (type, required/optional): [Description, validation regex/rules, default value]
+	- ## 4. Response Schema (Payload Specifications)
+		- **Success Response (HTTP 200/201):** [JSON structure description or example with field definitions]
+		- **Error Responses:**
+			- `HTTP 400 Bad Request`: [Shape and conditions]
+			- `HTTP 401 Unauthorized`: [Shape and conditions]
+			- `HTTP 403 Forbidden`: [Shape and conditions]
+			- `HTTP 422 Unprocessable`: [Validation error shape]
+			- `HTTP 500 Internal Error`: [Generic error shape]
+	- ## 5. Execution Logic (Data & Business Flow)
+		- 1. **Entry:** Controller intercepts request, parses parameters.
+		- 2. **Validation:** Executes schema validator `(ref: validatorSymbol)`.
+		- 3. **Service Logic:** Calls business service `(ref: serviceSymbol)`.
+			- Step-by-step description of internal logic.
+		- 4. **Database Operations:**
+			- Reads from: `table_or_collection` `(ref: querySymbol)` (Uses index: `index_name`)
+			- Writes to: `table_or_collection` `(ref: writeSymbol)`
+	- ## 6. Resilience & Reliability Config
+		- **Retry Policies:** [Number of retries, exponential backoff, jitter, config key reference]
+		- **Timeouts:** [Request execution timeout limit in ms, config key reference]
+		- **Circuit Breaker:** [Settings for fallback or degraded performance triggers]
+	- ## 7. Side Effects
+		- **Events Dispatched:** [Event name and payload class, ref: dispatchSymbol]
+		- **Background Jobs Queued:** [Job class, queue name, delivery delay, ref: queueSymbol]
+	- ## 8. Error Taxonomy & Mapping
+		- | Error Code | Trigger Condition | User Message | Logging / Alerting Severity |
+		- | :--- | :--- | :--- | :--- |
+		- | `ERR_VALIDATION` | Body validation fails | Invalid fields supplied | Low |
+		- | `ERR_NOT_FOUND` | Record does not exist | Resource not found | Info |
+	- ## 9. Sequence Diagram (Mermaid)
+		- [Embedded sequence diagram detailing request flow from client to middleware, controller, service, DB/cache, and response]
+	- ## 10. Dialectical Critique
+		- **Yellow Hat (Resilience):** [Robustness analysis, e.g. transaction boundary safeguards]
+		- **Black Hat (Architecture Risks):** [Performance bottlenecks, N+1 query risks, security vectors]
+		- **Blind Spots:** [Unhandled edge cases, dependency failures, or race conditions]
