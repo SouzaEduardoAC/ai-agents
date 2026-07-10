@@ -36,3 +36,7 @@
 		- **`request_approval`**: Called at phase exit. Sets gate to `pending` and emits a hard STOP message. LLM must cease tool calls until human approves. (ref: `index.js → request_approval`)
 		- **`check_gate`**: Called at phase entry. Returns `isError: true` if gate is `pending` or `locked`. Returns soft advisory if no active session (standalone mode). (ref: `index.js → check_gate`)
 		- **`/squad:approve <gate>`**: Human-only trust anchor. Calls the `pipeline_approve` MCP tool, which transitions the gate to `approved`. (ref: `squad/commands/squad/approve.toml`)
+	- ## Commands
+		- **`squad:run`**: Execute the standardized 5-phase engineering lifecycle end-to-end. (ref: `squad/commands/squad/run.toml`)
+		- **`squad:full-sync`**: Run the project-wide documentation sync, calling the isolated `squad-docs` commands of all participating agents. (ref: `squad/commands/squad/full-sync.toml`)
+		- **`squad:approve`**: Approve a pending gate to advance the pipeline phase. (ref: `squad/commands/squad/approve.toml`)

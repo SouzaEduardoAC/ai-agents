@@ -1,0 +1,39 @@
+- type:: [[Technical Spec]]
+- category:: [[Data Model]]
+- status:: [[ACTIVE]]
+- project:: [[ai-agents]]
+
+- # Technical Spec: Data Model / Schema Spec
+	- ## 1. Model Definition
+		- **Entity Name:** `(ref: ModelSymbol)`
+		- **Target Persistence Engine:** [PostgreSQL / MongoDB / DynamoDB / Redis]
+		- **Domain Context:** [Bounded context name, e.g. Billing, Identity, Inventory]
+		- **Conceptual Purpose:** [Why does this data entity exist? What does it represent?]
+	- ## 2. Schema Properties (Field-by-Field Spec)
+		- | Field Name | Data Type | Nullable | Default | Constraints / Validation | Business Meaning |
+		- | :--- | :--- | :--- | :--- | :--- | :--- |
+		- | `id` | UUID | No | `uuid_generate_v4()` | Primary Key | Unique entity identifier |
+	- ## 3. Entity Relationships (ERD Mapping)
+		- **Foreign Key / Reference Links:**
+			- `field_name` references [[TechSpec-OtherModelSlug]] (Cardinality: `1:N` or `M:N`, Cascade: `ON DELETE CASCADE`)
+	- ## 4. Indexes & Performance Keys
+		- **Primary Key:** `id`
+		- **Indexes:**
+			- `index_name`: [B-Tree/Hash/GIN, Columns indexed, Unique: Yes/No, Purpose]
+		- **Partition / Shard Keys:** [Details if applicable]
+	- ## 5. Model Lifecycle & State Transitions
+		- **Lifecycle Hooks:** [Custom save, update, delete, or validation triggers, ref: hooksSymbol]
+		- **Soft-Delete / Archival Policies:** [Is soft-delete enabled? Field name used, automatic pruning policy]
+		- **Expected State Transitions:**
+			- `DRAFT` -> `ACTIVE` -> `ARCHIVED` (Describe trigger for each transition)
+	- ## 6. custom Schema Validation Rules
+		- **Rule 1:** [Description of validation, e.g. email format check, range bounds, dependency checks]
+			- **Implementation Symbol:** `(ref: validationSymbol)`
+			- **Error Emitted:** [Error code / user-facing validation message]
+	- ## 7. Typical Access Patterns
+		- **Write Patterns:** [Creation/update frequency, concurrent update handling, write-heavy/read-heavy ratio]
+		- **Read Patterns:** [Common queries, performance critical index paths, typical filter properties]
+	- ## 8. Dialectical Critique
+		- **Yellow Hat (Robustness):** [Database validation safety, transaction isolation level safeguards]
+		- **Black Hat (Scaling Bottlenecks):** [Write locks, partition hot spotting, table bloating, missing index risks]
+		- **Blind Spots:** [Data drift, database migrations concurrency issues, synchronization with caching layer]

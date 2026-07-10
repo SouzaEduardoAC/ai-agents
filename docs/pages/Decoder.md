@@ -16,6 +16,10 @@
 			- **Command Path**: `decoder/commands/decoder/export.toml`
 			- **Objective**: Resolves colloquial terms to technical nodes and generates high-fidelity business specifications in `docs/exports/`.
 			- (ref: `decoder/commands/decoder/export.toml`)
+		- **Business Translation Documentation (`/decoder:squad-docs`)**:
+			- **Command Path**: `decoder/commands/decoder/squad-docs.toml`
+			- **Objective**: Translates technical Logseq pages into non-technical business specifications and exports.
+			- (ref: `decoder/commands/decoder/squad-docs.toml`)
 	- ## Specialized Skills (Translation Protocols)
 		- **Semantic Deduction Protocol**:
 			- Traverse the registry (`docs/pages/registry.md`) and search graph files to align standard business terminology with exact technical pages.

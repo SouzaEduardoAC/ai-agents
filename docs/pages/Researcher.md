@@ -18,3 +18,5 @@
 		- **No Analogies**: Strictly forbidden from using sports or software metaphors.
 		- **Brevity & Directness**: No conversational filler; Straight to facts.
 		- (ref: `researcher/brain/persona.md`)
+	- ## Commands
+		- **`researcher:squad-docs`**: Deeply document AI interaction standards, external integrations, and SaaS dependencies in the active workspace. (ref: `researcher/commands/researcher/squad-docs.toml`)

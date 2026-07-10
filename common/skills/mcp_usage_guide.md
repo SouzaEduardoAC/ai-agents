@@ -107,27 +107,27 @@ Updates the gate status to `approved` in the branch-scoped state file. Uses `cwd
 
 ### Product Owner (`po`)
 - **Description:** Requirements gathering, PRD generation, stakeholder interviews
-- **Commands:** `discovery` (transform ideas into PRDs), `interview` (interactive stakeholder grilling), `analyze` (business rule simulation), `docs` (document requirements)
+- **Commands:** `discovery` (transform ideas into PRDs), `interview` (interactive stakeholder grilling), `analyze` (business rule simulation), `docs` (document requirements), `squad-docs` (deep-dive project documentation of business flows)
 - **Triggers:** "gather requirements", "write a PRD", "product discovery", "interview me"
 
 ### Architect (`architect`)
 - **Description:** Systems architecture, security auditing, design patterns
-- **Commands:** `create` (full lifecycle: investigate → plan → implement → review), `auditor` (patterns/security/perf audit), `analyze` (behavioral simulation), `docs` (Logseq sync)
+- **Commands:** `create` (full lifecycle: investigate → plan → implement → review), `auditor` (patterns/security/perf audit), `analyze` (behavioral simulation), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of ADRs and resilience policies)
 - **Triggers:** "design the system", "architect this", "audit the architecture"
 
 ### Backend (`backend`)
 - **Description:** APIs, databases, server-side implementation
-- **Commands:** `create` (full lifecycle), `auditor` (backend-specific audit), `analyze` (API/data simulation), `review` (PR review), `docs` (Logseq sync)
+- **Commands:** `create` (full lifecycle), `auditor` (backend-specific audit), `analyze` (API/data simulation), `review` (PR review), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of routes and schemas)
 - **Triggers:** "implement the API", "build the backend", "review this PR (backend)"
 
 ### Frontend (`frontend`)
 - **Description:** UI implementation, React/Angular/Vue
-- **Commands:** `create` (full lifecycle), `auditor` (UI audit), `analyze` (component/state simulation), `review` (PR review), `docs` (Logseq sync)
+- **Commands:** `create` (full lifecycle), `auditor` (UI audit), `analyze` (component/state simulation), `review` (PR review), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of pages and UI state)
 - **Triggers:** "build the UI", "implement the frontend", "review this PR (frontend)"
 
 ### Mobile (`mobile`)
 - **Description:** Flutter/iOS/Android mobile development
-- **Commands:** `create` (full lifecycle), `auditor` (mobile audit), `analyze` (widget/state simulation), `review` (PR review), `docs` (Logseq sync)
+- **Commands:** `create` (full lifecycle), `auditor` (mobile audit), `analyze` (widget/state simulation), `review` (PR review), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of screens and local storage)
 - **Triggers:** "build the mobile app", "implement in Flutter", "review this PR (mobile)"
 
 ### Compliance (`compliance`)
@@ -142,12 +142,12 @@ Updates the gate status to `approved` in the branch-scoped state file. Uses `cwd
 
 ### Researcher (`researcher`)
 - **Description:** Deep investigation and data-driven research
-- **Commands:** `report` (data-driven research task), `investigate` (deep-dive research), `docs` (Logseq sync)
+- **Commands:** `report` (data-driven research task), `investigate` (deep-dive research), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of external APIs and AI standards)
 - **Triggers:** "research X", "investigate Y", "write a report on Z"
 
 ### Forge (`forge`)
 - **Description:** Meta-agent designer — creates, audits, and upgrades other agents
-- **Commands:** `create` (scaffold new agent), `discovery` (interactive agent design), `auditor` (audit existing agent), `upgrade` (upgrade agent), `docs` (Logseq sync)
+- **Commands:** `create` (scaffold new agent), `discovery` (interactive agent design), `auditor` (audit existing agent), `upgrade` (upgrade agent), `docs` (Logseq sync), `squad-docs` (deep-dive documentation of registries and triple-anchors)
 - **Triggers:** "create a new agent", "audit this agent", "upgrade the backend agent"
 
 ### Automata (`automata`)
@@ -157,8 +157,9 @@ Updates the gate status to `approved` in the branch-scoped state file. Uses `cwd
 
 ### Decoder (`decoder`)
 - **Description:** Technical-to-business translator
-- **Commands:** `export` (translate tech docs to business language), `docs` (Logseq sync)
+- **Commands:** `export` (translate tech docs to business language), `docs` (Logseq sync), `squad-docs` (deep-dive translation of tech specs to business spec exports)
 - **Triggers:** "translate this for stakeholders", "business export", "make this non-technical"
+
 
 ### Quicky (`quicky`)
 - **Description:** Rapid, lightweight fix agent for small tweaks

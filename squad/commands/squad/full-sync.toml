@@ -23,21 +23,21 @@ Mode: [MODE: SQUAD-DOCUMENTATION]
 ## Execution Pipeline:
 
 ### Phase 1: Discovery & Business Context
-- Call the **Product Owner** (`/po:docs`) and **Researcher** (`/researcher:docs`) to map and rewrite the business logic, use cases, and AI context.
-- Files to process: `docs/pages/BUSINESS_FLOW.md`, `docs/pages/AI Interaction Standard.md`, and any feature-specific use-case pages.
+- Call the **Product Owner** (`/po:squad-docs`) and **Researcher** (`/researcher:squad-docs`) to map and rewrite the business logic, use cases, and AI context in high-depth outliner format.
+- Files to process: `docs/pages/BUSINESS_FLOW.md`, `docs/pages/AI Interaction Standard.md`, and any feature-specific use-case pages using the business_flow_page template.
 
 ### Phase 2: Architecture & Technical Standards
-- Call the **Architect** (`/architect:docs`) to map and rewrite technical standards, patterns, and design decisions.
-- Files to process: `docs/pages/TECHNICAL_SPECS.md`, `docs/pages/code-dna.md`, and `docs/pages/resilience-policies.md`.
+- Call the **Architect** (`/architect:squad-docs`) to map and rewrite technical standards, patterns, and design decisions.
+- Files to process: `docs/pages/TECHNICAL_SPECS.md`, `docs/pages/code-dna.md`, and `docs/pages/resilience-policies.md` with deep outliner details.
 
 ### Phase 3: Implementation & Stack Specifics
-- Evaluate the project stack and call the relevant Developer agents (**Backend** via `/backend:docs`, **Frontend** via `/frontend:docs`, and/or **Mobile** via `/mobile:docs`).
+- Evaluate the project stack and call the relevant Developer agents (**Backend** via `/backend:squad-docs`, **Frontend** via `/frontend:squad-docs`, and/or **Mobile** via `/mobile:squad-docs`).
 - Instruct them to document their specific components, APIs, and file-level implementation details.
-- Files to process: Expand `docs/pages/code-dna.md` or create specific `docs/pages/[Stack].md` integration documents as needed.
+- Files to process: Create/update dedicated pages for each endpoint (`technical_endpoint` template) and model (`technical_data_model` template).
 
 ### Phase 4: Meta-Registry & Top-Level Files
-- Call **Forge** (`/forge:docs`) to map the Project Genome/Symbol Registry and update meta-anchors (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`).
-- Call **Decoder** (`/decoder:docs`) to read the generated technical documentation and translate it into business summaries on the Master Graph (e.g., `docs/pages/ai-agents-graph.md`) and map it back to `README.md`.
+- Call **Forge** (`/forge:squad-docs`) to map the Project Genome/Symbol Registry and update meta-anchors (`AGENTS.md`, `GEMINI.md`, `CLAUDE.md`).
+- Call **Decoder** (`/decoder:squad-docs`) to read the generated technical documentation and translate it into business summaries on the Master Graph (e.g., `docs/pages/ai-agents-graph.md`), generate exports in `docs/exports/`, and map it back to `README.md`.
 
 ## Output:
 Once all phases are completed, summarize all files that were created or rewritten.
