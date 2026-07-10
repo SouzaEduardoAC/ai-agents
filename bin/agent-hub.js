@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs-extra";
 import os from "os";
 import { spawn } from "child_process";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -21,24 +21,14 @@ program
 program
   .command("serve")
   .description("Start the MCP server")
-  .action(() => {
+  .action(async () => {
     const serverPath = path.join(ROOT, "index.js");
-    // Use 'pipe' so the MCP JSON-RPC framing is correctly forwarded.
-    // 'inherit' would attach the child's stdio to the wrapper's fd directly,
-    // but the MCP client is already bound to the wrapper process — messages
-    // never reach index.js. Explicit piping fixes this.
-    const child = spawn("node", [serverPath], {
-      stdio: "pipe",
-      env: process.env,
-    });
-    process.stdin.pipe(child.stdin);
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    child.on("exit", (code) => process.exit(code ?? 0));
-    child.on("error", (err) => {
+    try {
+      await import(pathToFileURL(serverPath).href);
+    } catch (err) {
       process.stderr.write(`[agent-hub] Failed to start MCP server: ${err.message}\n`);
       process.exit(1);
-    });
+    }
   });
 
 program
@@ -195,6 +185,8 @@ program
       }
     }
 
+    const isLocalClone = await fs.pathExists(path.join(ROOT, ".git"));
+
     const updateMcpServers = (mcpServers) => {
       let updated = false;
       // Add Filesystem MCP if missing
@@ -228,23 +220,27 @@ program
       }
 
       // Add/fix Agent Hub MCP.
-      // Point to bin/agent-hub.js with the 'serve' command. Stdio piping in
-      // the serve command forwards framing correctly to index.js.
-      const correctAgentHubEntry = {
-        command: "npx",
-        args: [
-          "-y",
-          "--prefer-online",
-          "https://github.com/SouzaEduardoAC/ai-agents",
-          "serve"
-        ]
-      };
+      // If we are running from a local git clone, point directly to index.js
+      // for instant, offline execution that immediately reflects local edits.
+      // Otherwise, fall back to the remote unversioned GitHub repository via npx.
+      const correctAgentHubEntry = isLocalClone
+        ? {
+            command: "node",
+            args: [path.join(ROOT, "index.js")]
+          }
+        : {
+            command: "npx",
+            args: [
+              "-y",
+              "--prefer-online",
+              "https://github.com/SouzaEduardoAC/ai-agents",
+              "serve"
+            ]
+          };
       const existingHub = mcpServers["agent-hub"];
       const needsUpdate = !existingHub ||
-        existingHub.command !== "npx" ||
-        !Array.isArray(existingHub.args) ||
-        existingHub.args.length < 4 ||
-        existingHub.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents";
+        (isLocalClone && (existingHub.command !== "node" || !Array.isArray(existingHub.args) || existingHub.args[0] !== path.join(ROOT, "index.js"))) ||
+        (!isLocalClone && (existingHub.command !== "npx" || !Array.isArray(existingHub.args) || existingHub.args.length < 4 || existingHub.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents"));
       if (needsUpdate) {
         mcpServers["agent-hub"] = correctAgentHubEntry;
         updated = true;
@@ -352,15 +348,20 @@ program
       path.join(os.homedir(), "Library", "Application Support", "Claude", "claude_desktop_config.json"), // Claude Desktop (macOS)
     ];
 
-    const HUB_MCP_ENTRY = {
-      command: "npx",
-      args: [
-        "-y",
-        "--prefer-online",
-        "https://github.com/SouzaEduardoAC/ai-agents",
-        "serve"
-      ],
-    };
+    const HUB_MCP_ENTRY = isLocalClone
+      ? {
+          command: "node",
+          args: [path.join(ROOT, "index.js")]
+        }
+      : {
+          command: "npx",
+          args: [
+            "-y",
+            "--prefer-online",
+            "https://github.com/SouzaEduardoAC/ai-agents",
+            "serve"
+          ],
+        };
 
     let claudeConfigured = false;
     for (const claudePath of CLAUDE_CONFIG_PATHS) {

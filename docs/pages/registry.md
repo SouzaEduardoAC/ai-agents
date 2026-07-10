@@ -11,7 +11,11 @@
 - # Active Features
 	- ## Core Infrastructure
 		- status:: [SYNC]
-		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]]
+		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]], [[Add MCP Sampling to the agent-hub MCP, allowing fallback for clients without sampling support, and release as beta first.-prd]]
+		- ## Feature: Integrate MCP Sampling into agent-hub MCP (2026-07-10)
+			- status:: [DONE]
+			- ref:: [[Add MCP Sampling to the agent-hub MCP, allowing fallback for clients without sampling support, and release as beta first.-prd]]
+			- summary:: Designing and implementing MCP Sampling support inside the `agent-hub` MCP server, allowing client-driven execution loops via `sampling/createMessage` for enterprise SSO environments, with graceful prompt-injection fallback, released as beta first.
 		- ## Feature: Mandatory Commit Scope & Body standard (2026-07-09)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]

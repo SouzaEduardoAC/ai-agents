@@ -70,7 +70,7 @@
 			- The following MCPs are automatically configured during the `bootstrap` phase.
 			- **Agent Hub (Internal)**:
 				- Description:: The core orchestration server developed in this repository.
-				- Interaction:: Provides the `call_agent_command` tool, mapping high-level goals to specialized agent personas and skillsets.
+				- Interaction:: Provides the `call_agent_command` tool to retrieve raw compiled prompts, and the `run_agent_loop` tool to execute multi-turn agent loops on the server side via client-side sampling.
 				- Link:: [[Internal]] (ref: `index.js`)
 				- **MCP Config Entry (Correct):** `{ "command": "node", "args": ["<ABSOLUTE_PATH>/bin/agent-hub.js", "serve"] }` — points to the CLI wrapper with the `serve` option (using stdin/stdout stream piping to forward JSON-RPC framing to `index.js`).
 				- **Startup Diagnostics:** `index.js` wraps `server.connect(transport)` in a `try/catch`, writing fatal errors to `process.stderr` and calling `process.exit(1)` for visibility to MCP host processes. (ref: `index.js → transport connect`)

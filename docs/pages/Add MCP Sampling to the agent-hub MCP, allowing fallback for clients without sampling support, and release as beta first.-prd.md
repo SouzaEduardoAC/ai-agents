@@ -1,0 +1,75 @@
+- type:: [[PRD]]
+- project:: [[ai-agents]]
+- status:: [[ACTIVE]]
+- version:: 0.1.0-beta
+
+- # Overview
+	- **Goal:** Integrate MCP Sampling into the `agent-hub` MCP server to support corporate SSO users, prevent agent persona drift in host clients like Codex, and release it as a beta.
+	- **Problem Statement:** Enterprise users utilizing SSO (such as on Codex or AntiGravity) do not have access to individual API keys. Thus, the MCP server must rely on prompt injection (forcing the host client to "become" the agent). However, Codex frequently experiences persona drift over multi-turn conversations because its host-level context/instructions override the injected system prompt.
+	- **Success Metrics (KPIs):**
+		- [[KPI-01]]: 100% of agent commands can be executed using the host's SSO session via sampling when supported.
+		- [[KPI-02]]: Zero persona drift during a multi-turn conversation when running via the MCP-managed loop.
+- # Target Audience & Personas
+	- **Primary Persona:** Enterprise software developers and QA engineers using SSO-authenticated IDE clients (like Codex or AntiGravity) who cannot supply personal API keys to backend services.
+- # User Stories
+	- TODO AS AN Enterprise Developer, I WANT the MCP server to run agent commands using my SSO-authenticated LLM session, SO THAT I do not have to manage or expose API keys.
+	- TODO AS AN Enterprise Developer, I WANT the agent to maintain its persona throughout a multi-turn session, SO THAT the output remains high-fidelity and matches the standards.
+- # Functional Requirements & MoSCoW
+	- [[FR-01]]: Client Sampling Capability Detection
+		- Description:: During the MCP `initialize` handshake, the server must detect and record if the client supports the `sampling` capability.
+		- MoSCoW:: must
+		- stories:: [[User Story 1]]
+	- [[FR-02]]: Managed Agent Execution Loop
+		- Description:: Implement a new execution flow where the MCP server maintains the conversation history and coordinates calls using `sampling/createMessage` back to the host.
+		- MoSCoW:: must
+		- stories:: [[User Story 2]]
+	- [[FR-03]]: Strict Prompt Pinning
+		- Description:: On every turn in the sampling loop, the server must supply the full agent system prompt (persona, standards, skills) in the `systemPrompt` parameter of the sampling request to prevent drift.
+		- MoSCoW:: must
+		- stories:: [[User Story 2]]
+	- [[FR-04]]: Graceful Fallback Mode
+		- Description:: If the host client does not support sampling, the server must fall back to the existing prompt injection mode (returning the prompt text to the client to execute) instead of failing.
+		- MoSCoW:: must
+		- stories:: [[User Story 1]]
+	- [[FR-05]]: Beta Release Protocol
+		- Description:: Publish the changes under a beta release tag (e.g. `npm publish --tag beta` or versioned as `X.Y.Z-beta.N`) instead of publishing directly to main/production, to allow safe evaluation.
+		- MoSCoW:: must
+		- stories:: [[User Story 1]]
+	- [[FR-06]]: Local Tool Execution within Sampling Loop
+		- Description:: Parse structured text actions from the model (e.g. XML/JSON tags like `<read_file>` or `<write_file>`) and execute them locally on the host machine during the sampling loop.
+		- MoSCoW:: should
+		- stories:: [[User Story 2]]
+- # Non-Functional Requirements
+	- **Performance:** Sampling network round-trip overhead should not add more than 500ms latency beyond the raw LLM generation time.
+	- **Security:** Ensure that local tools executed by the loop respect standard filesystem boundaries and do not expose sensitive credentials.
+	- **Compatibility:** Keep backward compatibility for clients that only call `call_agent_command` to retrieve raw prompts.
+- # Prioritization & ROI Analysis
+	- **RICE Scores:**
+		- [[FR-01]]:: Reach: 100 | Impact: 3.0 | Confidence: 1.0 | Effort: 2 | RICE: 150
+		- [[FR-02]]:: Reach: 100 | Impact: 3.0 | Confidence: 0.9 | Effort: 5 | RICE: 54
+		- [[FR-03]]:: Reach: 100 | Impact: 3.0 | Confidence: 1.0 | Effort: 1 | RICE: 300
+		- [[FR-04]]:: Reach: 100 | Impact: 2.0 | Confidence: 1.0 | Effort: 2 | RICE: 100
+		- [[FR-05]]:: Reach: 100 | Impact: 2.0 | Confidence: 1.0 | Effort: 1 | RICE: 200
+	- **Financial Feasibility:**
+		- ROI:: High (Allows deployment across all enterprise SSO seats, resolving a major blocker for corporate adoption).
+		- CoD:: High (Delaying this stops Codex users from successfully using specialized agents due to prompt drift).
+- # Constraints & Edge Cases
+	- [[EC-01]]: Client lacks sampling support -> Fall back gracefully to standard prompt injection mode.
+	- [[EC-02]]: Client times out during sampling -> Implement robust timeouts and error boundaries in the server loop.
+	- [[C-01]]: We must not require any API keys inside the MCP server process for the sampling loop.
+- # Acceptance Criteria (Gherkin Rules)
+	- **Tests for [[FR-01]] & [[FR-04]]:**
+		- Given an MCP client that does not advertise sampling capability
+		- When the client requests an agent run
+		- Then the server falls back to returning the compiled prompt text
+	- **Tests for [[FR-02]] & [[FR-03]]:**
+		- Given an MCP client that advertises sampling capability
+		- When the client initiates an agent run
+		- Then the server runs the local execution loop, calling `sampling/createMessage` with the pinned system prompt on every turn
+	- **Tests for [[FR-05]]:**
+		- Given the release build pipeline is triggered
+		- When a release is prepared
+		- Then the package is tagged and published as a beta version
+- # Metadata
+	- created-at:: 2026-07-10
+	- tags:: #prd #draft #sampling #beta
