@@ -28,7 +28,7 @@ Add the Agent Hub to your preferred AI environment.
 #### A. Claude Code (CLI)
 Run the standard MCP command:
 ```bash
-mcp add agent-hub -- npx -y github:SouzaEduardoAC/ai-agents serve
+mcp add tech-agents -- npx -y github:SouzaEduardoAC/ai-agents serve
 ```
 
 #### B. Claude Desktop
@@ -36,7 +36,7 @@ Add this to your configuration file (see locations in [CLAUDE.md](file:///home/e
 ```json
 {
   "mcpServers": {
-    "agent-hub": {
+    "tech-agents": {
       "command": "npx",
       "args": ["-y", "github:SouzaEduardoAC/ai-agents", "serve"]
     }
@@ -49,7 +49,7 @@ Add this to `~/.gemini/settings.json`:
 ```json
 {
   "mcpServers": {
-    "agent-hub": {
+    "tech-agents": {
       "command": "npx",
       "args": ["-y", "github:SouzaEduardoAC/ai-agents", "serve"]
     }

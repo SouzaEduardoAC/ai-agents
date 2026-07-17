@@ -35,7 +35,7 @@ Mode: [MODE: SQUAD-FLOW]
       - `status:: [[ACTIVE]]`
       - `project:: [[ai-agents]]`
       and format using strict outliner bullet syntax (`- ` and spaces).
-    - **Gate 0 — MCP Structural Enforcement:** Call `agent_hub:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-analysis.md", summary="Discovery/analysis phase complete. Architecture decision records are ready for review.")` THEN halt.
+    - **Gate 0 — MCP Structural Enforcement:** Call `tech_agents:request_approval(gate="discovery", artifact_path="docs/pages/{{args}}-analysis.md", summary="Discovery/analysis phase complete. Architecture decision records are ready for review.")` THEN halt.
 5. **Phase 2: Architectural Intent.**
     - **Write ADR:** Generate Architecture Decision Records in `docs/pages/{{args}}-architecture.md` using the template at `common/templates/logseq/architecture.md`.
     - **Logseq Header Mandate:** Must start with standard Logseq properties:
@@ -45,7 +45,7 @@ Mode: [MODE: SQUAD-FLOW]
       prefixed with `- ` and bulleted.
     - **Context7 Citation Mandate:** If the plan involves external libraries/APIs, query the `context7` MCP server to fetch up-to-date documentation. Embed these fetched code blocks directly into a dedicated section of the plan called `## Dependency & API Contracts (Context7)`.
     - **Linking:** Ensure each decision links back to `[[{{args}}-prd]]`.
-    - **Gate 1 — MCP Structural Enforcement:** Call `agent_hub:check_gate(gate="discovery")` FIRST. Then call `agent_hub:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-architecture.md", summary="Architecture plan complete. Ready for implementation approval.")` and halt.
+    - **Gate 1 — MCP Structural Enforcement:** Call `tech_agents:check_gate(gate="discovery")` FIRST. Then call `tech_agents:request_approval(gate="plan", artifact_path="docs/pages/{{args}}-architecture.md", summary="Architecture plan complete. Ready for implementation approval.")` and halt.
 6. **Phase 3: Execution.** Implement the changes following TDD rules.
     - Run package restores if needed. Check dependency manifests for private registries; if detected, stop and request nuget.config/npmrc.
     - Implement changes, run tests to ensure 100% pass rate.
@@ -54,7 +54,7 @@ Mode: [MODE: SQUAD-FLOW]
       - `type:: [[Audit]]`
       - `status:: [[ACTIVE]]`
       - `project:: [[ai-agents]]`
-    - **Gate 2 — MCP Structural Enforcement:** Call `agent_hub:check_gate(gate="plan")` FIRST. Then call `agent_hub:request_approval(gate="audit", artifact_path="docs/pages/{{args}}-audit.md", summary="Post-implementation audit complete. Ready for final approval.")` and halt.
+    - **Gate 2 — MCP Structural Enforcement:** Call `tech_agents:check_gate(gate="plan")` FIRST. Then call `tech_agents:request_approval(gate="audit", artifact_path="docs/pages/{{args}}-audit.md", summary="Post-implementation audit complete. Ready for final approval.")` and halt.
 8. **Phase 5: Post-Sync.** Update `docs/journals/` and `docs/pages/business-rules.md` to reflect the new state.
 9. **Closure.** Summarize results.
 """

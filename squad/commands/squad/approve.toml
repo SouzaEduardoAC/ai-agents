@@ -6,7 +6,7 @@ Gate to approve: {{args}}
 
 You MUST call the MCP tool:
 ```
-agent_hub:pipeline_approve(gate="{{args}}")
+tech_agents:pipeline_approve(gate="{{args}}")
 ```
 
 This tool automatically resolves the branch-specific pipeline state file at the root of the active workspace and marks the gate as approved.

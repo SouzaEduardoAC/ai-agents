@@ -7,7 +7,7 @@ Mode: [MODE: SQUAD-ORCHESTRATOR]
 
 # Context Preparation
 1. Check the availability of the `agent-hub` MCP server.
-2. Call `agent_hub:get_agent_prompt(agent="squad")` to initialize your squad manager persona.
+2. Call `tech_agents:get_agent_prompt(agent="squad")` to initialize your squad manager persona.
 3. Execute the **Pipeline Protocol** below, respecting every MANDATORY HUMAN CHECKPOINT without exception.
 
 ## Probes
@@ -20,7 +20,7 @@ Mode: [MODE: SQUAD-ORCHESTRATOR]
 ### PIPELINE INIT — Register Session & Gates
 **BEFORE starting Phase 1**, call:
 ```
-agent_hub:pipeline_start(
+tech_agents:pipeline_start(
   goal="{{args}}",
   gates=["prd", "discovery", "plan", "compliance", "execution"]
 )
@@ -30,7 +30,7 @@ This registers the session and locks all gates. You MUST do this before any othe
 ---
 
 ### Phase 1 — Product Elicitation (PO)
-- Call `agent_hub:call_agent_command(agent="po", command="squad-discovery", args="{{args}}")`.
+- Call `tech_agents:call_agent_command(agent="po", command="squad-discovery", args="{{args}}")`.
 - Adopt the Product Owner persona, run the requirements discovery protocol to draft the PRD, write it to `docs/pages/{{args}}-prd.md`, and request human sign-off on the 'prd' gate.
 
 ---
@@ -44,12 +44,12 @@ The pipeline is BLOCKED until the human runs `/squad:approve prd`.
 ### Phase 2 — Architecture & Implementation Plan (Architect)
 **FIRST**, verify approval exists by calling:
 ```
-agent_hub:check_gate(gate="prd")
+tech_agents:check_gate(gate="prd")
 ```
 If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:approve prd` must be run first.
 
 (Proceed ONLY after check_gate returns approved:true for 'prd'.)
-- Call `agent_hub:call_agent_command(agent="architect", command="squad-plan", args="{{args}}")`.
+- Call `tech_agents:call_agent_command(agent="architect", command="squad-plan", args="{{args}}")`.
 - Adopt the Architect persona. The Architect will run in two sub-phases:
   - **Sub-Phase 2a (Discovery/Analysis):** Produces `docs/pages/{{args}}-analysis.md` and requests approval on the 'discovery' gate. The pipeline halts here.
   - **Sub-Phase 2b (Architecture/ADR):** After the 'discovery' gate is approved, produces `docs/pages/{{args}}-architecture.md` and requests approval on the 'plan' gate. The pipeline halts again.
@@ -76,7 +76,7 @@ The pipeline is BLOCKED until the human runs `/squad:approve plan`.
 ### Phase 3 — Compliance Audit (Conditional)
 **FIRST**, verify approval exists by calling:
 ```
-agent_hub:check_gate(gate="plan")
+tech_agents:check_gate(gate="plan")
 ```
 If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:approve plan` must be run first.
 
@@ -85,11 +85,11 @@ If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:a
 **Evaluate compliance trigger BEFORE calling any agent.** Compliance is required if the feature handles any of: PII, Financial Data, Account/Auth Logic, or targets GDPR/LGPD/HIPAA regions.
 
 - **If compliance IS required:**
-  - Call `agent_hub:call_agent_command(agent="compliance", command="master", args="{{args}}")`.
+  - Call `tech_agents:call_agent_command(agent="compliance", command="master", args="{{args}}")`.
   - Adopt the Privacy Auditor persona, conduct the compliance audit, and present the Audit Report to the user.
   - **AFTER presenting the audit**, call:
     ```
-    agent_hub:request_approval(
+    tech_agents:request_approval(
       gate="compliance",
       artifact_path="docs/pages/{{args}}-audit.md",
       summary="Compliance audit completed. Please review the audit report and approve to proceed to execution."
@@ -98,7 +98,7 @@ If the gate is not approved, STOP IMMEDIATELY and inform the user that `/squad:a
   - Wait for `/squad:approve compliance`.
 
 - **If compliance is NOT required:**
-  - Call `agent_hub:request_approval(gate="compliance", summary="Compliance phase skipped — feature does not require regulatory audit.")` directly. Do NOT call the compliance agent.
+  - Call `tech_agents:request_approval(gate="compliance", summary="Compliance phase skipped — feature does not require regulatory audit.")` directly. Do NOT call the compliance agent.
   - Inform the user and wait for acknowledgment via `/squad:approve compliance`.
 
 ---
@@ -112,13 +112,13 @@ The pipeline is BLOCKED until the human runs `/squad:approve compliance`.
 ### Phase 4 — Execution (Developer Agent)
 **FIRST**, verify approval exists by calling:
 ```
-agent_hub:check_gate(gate="compliance")
+tech_agents:check_gate(gate="compliance")
 ```
 If the gate is not approved, STOP IMMEDIATELY.
 
 (Proceed ONLY after the human has explicitly approved all prior applicable phases.)
 - Determine the target tech stack from the Implementation Plan (`docs/pages/{{args}}-architecture.md`).
-- Call `agent_hub:call_agent_command(agent="backend|frontend|mobile", command="squad-create", args="{{args}}")` as appropriate.
+- Call `tech_agents:call_agent_command(agent="backend|frontend|mobile", command="squad-create", args="{{args}}")` as appropriate.
 - Adopt the selected developer persona. The developer will:
   1. Read the approved PRD (`docs/pages/{{args}}-prd.md`) and the Architect's Implementation Plan (`docs/pages/{{args}}-architecture.md`).
   2. Implement unit and integration tests **first** before writing the production logic (TDD), ensuring 100% test coverage.
@@ -139,7 +139,7 @@ If the gate is not approved, STOP IMMEDIATELY.
 
 ### Phase 4.5 — Peer Code Review, Fix Loop & Push to Origin
 - Call a second developer agent of the same technology stack as a Peer Reviewer:
-  `agent_hub:call_agent_command(agent="backend|frontend|mobile", command="squad-review", args="{{args}}")`
+  `tech_agents:call_agent_command(agent="backend|frontend|mobile", command="squad-review", args="{{args}}")`
 - Adopt the Peer Reviewer persona and perform a local code review on the committed branch:
   1. Use the `sonarqube` MCP server's `issues` tool to check for static analysis issues, code smells, vulnerabilities, or bugs on modified components.
   2. Evaluate code quality, conventional commit guidelines, and ensure all tests are fully passing.
@@ -147,14 +147,14 @@ If the gate is not approved, STOP IMMEDIATELY.
   4. **Push to Origin:** Once the verdict is `APPROVE`, the reviewer pushes the branch to origin (`git push origin <branch-name>`).
   5. After the push, call:
      ```
-     agent_hub:request_approval(
+     tech_agents:request_approval(
        gate="execution",
        summary="Code implementation and peer review completed successfully. Tests passed, SonarQube checks are clean, and changes pushed to feature branch."
      )
      ```
 
 ### Phase 5 — Synthesis & Export (Optional)
-- If requested by the human or stakeholders, call `agent_hub:call_agent_command(agent="decoder", command="export", args="{{args}}")` for stakeholder reporting.
+- If requested by the human or stakeholders, call `tech_agents:call_agent_command(agent="decoder", command="export", args="{{args}}")` for stakeholder reporting.
 
 ---
 

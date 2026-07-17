@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * MCP Integration Test Suite
- * Tests ALL agent commands via the bin/agent-hub.js serve transport
+ * Tests ALL agent commands via the bin/tech-agents.js serve transport
  * (the path used by external clients: `npx github:SouzaEduardoAC/ai-agents serve`)
  *
  * Usage: node test/mcp-integration.mjs [--verbose]
@@ -81,7 +81,7 @@ const TEST_MATRIX = [
 
 // ─── MCP client ──────────────────────────────────────────────────────────
 function spawnServer() {
-  return spawn("node", [path.join(ROOT, "bin", "agent-hub.js"), "serve"], {
+  return spawn("node", [path.join(ROOT, "bin", "tech-agents.js"), "serve"], {
     cwd: ROOT,
     stdio: "pipe",
     env: process.env,
@@ -256,7 +256,7 @@ async function runTests() {
 
   console.log(hdr("═══════════════════════════════════════════════════════"));
   console.log(hdr("  Agent Hub MCP Integration Test Suite"));
-  console.log(hdr(`  Transport: node bin/agent-hub.js serve`));
+  console.log(hdr(`  Transport: node bin/tech-agents.js serve`));
   console.log(hdr("═══════════════════════════════════════════════════════"));
 
   // ── Phase 1: Transport & handshake ──────────────────────────────────────
@@ -420,7 +420,7 @@ async function runTests() {
     await fs.mkdir(path.join(tmpDir, 'module-frontend'));
     await fs.writeFile(path.join(tmpDir, 'module-frontend', 'package.json'), '{"dependencies":{"react":"18"}}');
     
-    const monoProc = spawn("node", [path.join(ROOT, "bin", "agent-hub.js"), "serve"], {
+    const monoProc = spawn("node", [path.join(ROOT, "bin", "tech-agents.js"), "serve"], {
       cwd: tmpDir,
       stdio: "pipe",
       env: process.env,

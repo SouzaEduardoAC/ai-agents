@@ -6,7 +6,7 @@
 - # Project Overview
 	- The Universal Agent Hub for AI-driven software engineering.
 - # Navigation
-	- [[TECHNICAL_SPECS]] - Core architecture and MCP details. (ref: `bin/agent-hub.js`)
+	- [[TECHNICAL_SPECS]] - Core architecture and MCP details. (ref: `bin/tech-agents.js`)
 	- [[BUSINESS_FLOW]] - Value prop and business rules. (ref: `index.js`)
 	- [[code-dna]] - Architectural patterns and standards. (ref: `architect/knowledge/patterns.md`)
 	- [[registry]] - Global Symbol Registry (The Project Genome).

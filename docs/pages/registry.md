@@ -12,6 +12,10 @@
 	- ## Core Infrastructure
 		- status:: [SYNC]
 		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]], [[Add MCP Sampling to the agent-hub MCP, allowing fallback for clients without sampling support, and release as beta first.-prd]]
+		- ## Feature: Rename MCP Server and CLI to tech-agents (2026-07-17)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]], [[CLAUDE]], [[README]], [[GEMINI]], [[AGENTS]]
+			- summary:: Renamed the MCP server name and CLI command from `agent-hub` to `tech-agents`. Updated the command script file to `bin/tech-agents.js`. Refactored the bootstrapper's update settings and Claude integration logic to automatically clean up the old `agent-hub` configuration key and register `tech-agents`. Updated all 26 TOML prompt files to call the new namespace `tech_agents:`. Updated all documentation, integration tests, and specs.
 		- ## Bug Fix: MCP Sampling Loop Early Exit & Peer Review SonarQube Reporting (2026-07-17)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[Squad Orchestrator]], [[Backend]], [[Frontend]], [[Mobile]]

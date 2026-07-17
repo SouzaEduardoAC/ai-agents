@@ -108,7 +108,7 @@ const pkg = fs.readJsonSync(path.join(AGENTS_ROOT, "package.json"));
 
 const server = new Server(
   {
-    name: "agent-hub",
+    name: "tech-agents",
     version: pkg.version,
   },
   {
@@ -1258,8 +1258,8 @@ ${knowledge}
 try {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  process.stderr.write(`[agent-hub] MCP Server v${pkg.version} running on stdio\n`);
+  process.stderr.write(`[tech-agents] MCP Server v${pkg.version} running on stdio\n`);
 } catch (e) {
-  process.stderr.write(`[agent-hub] FATAL: ${e.message}\n${e.stack}\n`);
+  process.stderr.write(`[tech-agents] FATAL: ${e.message}\n${e.stack}\n`);
   process.exit(1);
 }

@@ -13,7 +13,7 @@ This repository is optimized for **Gemini CLI**. It uses a specialized `bootstra
 **CRITICAL MANDATE:** You MUST always respect and update the entire documentation protocol of all agents (such as journals, registry, and graphs) when modifying the repository, EVEN if you are not currently operating as the specific agent responsible for that domain. Code changes without corresponding protocol updates are strictly prohibited.
 
 ## 🛠 Gemini Commands
-The following namespaces are registered via `/bin/agent-hub bootstrap`:
+The following namespaces are registered via `/bin/tech-agents bootstrap`:
 - `/squad:*`: Multi-agent pipeline orchestration and full documentation sync.
 - `/architect:*`: Systems design and auditing.
 - `/po:*`: Discovery and PRD generation.
@@ -46,7 +46,7 @@ The following namespaces are registered via `/bin/agent-hub bootstrap`:
 - DONE: Standardize global Logseq documentation protocol and interface (`/agent:docs`) across all agents via the new Squad `/squad:full-sync` orchestrator. (ref: [[registry]])
 - DONE: Implement cross-platform and stack-aware Pull Request reviews for implementation specialists (Backend, Frontend, Mobile). (ref: `common/skills/pr_review.md`, `[[registry]]`)
 - DONE: Implement structural MCP-level human approval gate system (`pipeline_start`, `request_approval`, `check_gate`, `pipeline_approve` tools + `/squad:approve` command) to make it physically impossible for LLM orchestrators to auto-approve pipeline phase transitions. (ref: `index.js`, `.squad-state-*.json`, `squad/commands/squad/approve.toml`, `[[TECHNICAL_SPECS]]`)
-- DONE: Implement MCP usage guide skill and serve it dynamically via list_agents tool. (ref: `common/skills/mcp_usage_guide.md`, `index.js`, `bin/agent-hub.js`, `[[TECHNICAL_SPECS]]`)
+- DONE: Implement MCP usage guide skill and serve it dynamically via list_agents tool. (ref: `common/skills/mcp_usage_guide.md`, `index.js`, `bin/tech-agents.js`, `[[TECHNICAL_SPECS]]`)
 - DONE: Implement server-side managed execution loop via MCP Sampling (`run_agent_loop` tool), supporting local XML action execution (filesystem, terminal commands) and fallback logic. (ref: `index.js`, `test/mcp-sampling-test.js`, `[[TECHNICAL_SPECS]]`)
 - TODO: Implement automated AST-sync for [[Mobile]] widget trees.
 

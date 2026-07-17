@@ -5,11 +5,11 @@
   "type": "module",
   "main": "index.js",
   "bin": {
-    "agent-hub": "bin/agent-hub.js"
+    "tech-agents": "bin/tech-agents.js"
   },
   "scripts": {
-    "start": "node bin/agent-hub.js",
-    "serve": "node bin/agent-hub.js serve"
+    "start": "node bin/tech-agents.js",
+    "serve": "node bin/tech-agents.js serve"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.1",
