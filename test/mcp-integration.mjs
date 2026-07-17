@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * MCP Integration Test Suite
- * Tests ALL agent commands via the bin/agent-hub.js serve transport
+ * Tests ALL agent commands via the bin/tech-agents.js serve transport
  * (the path used by external clients: `npx github:SouzaEduardoAC/ai-agents serve`)
  *
  * Usage: node test/mcp-integration.mjs [--verbose]
@@ -65,15 +65,28 @@ const TEST_MATRIX = [
   ["po",         "discovery", "Discover and document requirements for a B2B SaaS invoicing feature"],
   ["po",         "interview", "Conduct a product interview for the mobile onboarding flow"],
   ["po",         "squad-discovery", "Discover requirements for the invoice feature"],
+  ["po",         "squad-docs", "Document the product requirements and business flows"],
   ["quicky",     "fix",       "Fix the null pointer exception in the user profile controller"],
   ["researcher", "report",    "Research the best vector database options for a RAG system in 2025"],
   ["researcher", "investigate", "Investigate the root cause of the intermittent timeout errors in prod"],
+  ["researcher", "squad-docs", "Document the technical findings and external system research"],
+  ["architect",  "squad-docs", "Document the API design for the authentication service"],
+  ["backend",    "squad-docs", "Document the backend code architecture and API endpoints"],
+  ["decoder",    "squad-docs", "Translate technical documentation to a business specification for squad docs"],
+  ["forge",      "squad-docs", "Document the registry mapping for the squad agents"],
+  ["frontend",   "squad-docs", "Document the design system components and React endpoints"],
+  ["mobile",     "squad-docs", "Document the mobile widgets and Flutter structure"],
   ["squad",      "run",       "Build a full-stack authentication system: design, backend, and frontend"],
+  ["architect",  "adhoc",     "Discuss if we should use GraphQL or REST for our new public catalog API"],
+  ["backend",    "adhoc",     "Discuss caching strategy for hot queries on user profile"],
+  ["frontend",   "adhoc",     "Discuss if React Server Components fit a search result page"],
+  ["mobile",     "adhoc",     "Discuss how to handle offline synchronization in Flutter"],
+  ["po",         "adhoc",     "Brainstorm feature ideas for a user referral program"],
 ];
 
 // ─── MCP client ──────────────────────────────────────────────────────────
 function spawnServer() {
-  return spawn("node", [path.join(ROOT, "bin", "agent-hub.js"), "serve"], {
+  return spawn("node", [path.join(ROOT, "bin", "tech-agents.js"), "serve"], {
     cwd: ROOT,
     stdio: "pipe",
     env: process.env,
@@ -187,10 +200,23 @@ const CONTENT_FINGERPRINTS = {
   "po:discovery":        ["product", "discovery"],
   "po:interview":        ["interview", "product"],
   "po:squad-discovery":  ["product", "discovery"],
+  "po:squad-docs":       ["squad", "documentation"],
   "quicky:fix":          ["fix", "task"],
   "researcher:report":   ["research", "report"],
   "researcher:investigate": ["investigation", "research"],
+  "researcher:squad-docs": ["squad", "documentation"],
+  "architect:squad-docs": ["squad", "documentation"],
+  "backend:squad-docs": ["squad", "documentation"],
+  "decoder:squad-docs": ["squad", "documentation"],
+  "forge:squad-docs": ["squad", "documentation"],
+  "frontend:squad-docs": ["squad", "documentation"],
+  "mobile:squad-docs": ["squad", "documentation"],
   "squad:run":           ["squad", "orchestrat"],
+  "architect:adhoc":     ["architect", "consultation"],
+  "backend:adhoc":       ["backend", "consultation"],
+  "frontend:adhoc":      ["frontend", "consultation"],
+  "mobile:adhoc":        ["mobile", "consultation"],
+  "po:adhoc":            ["product", "consultation"],
 };
 
 // ─── assertions ───────────────────────────────────────────────────────────
@@ -240,7 +266,7 @@ async function runTests() {
 
   console.log(hdr("═══════════════════════════════════════════════════════"));
   console.log(hdr("  Agent Hub MCP Integration Test Suite"));
-  console.log(hdr(`  Transport: node bin/agent-hub.js serve`));
+  console.log(hdr(`  Transport: node bin/tech-agents.js serve`));
   console.log(hdr("═══════════════════════════════════════════════════════"));
 
   // ── Phase 1: Transport & handshake ──────────────────────────────────────
@@ -404,7 +430,7 @@ async function runTests() {
     await fs.mkdir(path.join(tmpDir, 'module-frontend'));
     await fs.writeFile(path.join(tmpDir, 'module-frontend', 'package.json'), '{"dependencies":{"react":"18"}}');
     
-    const monoProc = spawn("node", [path.join(ROOT, "bin", "agent-hub.js"), "serve"], {
+    const monoProc = spawn("node", [path.join(ROOT, "bin", "tech-agents.js"), "serve"], {
       cwd: tmpDir,
       stdio: "pipe",
       env: process.env,

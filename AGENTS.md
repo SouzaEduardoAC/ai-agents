@@ -1,8 +1,8 @@
 # UNIVERSAL COGNITIVE ANCHOR (v2026)
-**Stack:** Markdown, TOML, [[Agent Hub]], Logseq Graph.
+**Stack:** Markdown, TOML, [[Tech Agents]], Logseq Graph.
 
-## 🧠 Hub BIOS
-This repository is a **Specialized Agent Hub** designed for high-fidelity engineering, compliance, and research tasks. It uses an **[[Agentic Modular Design]] (#AMD)** where each agent is a self-contained unit of persona, skills, and knowledge. The Hub serves as a bridge for multiple AI environments (Gemini CLI, AntiGravity, Claude Code).
+## 🧠 BIOS
+This repository is a **Specialized Tech Agents** platform designed for high-fidelity engineering, compliance, and research tasks. It uses an **[[Agentic Modular Design]] (#AMD)** where each agent is a self-contained unit of persona, skills, and knowledge. The platform serves as a bridge for multiple AI environments (Gemini CLI, AntiGravity, Claude Code).
 
 ## 🗺 Documentation Map (Logseq Graph)
 The project documentation is managed as a knowledge graph in `docs/pages/`.
@@ -37,7 +37,8 @@ The project documentation is managed as a knowledge graph in `docs/pages/`.
 - DONE: Standardize global Logseq documentation protocol and interface (`/agent:docs`) across all agents via the new Squad `/squad:full-sync` orchestrator. (ref: [[registry]])
 - DONE: Implement cross-platform and stack-aware Pull Request reviews for implementation specialists (Backend, Frontend, Mobile). (ref: `common/skills/pr_review.md`, `[[registry]]`)
 - DONE: Implement structural MCP-level human approval gate system (`pipeline_start`, `request_approval`, `check_gate`, `pipeline_approve` tools + `/squad:approve` command) to make it physically impossible for LLM orchestrators to auto-approve pipeline phase transitions. (ref: `index.js`, `.squad-state-*.json`, `squad/commands/squad/approve.toml`, `[[TECHNICAL_SPECS]]`)
-- DONE: Implement MCP usage guide skill and serve it dynamically via list_agents tool. (ref: `common/skills/mcp_usage_guide.md`, `index.js`, `bin/agent-hub.js`, `[[TECHNICAL_SPECS]]`)
+- DONE: Implement MCP usage guide skill and serve it dynamically via list_agents tool. (ref: `common/skills/mcp_usage_guide.md`, `index.js`, `bin/tech-agents.js`, `[[TECHNICAL_SPECS]]`)
+- DONE: Implement server-side managed execution loop via MCP Sampling (`run_agent_loop` tool), supporting local XML action execution (filesystem, terminal commands) and fallback logic. (ref: `index.js`, `test/mcp-sampling-test.js`, `[[TECHNICAL_SPECS]]`)
 - TODO: Implement automated AST-sync for [[Mobile]] widget trees.
 
 #AMD #UniversalHub #AgenticFramework #Logseq

@@ -108,7 +108,7 @@ const pkg = fs.readJsonSync(path.join(AGENTS_ROOT, "package.json"));
 
 const server = new Server(
   {
-    name: "agent-hub",
+    name: "tech-agents",
     version: pkg.version,
   },
   {
@@ -490,6 +490,24 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
+        name: "run_agent_loop",
+        description: [
+          "Run a multi-turn agent execution loop on the server side using client LLM sampling.",
+          "Use this to execute agents in SSO or token-based environments where local API keys are unavailable.",
+          "The server manages prompt pinning and context loops directly to prevent persona drift.",
+          "If the client does not support sampling, it will return an error or advice to fall back.",
+        ].join(" "),
+        inputSchema: {
+          type: "object",
+          properties: {
+            agent: { type: "string", description: "The agent name (e.g., architect, backend, squad, council, po, compliance, researcher, forge, automata, decoder, quicky, frontend, mobile)." },
+            command: { type: "string", description: "The command name. Common defaults: 'run' (squad), 'create' (architect/backend/frontend/mobile), 'debate' (council), 'discovery' (po), 'master' (compliance), 'report' (researcher), 'fix' (quicky), 'export' (decoder). Call list_agents to see all available commands." },
+            args: { type: "string", description: "The full task description, goal, or user request to pass to the agent. Be specific — this becomes the agent's primary objective." },
+          },
+          required: ["agent", "command", "args"],
+        },
+      },
+      {
         name: "get_agent_prompt",
         description: "Retrieve the full identity, persona, and knowledge base for a specific agent without executing a command. Use this to understand an agent's capabilities before calling call_agent_command, or to load an agent's persona into the current context.",
         inputSchema: {
@@ -728,6 +746,275 @@ To maintain transparency and multi-agent coordination, you MUST prefix your very
       const finalPrompt = await resolveProbes(prompt);
 
       return { content: [{ type: "text", text: finalPrompt }] };
+    }
+
+    if (name === "run_agent_loop") {
+      const capabilities = server.getClientCapabilities();
+      const supportsSampling = !!capabilities?.sampling;
+      if (!supportsSampling) {
+        throw new Error(
+          "The connected client does not support the MCP sampling capability. " +
+          "Please fall back to standard prompt injection by calling call_agent_command instead, " +
+          "or use a client that supports sampling (like AntiGravity or Codex)."
+        );
+      }
+
+      const { agent, command, args: taskArgs } = args;
+
+      // Resolve aliases for command names that commonly map to standard agent entrypoints
+      const aliases = {
+        squad: { create: "run", discovery: "run", plan: "run" },
+        architect: { discovery: "create", plan: "create", run: "create" },
+        backend: { discovery: "create", plan: "create", run: "create" },
+        frontend: { discovery: "create", plan: "create", run: "create" },
+        mobile: { discovery: "create", plan: "create", run: "create" },
+        po: { create: "discovery", run: "discovery" },
+        automata: { discovery: "plan", run: "plan" },
+        forge: { run: "create" },
+        quicky: { run: "fix", create: "fix" },
+        researcher: { run: "report", create: "report", discovery: "investigate" },
+        compliance: { run: "master", create: "master" },
+        council: { run: "debate", create: "debate" },
+        decoder: { run: "export", create: "export", synthesize: "export" }
+      };
+
+      let commandName = command;
+      if (aliases[agent] && aliases[agent][command]) {
+        commandName = aliases[agent][command];
+      }
+
+      const { projectRoot } = await resolveStateFilePath();
+      const insideHub = await isInsideHub(projectRoot);
+
+      const tomlPath = path.join(AGENTS_ROOT, agent, "commands", agent, `${commandName}.toml`);
+
+      if (!(await fs.pathExists(tomlPath))) {
+        const cmdDir = path.join(AGENTS_ROOT, agent, "commands", agent);
+        let available = [];
+        if (await fs.pathExists(cmdDir)) {
+          const files = await fs.readdir(cmdDir);
+          available = files.filter(f => f.endsWith(".toml")).map(f => path.basename(f, ".toml"));
+        }
+        throw new Error(
+          `Command '${command}' for agent '${agent}' not found. ` +
+          `Available commands for '${agent}': ${available.join(", ") || "none"}`
+        );
+      }
+
+      const tomlData = toml.parse(await fs.readFile(tomlPath, "utf-8"));
+      let prompt = tomlData.prompt || "";
+      
+      // Extract all catted basenames in the prompt to prevent double injection
+      const cattedBasenames = new Set();
+      const catMatches = prompt.matchAll(/!\{cat\s+([^\}]+)\}/g);
+      for (const match of catMatches) {
+        cattedBasenames.add(path.basename(match[1].trim()));
+      }
+
+      const searchTarget = `${commandName} ${tomlData.description || ""} ${taskArgs || ""}`.toLowerCase();
+
+      // Inject Common Knowledge & Skills (Deduplicated and filtered by relevance)
+      const commonKnowledge = await compileCommonSection(path.join(AGENTS_ROOT, "common", "knowledge"), searchTarget, cattedBasenames, "knowledge").catch(() => "");
+      const commonSkills = await compileCommonSection(path.join(AGENTS_ROOT, "common", "skills"), searchTarget, cattedBasenames, "skills").catch(() => "");
+      
+      // Inject Dynamic Knowledge for Architect/Backend/Frontend/Mobile (language stack files, on-demand)
+      let dynamicKnowledge = "";
+      if (["architect", "backend", "frontend", "mobile"].includes(agent)) {
+        dynamicKnowledge = await getDynamicKnowledge(taskArgs, agent);
+      }
+
+      // Auto-inject agent-level skills/ and knowledge/ dirs.
+      const readAgentDirDeduped = async (dirPath) => {
+        if (!(await fs.pathExists(dirPath))) return "";
+        const globPattern = path.join(dirPath, "*.md").replace(/\\/g, "/");
+        const files = await glob(globPattern);
+        let content = "";
+        for (const file of files) {
+          const basename = path.basename(file);
+          if (cattedBasenames.has(basename)) continue; // already injected via !{cat}
+          const fileContent = await fs.readFile(file, "utf-8");
+          content += `\n### File: ${basename}\n${fileContent}\n`;
+        }
+        return content;
+      };
+      const agentSkills = await readAgentDirDeduped(path.join(AGENTS_ROOT, agent, "skills")).catch(() => "");
+      const agentKnowledge = await readAgentDirDeduped(path.join(AGENTS_ROOT, agent, "knowledge")).catch(() => "");
+
+      const identityMeta = `### ACTIVE PERSONA CONTEXT
+You are currently executing the command '${commandName}' as the **${agent.toUpperCase()}** agent.
+To maintain transparency and multi-agent coordination, you MUST prefix your very first response line with a clean, prominent identity tag in the format:
+\`[Agent: ${agent.toUpperCase()} | Command: ${commandName.toUpperCase()}]\`
+
+--------------------------------------------------------------------------------\n\n`;
+
+      let logseqWarning = "";
+      const hasPagesDir = await fs.pathExists(path.join(projectRoot, "docs", "pages"));
+      if (!hasPagesDir) {
+        logseqWarning = `⚠️ **WARNING: The 'docs/pages/' folder is missing in the active workspace. This project is NOT a Logseq knowledge graph. Do NOT write documentation in Logseq outliner format (nested bullets) or use [[links]] for new page references. Write standard, clean Markdown (.md) instead.**\n\n`;
+      }
+
+      let externalAdaptation = "";
+      if (!insideHub && (commandName === "full-sync" || commandName === "docs")) {
+        externalAdaptation = `⚠️ **EXTERNAL WORKSPACE NOTICE:** You are executing this command within an external project (not the Agent Hub codebase).
+- **DO NOT** create, edit, or refer to the Hub-specific cognitive anchors: \`AGENTS.md\`, \`GEMINI.md\`, or \`CLAUDE.md\` at the project root.
+- Document this project's own architecture, code patterns, and files instead of the Hub's.
+- Write documentation using the format and path layout appropriate for this project (following standard Markdown if Logseq is missing).\n\n`;
+      }
+
+      prompt = `${identityMeta}${logseqWarning}${externalAdaptation}# Common Standards\n${commonKnowledge}\n\n# Common Skills\n${commonSkills}\n\n# Dynamic Knowledge\n${dynamicKnowledge}\n\n# Agent Skills\n${agentSkills}\n\n# Agent Knowledge\n${agentKnowledge}\n\n${prompt}`;
+      
+      if (insideHub) {
+        const complianceMandate = await getComplianceMandate(projectRoot);
+        prompt = `${prompt}\n\n${complianceMandate}`;
+      }
+
+      // Resolve {{args}}
+      prompt = prompt.replace(/\{\{args\}\}/g, taskArgs);
+      
+      // Resolve internal !{cat ...} probes for universal use
+      const finalPrompt = await resolveProbes(prompt);
+
+      const parserInstructions = `
+================================================================================
+### IMPORTANT SYSTEM DIRECTIVE FOR LOCAL TOOL USE (SSO SAMPLING LOOP)
+Because you are executing inside a managed SSO sampling loop on the server, you do NOT have direct access to client tools.
+To execute file or command actions, you MUST output specific XML-like tags in your text output. The server will intercept these tags, execute the requested action locally within the workspace root, and feed the results back into your context as user messages.
+
+Available actions:
+1. **Read File**:
+   <read_file path="relative/path/to/file" />
+2. **Write/Overwrite File**:
+   <write_file path="relative/path/to/file">
+   [Your file content here]
+   </write_file>
+3. **Execute Command**:
+   <run_command cmd="npm test" />
+4. **Complete Task**:
+   When you are completely finished with your task and have verified it, output:
+   <task_complete summary="Detailed summary of what was accomplished" />
+
+RULES:
+- All paths MUST be relative to the active project workspace root.
+- You can request multiple actions in a single turn. The server will execute all of them in order and return all outputs in a single user message.
+- DO NOT use markdown code blocks around your XML tags. Output the raw tags directly.
+================================================================================
+`;
+
+      const messages = [
+        {
+          role: "user",
+          content: {
+            type: "text",
+            text: `Execute the following task: ${taskArgs}`
+          }
+        }
+      ];
+
+      let turn = 0;
+      const maxTurns = 15;
+      let loopResult = "";
+
+      while (turn < maxTurns) {
+        turn++;
+
+        const samplingResponse = await server.createMessage({
+          messages: messages,
+          systemPrompt: `${finalPrompt}\n\n${parserInstructions}`,
+          maxTokens: 4000,
+        });
+
+        const assistantText = samplingResponse.content.text || "";
+        messages.push({
+          role: "assistant",
+          content: samplingResponse.content
+        });
+
+        const readRegex = /<read_file\s+path=["']([^"']+)["']\s*\/?>/gi;
+        const writeRegex = /<write_file\s+path=["']([^"']+)["']\s*>([\s\S]*?)<\/write_file>/gi;
+        const commandRegex = /<run_command\s+cmd=["']([^"']+)["']\s*\/?>/gi;
+        const completeRegex = /<task_complete(?:\s+summary=["']([^"']+)["'])?\s*\/?>/i;
+
+        let toolExecuted = false;
+        let turnOutput = "";
+
+        const completeMatch = completeRegex.exec(assistantText);
+        if (completeMatch) {
+          loopResult = completeMatch[1] || "Task completed successfully.";
+          break;
+        }
+
+        let match;
+        readRegex.lastIndex = 0;
+        while ((match = readRegex.exec(assistantText)) !== null) {
+          const relativePath = match[1];
+          const absolutePath = path.resolve(projectRoot, relativePath);
+          if (!absolutePath.startsWith(projectRoot)) {
+            turnOutput += `\nError: Path "${relativePath}" is outside the project workspace.\n`;
+          } else {
+            try {
+              const fileContent = await fs.readFile(absolutePath, "utf8");
+              turnOutput += `\nFile [${relativePath}] read successfully:\n\`\`\`\n${fileContent}\n\`\`\`\n`;
+            } catch (e) {
+              turnOutput += `\nError reading file "${relativePath}": ${e.message}\n`;
+            }
+          }
+          toolExecuted = true;
+        }
+
+        writeRegex.lastIndex = 0;
+        while ((match = writeRegex.exec(assistantText)) !== null) {
+          const relativePath = match[1];
+          const content = match[2];
+          const absolutePath = path.resolve(projectRoot, relativePath);
+          if (!absolutePath.startsWith(projectRoot)) {
+            turnOutput += `\nError: Path "${relativePath}" is outside the project workspace.\n`;
+          } else {
+            try {
+              await fs.ensureDir(path.dirname(absolutePath));
+              await fs.writeFile(absolutePath, content, "utf8");
+              turnOutput += `\nFile [${relativePath}] written successfully.\n`;
+            } catch (e) {
+              turnOutput += `\nError writing file "${relativePath}": ${e.message}\n`;
+            }
+          }
+          toolExecuted = true;
+        }
+
+        commandRegex.lastIndex = 0;
+        while ((match = commandRegex.exec(assistantText)) !== null) {
+          const command = match[1];
+          try {
+            const output = execSync(command, { cwd: projectRoot, encoding: "utf8", timeout: 30000 });
+            turnOutput += `\nCommand "${command}" executed successfully. Output:\n\`\`\`\n${output}\n\`\`\`\n`;
+          } catch (e) {
+            turnOutput += `\nError executing command "${command}": ${e.message}\n${e.stdout || ""}\n${e.stderr || ""}\n`;
+          }
+          toolExecuted = true;
+        }
+
+        if (!toolExecuted) {
+          turnOutput = "Please continue and execute the task or output <task_complete summary=\"...\" /> when finished.";
+        }
+
+        messages.push({
+          role: "user",
+          content: {
+            type: "text",
+            text: turnOutput.trim()
+          }
+        });
+      }
+
+      if (!loopResult) {
+        loopResult = "Loop execution reached max turns limit without explicit task completion.";
+      }
+
+      return {
+        content: [{
+          type: "text",
+          text: `Agent execution loop completed.\nSummary: ${loopResult}`
+        }]
+      };
     }
 
     if (name === "get_agent_prompt") {
@@ -971,8 +1258,8 @@ ${knowledge}
 try {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  process.stderr.write(`[agent-hub] MCP Server v${pkg.version} running on stdio\n`);
+  process.stderr.write(`[tech-agents] MCP Server v${pkg.version} running on stdio\n`);
 } catch (e) {
-  process.stderr.write(`[agent-hub] FATAL: ${e.message}\n${e.stack}\n`);
+  process.stderr.write(`[tech-agents] FATAL: ${e.message}\n${e.stack}\n`);
   process.exit(1);
 }

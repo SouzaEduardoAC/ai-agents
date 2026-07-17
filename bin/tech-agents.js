@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs-extra";
 import os from "os";
 import { spawn } from "child_process";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -14,31 +14,21 @@ const pkg = fs.readJsonSync(path.join(ROOT, "package.json"));
 const program = new Command();
 
 program
-  .name("agent-hub")
+  .name("tech-agents")
   .description("Universal bridge for AI Agents")
   .version(pkg.version);
 
 program
   .command("serve")
   .description("Start the MCP server")
-  .action(() => {
+  .action(async () => {
     const serverPath = path.join(ROOT, "index.js");
-    // Use 'pipe' so the MCP JSON-RPC framing is correctly forwarded.
-    // 'inherit' would attach the child's stdio to the wrapper's fd directly,
-    // but the MCP client is already bound to the wrapper process — messages
-    // never reach index.js. Explicit piping fixes this.
-    const child = spawn("node", [serverPath], {
-      stdio: "pipe",
-      env: process.env,
-    });
-    process.stdin.pipe(child.stdin);
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    child.on("exit", (code) => process.exit(code ?? 0));
-    child.on("error", (err) => {
-      process.stderr.write(`[agent-hub] Failed to start MCP server: ${err.message}\n`);
+    try {
+      await import(pathToFileURL(serverPath).href);
+    } catch (err) {
+      process.stderr.write(`[tech-agents] Failed to start MCP server: ${err.message}\n`);
       process.exit(1);
-    });
+    }
   });
 
 program
@@ -129,7 +119,7 @@ program
       .filter((d) => d.isDirectory() && !d.name.startsWith(".") && !["node_modules", "bin", "docs", "common", "test"].includes(d.name))
       .map((d) => d.name);
 
-    console.log("\n🚀 Bootstrapping Universal Agent Hub...");
+    console.log("\n🚀 Bootstrapping Universal Tech Agents...");
 
     // 0. Configure MCP Settings
     const SETTINGS_PATH = path.join(os.homedir(), ".gemini", "settings.json");
@@ -195,6 +185,8 @@ program
       }
     }
 
+    const isLocalClone = await fs.pathExists(path.join(ROOT, ".git"));
+
     const updateMcpServers = (mcpServers) => {
       let updated = false;
       // Add Filesystem MCP if missing
@@ -228,25 +220,33 @@ program
       }
 
       // Add/fix Agent Hub MCP.
-      // Point to bin/agent-hub.js with the 'serve' command. Stdio piping in
-      // the serve command forwards framing correctly to index.js.
-      const correctAgentHubEntry = {
-        command: "npx",
-        args: [
-          "-y",
-          "--prefer-online",
-          "https://github.com/SouzaEduardoAC/ai-agents",
-          "serve"
-        ]
-      };
-      const existingHub = mcpServers["agent-hub"];
+      // If we are running from a local git clone, point directly to index.js
+      // for instant, offline execution that immediately reflects local edits.
+      // Otherwise, fall back to the remote unversioned GitHub repository via npx.
+      if (mcpServers["agent-hub"]) {
+        delete mcpServers["agent-hub"];
+        updated = true;
+      }
+      const correctTechAgentsEntry = isLocalClone
+        ? {
+            command: "node",
+            args: [path.join(ROOT, "index.js")]
+          }
+        : {
+            command: "npx",
+            args: [
+              "-y",
+              "--prefer-online",
+              "https://github.com/SouzaEduardoAC/ai-agents",
+              "serve"
+            ]
+          };
+      const existingHub = mcpServers["tech-agents"];
       const needsUpdate = !existingHub ||
-        existingHub.command !== "npx" ||
-        !Array.isArray(existingHub.args) ||
-        existingHub.args.length < 4 ||
-        existingHub.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents";
+        (isLocalClone && (existingHub.command !== "node" || !Array.isArray(existingHub.args) || existingHub.args[0] !== path.join(ROOT, "index.js"))) ||
+        (!isLocalClone && (existingHub.command !== "npx" || !Array.isArray(existingHub.args) || existingHub.args.length < 4 || existingHub.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents"));
       if (needsUpdate) {
-        mcpServers["agent-hub"] = correctAgentHubEntry;
+        mcpServers["tech-agents"] = correctTechAgentsEntry;
         updated = true;
       }
 
@@ -352,15 +352,20 @@ program
       path.join(os.homedir(), "Library", "Application Support", "Claude", "claude_desktop_config.json"), // Claude Desktop (macOS)
     ];
 
-    const HUB_MCP_ENTRY = {
-      command: "npx",
-      args: [
-        "-y",
-        "--prefer-online",
-        "https://github.com/SouzaEduardoAC/ai-agents",
-        "serve"
-      ],
-    };
+    const HUB_MCP_ENTRY = isLocalClone
+      ? {
+          command: "node",
+          args: [path.join(ROOT, "index.js")]
+        }
+      : {
+          command: "npx",
+          args: [
+            "-y",
+            "--prefer-online",
+            "https://github.com/SouzaEduardoAC/ai-agents",
+            "serve"
+          ],
+        };
 
     let claudeConfigured = false;
     for (const claudePath of CLAUDE_CONFIG_PATHS) {
@@ -368,12 +373,26 @@ program
         try {
           const claudeConfig = await fs.readJson(claudePath);
           if (!claudeConfig.mcpServers) claudeConfig.mcpServers = {};
-          if (!claudeConfig.mcpServers["agent-hub"]) {
-            claudeConfig.mcpServers["agent-hub"] = HUB_MCP_ENTRY;
+          let configChanged = false;
+          if (claudeConfig.mcpServers["agent-hub"]) {
+            delete claudeConfig.mcpServers["agent-hub"];
+            configChanged = true;
+          }
+          const existingTechAgents = claudeConfig.mcpServers["tech-agents"];
+          const needsTechAgentsUpdate = !existingTechAgents || 
+            (isLocalClone && (existingTechAgents.command !== "node" || !Array.isArray(existingTechAgents.args) || existingTechAgents.args[0] !== path.join(ROOT, "index.js"))) ||
+            (!isLocalClone && (existingTechAgents.command !== "npx" || !Array.isArray(existingTechAgents.args) || existingTechAgents.args.length < 4 || existingTechAgents.args[2] !== "https://github.com/SouzaEduardoAC/ai-agents"));
+          
+          if (needsTechAgentsUpdate) {
+            claudeConfig.mcpServers["tech-agents"] = HUB_MCP_ENTRY;
+            configChanged = true;
+          }
+
+          if (configChanged) {
             await fs.writeJson(claudePath, claudeConfig, { spaces: 2 });
-            console.log(`   ✅ [Claude] Configured agent-hub MCP server in ${claudePath}`);
+            console.log(`   ✅ [Claude] Configured tech-agents MCP server in ${claudePath}`);
           } else {
-            console.log(`   ✅ [Claude] agent-hub MCP already registered in ${claudePath}`);
+            console.log(`   ✅ [Claude] tech-agents MCP already registered in ${claudePath}`);
           }
           claudeConfigured = true;
           break;
@@ -461,11 +480,11 @@ program
     console.log("\n3️⃣  Claude Code");
     console.log("    → If auto-config succeeded, restart Claude Code.");
     console.log("    → If not detected, run this command manually:");
-    console.log("       mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve");
+    console.log("       mcp add tech-agents -- npx github:SouzaEduardoAC/ai-agents serve");
     console.log("    → Then use: call_agent_command(agent, command, args)");
     console.log("\n4️⃣  Codex / Cursor");
     console.log("    → Link an agent persona to your project:");
-    console.log("       agent-hub link squad .cursorrules");
+    console.log("       tech-agents link squad .cursorrules");
     console.log("==================================================");
   });
 

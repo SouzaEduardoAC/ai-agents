@@ -34,7 +34,7 @@ let msgId = 1;
 const nextId = () => msgId++;
 
 function spawnServer(cwd) {
-  return spawn("node", [path.join(ROOT, "bin", "agent-hub.js"), "serve"], {
+  return spawn("node", [path.join(ROOT, "bin", "tech-agents.js"), "serve"], {
     cwd,
     stdio: "pipe",
     env: process.env,
@@ -271,7 +271,7 @@ async function runTests() {
   // Test Scenario 2: Outside the Hub
   // ────────────────────────────────────────────────────────────────────────
   console.log(`\n${C.bold}--- Scenario 2: Outside the Hub (CWD = Temp Dir) ---${C.reset}`);
-  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "agent-hub-test-"));
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "tech-agents-test-"));
   const outsideProc = spawnServer(tmpDir);
 
   try {

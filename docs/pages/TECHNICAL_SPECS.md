@@ -4,29 +4,29 @@
 
 - # Core Infrastructure: Universal Agent Hub (Deep Specification)
 	- ## Entry Point Logic (Binary Execution)
-		- Binary:: `bin/agent-hub.js` (ref: `package.json -> bin`)
+		- Binary:: `bin/tech-agents.js` (ref: `package.json -> bin`)
 		- Entry Point:: `index.js` at the root, acting as the MCP Server (ref: `package.json -> main`)
 		- **Command: `serve`**: 
 			- Function:: Spawns the Hub server (ref: `index.js`) as a child process.
-			- Transport:: Uses `StdioServerTransport` on `index.js`. The wrapper uses `stdio: "pipe"` + explicit stream forwarding (`process.stdin → child.stdin`, `child.stdout → process.stdout`) to preserve MCP JSON-RPC framing. Using `stdio: "inherit"` is a **known anti-pattern** here — it attaches child fds to the wrapper's already-open descriptors, causing the MCP client to never reach the `StdioServerTransport`. (ref: `bin/agent-hub.js → serve`)
+			- Transport:: Uses `StdioServerTransport` on `index.js`. The wrapper uses `stdio: "pipe"` + explicit stream forwarding (`process.stdin → child.stdin`, `child.stdout → process.stdout`) to preserve MCP JSON-RPC framing. Using `stdio: "inherit"` is a **known anti-pattern** here — it attaches child fds to the wrapper's already-open descriptors, causing the MCP client to never reach the `StdioServerTransport`. (ref: `bin/tech-agents.js → serve`)
 			- **Direct Invocation (Preferred for MCP clients):** Configure `mcp_config.json` to point directly to `index.js`, bypassing the wrapper entirely.
 		- **Command: `bootstrap` (Environment Initialization)**: 
 			- Function:: One-time local environment setup for Gemini CLI, AntiGravity, and Claude Code.
 			- **Step 0: Gemini MCP Configuration**:
 				- Path:: `~/.gemini/settings.json` and `~/.gemini/antigravity/mcp_config.json`
-				- Logic:: Dynamically injects `filesystem`, `context7`, and `agent-hub` MCP server configurations if missing.
-				- **agent-hub MCP Entry:** Registered as `{ command: "node", args: ["<ROOT>/index.js"] }` — points directly to the MCP server, not the CLI wrapper, to ensure correct stdio handshake.
+				- Logic:: Dynamically injects `filesystem`, `context7`, and `tech-agents` MCP server configurations if missing.
+				- **tech-agents MCP Entry:** Registered as `{ command: "node", args: ["<ROOT>/index.js"] }` — points directly to the MCP server, not the CLI wrapper, to ensure correct stdio handshake.
 			- **Step 1: Gemini Slash Commands**:
 				- Source:: `[agent]/commands/[agent]/*.toml`
 				- Target:: `~/.gemini/commands/[agent]/`
-				- Logic:: Performs path reconciliation, replacing `~/.gemini/agents` and relative paths with the absolute Hub root. (ref: `bin/agent-hub.js -> bootstrap`)
+				- Logic:: Performs path reconciliation, replacing `~/.gemini/agents` and relative paths with the absolute Hub root. (ref: `bin/tech-agents.js -> bootstrap`)
 			- **Step 2: AntiGravity Personas**:
 				- Source:: `[agent]/brain/persona.md`
 				- Target:: `~/.gemini/antigravity/brain/[agent].md`
 				- Logic:: Physical copy of persona files for native AntiGravity orchestration.
 			- **Step 3: Claude Code & Claude Desktop Integration (v2026 Upgrades)**:
 				- Path:: Auto-detects Claude Desktop configurations dynamically across all platforms (Windows, macOS, Linux).
-				- Logic:: Automatically writes the MCP entry for `agent-hub` to `claude_desktop_config.json` if the config directory is found.
+				- Logic:: Automatically writes the MCP entry for `tech-agents` to `claude_desktop_config.json` if the config directory is found.
 				- Fallback:: Always outputs the exact, copy-pasteable `mcp add` command as a fallback for Claude CLI users.
 		- **Command: `link <agent> <target>`**: 
 			- Function:: Creates a hard filesystem symlink between the agent's core `persona.md` and a project-specific instruction file (e.g., `.cursorrules`).
@@ -70,9 +70,10 @@
 			- The following MCPs are automatically configured during the `bootstrap` phase.
 			- **Agent Hub (Internal)**:
 				- Description:: The core orchestration server developed in this repository.
-				- Interaction:: Provides the `call_agent_command` tool, mapping high-level goals to specialized agent personas and skillsets.
+				- Interaction:: Provides the `call_agent_command` tool to retrieve raw compiled prompts, and the `run_agent_loop` tool to execute multi-turn agent loops on the server side via client-side sampling.
+				- Loop Completion Rule:: The server-side loop execution terminates ONLY when the agent outputs the `<task_complete>` tag, preventing premature exits on generic words like "complete" or "done".
 				- Link:: [[Internal]] (ref: `index.js`)
-				- **MCP Config Entry (Correct):** `{ "command": "node", "args": ["<ABSOLUTE_PATH>/bin/agent-hub.js", "serve"] }` — points to the CLI wrapper with the `serve` option (using stdin/stdout stream piping to forward JSON-RPC framing to `index.js`).
+				- **MCP Config Entry (Correct):** `{ "command": "node", "args": ["<ABSOLUTE_PATH>/bin/tech-agents.js", "serve"] }` — points to the CLI wrapper with the `serve` option (using stdin/stdout stream piping to forward JSON-RPC framing to `index.js`).
 				- **Startup Diagnostics:** `index.js` wraps `server.connect(transport)` in a `try/catch`, writing fatal errors to `process.stderr` and calling `process.exit(1)` for visibility to MCP host processes. (ref: `index.js → transport connect`)
 				- **`list_agents` Upgrade:** The `list_agents` tool dynamically detects and returns the full `mcp_usage_guide.md` text rather than a raw listing of folder names. This guarantees that any client LLM executing `list_agents` immediately receives the complete tool execution protocols, agent directory mapping, aliases, and flowchart, enabling out-of-the-box accuracy in external workspace environments. (ref: `index.js → list_agents`)
 			- **Filesystem MCP**:

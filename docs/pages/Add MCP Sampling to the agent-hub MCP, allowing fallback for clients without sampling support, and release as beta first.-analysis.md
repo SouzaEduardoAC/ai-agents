@@ -1,0 +1,49 @@
+- type:: [[Analysis]]
+- status:: [[ACTIVE]]
+- project:: [[ai-agents]]
+
+- # Architectural Analysis: MCP Sampling Support
+	- ## 1. Problem & Persona Context
+		- Codex and other enterprise SSO environments do not expose raw API keys, making server-driven LLM calls impossible.
+		- Relying on prompt injection (returning raw prompts from `call_agent_command` to the host client) results in **persona drift** in Codex because Codex's client-side wrapper overrides or dilutes the injected system prompt over multiple turns.
+	- ## 2. Core Solution: MCP Sampling Loop
+		- Instead of injecting the prompt, the `agent-hub` server will run a **Managed Agent Loop** using the host's SSO session via the standard MCP `sampling/createMessage` method.
+		- The server will pin the compiled agent prompt as the `systemPrompt` on every single sampling call, ensuring Codex cannot dilute or ignore the agent's identity.
+	- ## 3. Client Capabilities Handshake
+		- Modify `index.js` `InitializeRequestSchema` handler to capture the client's capabilities.
+		- If the client's capabilities include `sampling`, the server is allowed to make sampling calls.
+		- Define a global/module-scoped state variable:
+			- `let clientCapabilities = {};`
+	- ## 4. Managed Loop Execution Flow
+		- Introduce a new tool or execution mode in `call_agent_command` (or a dedicated `run_agent_loop` tool):
+			- **Option A (Inlined in `call_agent_command`):** If `clientCapabilities.sampling` is active, the tool executes the loop synchronously and returns the final execution report.
+			- **Option B (Separate Tool):** Register a new tool `run_agent_loop` for clients that want to explicitly delegate the execution loop to the server, while keeping `call_agent_command` as a prompt-retrieval fallback.
+			- **Recommended Choice:** **Option B (Separate Tool)**. It keeps `call_agent_command` pure and predictable. If a client wants the server to run the loop, it invokes `run_agent_loop`. If `run_agent_loop` is called but sampling is unsupported, it throws an error or falls back to prompt injection.
+	- ## 5. Fallback Strategy
+		- If the client does not advertise `sampling` capability during `initialize`, the server falls back to prompt injection (returning raw prompt text).
+		- A wrapper/client-side script can also capture this error and fall back to the prompt-injection route.
+	- ## 6. XML/JSON Action Parser
+		- The model needs to run commands and edit files locally.
+		- Since standard tools are hosted on the client, and mapping them through sampling has platform constraints, the MCP server will instruct the model to write structured tags in its text output:
+			- `<read_file path="..." />`
+			- `<write_file path="...">[content]</write_file>`
+			- `<run_command cmd="..." />`
+		- The server parses these tags, executes them using Node's `fs-extra` and `child_process`, appends the results to the message list, and calls `sampling/createMessage` again.
+	- ## 7. Beta Release Protocol
+		- Versioning schema: `X.Y.Z-beta.N`.
+		- Release tag: publish to npm using `npm publish --tag beta`.
+		- Branch structure: develop and test on `feature/mcp-sampling` first.
+	- ## 8. Conflict Detection & Risks
+		- **Risk 1: Loop Infinite Runaway.** If the model gets stuck in a loop calling a failing command, it could exhaust tokens or crash.
+			- *Mitigation:* Implement a hard limit on loop iterations (e.g., maximum 15 turns per run).
+		- **Risk 2: Security Boundaries.** The server runs commands and writes files locally. We must ensure it only operates within the workspace directory.
+			- *Mitigation:* Resolve all paths against the active `projectRoot` and block paths containing `..` or absolute paths outside the workspace.
+- # Dialectical Critique
+	- **Yellow Hat (Resilience):**
+		- The fallback to standard prompt injection ensures that clients without sampling support (e.g., basic CLIs or older versions) continue to function without interruption.
+		- Path validation prevents directory traversal attacks or accidental deletion/edits of system files outside the repository.
+	- **Black Hat (Risks):**
+		- If the host client has a strict timeout on tool executions (e.g. 30 seconds), a multi-turn sampling loop that runs tests or builds will easily exceed this limit, causing the client to terminate the call before the loop finishes.
+		- Shifting execution to the server bypasses the client's built-in user approval dialogs for terminal commands and file writes.
+	- **Blind Spots:**
+		- Codex's SSO LLM gateway might enforce token-limit policies or payload inspections that block XML tags or recursive calls originating from local servers.

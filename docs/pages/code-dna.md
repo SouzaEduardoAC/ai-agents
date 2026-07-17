@@ -7,7 +7,7 @@
 	- ## Architectural Styles
 		- **Clean Architecture**: Strict separation of concerns. (ref: `architect/knowledge/patterns.md`)
 		- **SOLID**: Standard OO design principles. (ref: `architect/knowledge/patterns.md`)
-		- **Hub-and-Spoke Orchestration**: Centralized Agent Hub (`bin/agent-hub.js`) managing persona-specific command execution and knowledge injection.
+		- **Hub-and-Spoke Orchestration**: Centralized Agent Hub (`bin/tech-agents.js`) managing persona-specific command execution and knowledge injection.
 		- **Probe-Based Prompt Injection**: Use of `!{cat ...}` and `!{gemini mcp list}` for late-binding of documentation and capability context. (ref: `index.js -> resolveProbes`)
 	- ## Documentation DNA
 		- **Signal Preservation**: Documentation MUST capture Agent Identities, Commands, and Guardrails.
@@ -31,7 +31,7 @@
 		- **Degraded/Shell-less Resilience**: All reviewer/auditor actions must define strict manual fallbacks (requesting user CLI input) and gracefully degrade to static manual equivalents if restrictive clients or offline specialized MCP servers are encountered.
 	- ## MCP Transport DNA
 		- **stdio Anti-Pattern — `inherit` vs `pipe`**: When a CLI wrapper spawns an MCP server as a child process, `stdio: "inherit"` attaches the child's file descriptors to the wrapper's already-open fds. The MCP client — which is bound to the wrapper process — never receives the child's JSON-RPC responses. **Always use `stdio: "pipe"` + explicit stream forwarding** for wrapper-spawned MCP servers.
-		- **Wrapper Entry Point (Preferred)**: For MCP clients (Antigravity, Claude, Gemini CLI), configure `mcp_config.json` to use the CLI wrapper (`bin/agent-hub.js serve`). This uses `stdio: "pipe"` + explicit stream forwarding to preserve MCP JSON-RPC framing and provide a clean CLI-wrapped startup.
+		- **Wrapper Entry Point (Preferred)**: For MCP clients (Antigravity, Claude, Gemini CLI), configure `mcp_config.json` to use the CLI wrapper (`bin/tech-agents.js serve`). This uses `stdio: "pipe"` + explicit stream forwarding to preserve MCP JSON-RPC framing and provide a clean CLI-wrapped startup.
 		- **Startup Diagnostics Mandate**: MCP server entry files MUST wrap `server.connect(transport)` in a `try/catch` that writes to `process.stderr` and calls `process.exit(1)` on failure. Silent crashes are undetectable by MCP host processes. (ref: `index.js → transport connect`)
-		- **Idempotent Bootstrap Migration**: Bootstrap guards for MCP entries MUST check for both absence (`!entry`) AND stale/broken content (e.g., args pointing directly to `index.js`). A guard that only checks for absence is not idempotent and will silently skip incorrect or direct installations. (ref: `bin/agent-hub.js → updateMcpServers`)
+		- **Idempotent Bootstrap Migration**: Bootstrap guards for MCP entries MUST check for both absence (`!entry`) AND stale/broken content (e.g., args pointing directly to `index.js`). A guard that only checks for absence is not idempotent and will silently skip incorrect or direct installations. (ref: `bin/tech-agents.js → updateMcpServers`)
 

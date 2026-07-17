@@ -11,7 +11,23 @@
 - # Active Features
 	- ## Core Infrastructure
 		- status:: [SYNC]
-		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]]
+		- nodes:: [[TECHNICAL_SPECS]], [[BUSINESS_FLOW]], [[code-dna]], [[resilience-policies]], [[AI Interaction Standard]], [[Decoder]], [[squad-docs]], [[Add MCP Sampling to the agent-hub MCP, allowing fallback for clients without sampling support, and release as beta first.-prd]]
+		- ## Feature: Rename MCP Server and CLI to tech-agents (2026-07-17)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[code-dna]], [[CLAUDE]], [[README]], [[GEMINI]], [[AGENTS]]
+			- summary:: Renamed the MCP server name and CLI command from `agent-hub` to `tech-agents`. Updated the command script file to `bin/tech-agents.js`. Refactored the bootstrapper's update settings and Claude integration logic to automatically clean up the old `agent-hub` configuration key and register `tech-agents`. Updated all 26 TOML prompt files to call the new namespace `tech_agents:`. Updated all documentation, integration tests, and specs.
+		- ## Feature: Add adhoc consultation command to po, architect, backend, frontend, and mobile (2026-07-17)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]]
+			- summary:: Designed and created the non-coding consultative command `adhoc` (implemented via `adhoc.toml`) for `po`, `architect`, `backend`, `frontend`, and `mobile` agents. This allows conversational, analytical, and collaborative planning/brainstorming using agent-specific personas and skills, bypassing standard coding pipelines and validation gates. Added integration test coverage.
+		- ## Bug Fix: MCP Sampling Loop Early Exit & Peer Review SonarQube Reporting (2026-07-17)
+			- status:: [DONE]
+			- ref:: [[TECHNICAL_SPECS]], [[Squad Orchestrator]], [[Backend]], [[Frontend]], [[Mobile]]
+			- summary:: Fixed early exit in server-managed sampling execution loop (`run_agent_loop` in `index.js`) where substring checks for "complete", "done", or "resolved" broke loops prematurely before Git closure steps could execute. Standardized PR review protocol and squad-review commands to explicitly report the unavailability of SonarQube MCP rather than silently suppressing it.
+		- ## Feature: Integrate MCP Sampling into agent-hub MCP (2026-07-10)
+			- status:: [DONE]
+			- ref:: [[Add MCP Sampling to the agent-hub MCP, allowing fallback for clients without sampling support, and release as beta first.-prd]]
+			- summary:: Designing and implementing MCP Sampling support inside the `agent-hub` MCP server, allowing client-driven execution loops via `sampling/createMessage` for enterprise SSO environments, with graceful prompt-injection fallback, released as beta first.
 		- ## Feature: Mandatory Commit Scope & Body standard (2026-07-09)
 			- status:: [DONE]
 			- ref:: [[TECHNICAL_SPECS]], [[code-dna]]

@@ -1,19 +1,19 @@
 # CLAUDE CODE COGNITIVE ANCHOR (v2026)
-**Stack:** Markdown, TOML, [[Agent Hub]], Logseq Graph.
+**Stack:** Markdown, TOML, [[Tech Agents]], Logseq Graph.
 
 ## 🧠 Claude Integration
-This repository is a **Specialized Agent Hub** designed for high-fidelity engineering, compliance, and research tasks. It uses an **[[Agentic Modular Design]] (#AMD)** where each agent is a self-contained unit of persona, skills, and knowledge.
+This repository is a **Specialized Tech Agents** platform designed for high-fidelity engineering, compliance, and research tasks. It uses an **[[Agentic Modular Design]] (#AMD)** where each agent is a self-contained unit of persona, skills, and knowledge.
 
-Claude Code interacts with this Hub exclusively via the **MCP server**. There are no slash commands — all agent execution is done through MCP tool calls.
+Claude Code interacts with this platform exclusively via the **MCP server**. There are no slash commands — all agent execution is done through MCP tool calls.
 
 ## 🚀 Setup (One-Time)
-Register the Hub as an MCP server in your environment:
+Register the platform as an MCP server in your environment:
 ```bash
-mcp add agent-hub -- npx github:SouzaEduardoAC/ai-agents serve
+mcp add tech-agents -- npx github:SouzaEduardoAC/ai-agents serve
 ```
 
 ## 🛠 MCP Tools
-The following tools are available via the `agent-hub` MCP server:
+The following tools are available via the `tech-agents` MCP server:
 
 | Tool | Description |
 |------|-------------|
