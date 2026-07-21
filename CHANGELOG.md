@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/SouzaEduardoAC/tech-agents/compare/v2.0.2...v2.1.0) (2026-07-21)
+
+
+### Features
+
+* **mcp:** make MCP server fully self-contained and deprecate bootstrap ([b79db42](https://github.com/SouzaEduardoAC/tech-agents/commit/b79db42a09f839b6c4657669e4bb50de29179b7e))
+* **mcp:** make MCP server fully self-contained and deprecate bootstrap ([0732930](https://github.com/SouzaEduardoAC/tech-agents/commit/0732930938b8a3cb36cb2adf43905dfbf073b3d2))
+
 ## [2.0.2](https://github.com/SouzaEduardoAC/tech-agents/compare/v2.0.1...v2.0.2) (2026-07-21)
 
 
