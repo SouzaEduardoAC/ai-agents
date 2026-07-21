@@ -1,6 +1,9 @@
 # Agentic AI Framework (Universal Agent Hub)
 **Standardized orchestration for specialized AI Agents across Gemini, Claude, AntiGravity, and Codex.**
 
+[![PR Validation](https://github.com/SouzaEduardoAC/tech-agents/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/SouzaEduardoAC/tech-agents/actions/workflows/pr-validation.yml)
+[![Release Please](https://github.com/SouzaEduardoAC/tech-agents/actions/workflows/release-please.yml/badge.svg)](https://github.com/SouzaEduardoAC/tech-agents/actions/workflows/release-please.yml)
+
 ## 🧠 Cognitive Anchors (AI Optimized)
 The primary entry points for AI agents are the **[[AGENTS.md]]** (Universal), **[[GEMINI.md]]** (Gemini CLI), and **[[CLAUDE.md]]** (Claude Code) files.
 - **Efficiency**: Optimized for AI consumption to minimize token overhead.
