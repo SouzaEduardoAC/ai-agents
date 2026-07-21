@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2](https://github.com/SouzaEduardoAC/tech-agents/compare/v2.0.1...v2.0.2) (2026-07-21)
+
+
+### Bug Fixes
+
+* **mcp:** update bootstrap server registration target to github remote ([821ecf0](https://github.com/SouzaEduardoAC/tech-agents/commit/821ecf01b1f7d94bcb11d77dac93a14bf9817ff1))
+* **mcp:** update bootstrap server registration target to github remote ([22fb62d](https://github.com/SouzaEduardoAC/tech-agents/commit/22fb62d98df26c4022483794be6d644fee777fd8))
+
 ## [2.0.1](https://github.com/SouzaEduardoAC/tech-agents/compare/v2.0.0...v2.0.1) (2026-07-20)
 
 
